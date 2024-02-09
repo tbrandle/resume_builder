@@ -90,18 +90,10 @@ const ResumeForm = () => {
             })
           }
         />
-        <p
-          style={{
-            width: "100%",
-            textAlign: "left",
-            paddingLeft: "10px",
-          }}
-        >
-          Skills
-        </p>
         {formData.skills.map((skill) => {
           return (
             <FormSection
+              title={"Skills"}
               data={skill}
               handleUpdate={(fieldPayload) =>
                 dispatch({
