@@ -1,9 +1,11 @@
-import { useReducer, useState } from "react";
+import { useReducer } from "react";
 import defaultResume from "../data/defaultResume";
 import { capitalize } from "lodash";
-import { Box, Stack, TextField } from "@mui/material";
+import { Box, InputLabel, Stack, TextField } from "@mui/material";
 import resumeReducer, { actionConstants } from "../reducers/resumeReducer";
 import { IFormSection } from "../types/resumeTypes";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 interface FormSectionProps {
   data: IFormSection;
@@ -24,6 +26,18 @@ const FormSection = ({ data, handleUpdate, title }: FormSectionProps) => {
         {title}
       </p>
       {data.fields.map(({ id, label, type, value }) => {
+        if (type === "html") {
+          return (
+            <div style={{ flexGrow: "1", padding: "27px" }}>
+              <InputLabel>{capitalize(label.replace("_", " "))}</InputLabel>
+              <ReactQuill
+                theme="snow"
+                value={value as string}
+                onChange={(e) => handleUpdate({ id, value: e })}
+              />
+            </div>
+          );
+        }
         return (
           <TextField
             id={id}
@@ -113,17 +127,6 @@ const ResumeForm = () => {
             />
           );
         })}
-        {/* 
-        <FormSection
-          title={"Education"}
-          data={formData.education}
-          handleUpdate={(payload) =>
-            dispatch({
-              type: actionConstants.UPDATE_EDUCATION,
-              payload,
-            })
-          }
-        /> */}
       </Stack>
     </Box>
   );

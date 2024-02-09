@@ -5,13 +5,7 @@ export interface Location {
   state: string;
 }
 
-export type InputType =
-  | "select"
-  | "markdown"
-  | "text"
-  | "date"
-  | "phone"
-  | "email";
+export type InputType = "select" | "html" | "text" | "date" | "phone" | "email";
 
 export interface Field {
   id: string;

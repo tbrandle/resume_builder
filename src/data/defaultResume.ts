@@ -10,7 +10,7 @@ const defaultResume: Resume = {
       {
         id: uniqueId(),
         label: "professional_summary",
-        type: "markdown",
+        type: "html",
         value: "",
       },
       { id: uniqueId(), label: "phone_number", type: "phone", value: "" },
@@ -54,7 +54,7 @@ const defaultResume: Resume = {
         { id: uniqueId(), label: "state", type: "text", value: "" },
         { id: uniqueId(), label: "date_start", type: "text", value: "" },
         { id: uniqueId(), label: "date_end", type: "text", value: "" },
-        { id: uniqueId(), label: "description", type: "text", value: "" },
+        { id: uniqueId(), label: "description", type: "html", value: "" },
       ],
     },
   ],
