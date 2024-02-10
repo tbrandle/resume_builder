@@ -1,9 +1,18 @@
-import { Field, IFormSection, Resume } from "../types/resumeTypes";
+import { uniqueId } from "lodash";
+import {
+  Field,
+  IFormSection,
+  IFormSectionParent,
+  Resume,
+  SkillLevel,
+} from "../types/resumeTypes";
 
 export const actionConstants = {
   UPDATE_PERSONAL_DETAILS: "UPDATE_PERSONAL_DETAILS",
   UPDATE_SOCIAL_MEDIA: "UPDATE_SOCIAL_MEDIA",
   UPDATE_SKILLS: "UPDATE_SKILLS",
+  ADD_EMPLOYMENT_HISTORY: "ADD_EMPLOYMENT_HISTORY",
+  ADD_SKILL: "ADD_SKILL",
   UPDATE_EMPLOYMENT_HISTORY: "UPDATE_EMPLOYMENT_HISTORY",
   UPDATE_EDUCATION: "UPDATE_EDUCATION",
 } as const;
@@ -20,6 +29,12 @@ type Action =
   | {
       type: typeof actionConstants.UPDATE_SKILLS;
       payload: { parentId: string; fieldPayload: Partial<Field> };
+    }
+  | {
+      type: typeof actionConstants.ADD_SKILL;
+    }
+  | {
+      type: typeof actionConstants.ADD_EMPLOYMENT_HISTORY;
     }
   | {
       type: typeof actionConstants.UPDATE_EMPLOYMENT_HISTORY;
@@ -73,6 +88,48 @@ const resumeReducer = (state: Resume, action: Action) => {
       return {
         ...state,
         skills: newState,
+      };
+    }
+    case actionConstants.ADD_SKILL: {
+      const newSkill: IFormSectionParent = {
+        id: uniqueId(),
+        fields: [
+          {
+            id: uniqueId(),
+            label: "language",
+            type: "text",
+            value: "",
+          },
+          {
+            id: uniqueId(),
+            label: "skill_level",
+            type: "select",
+            value: "",
+            options: SkillLevel,
+          },
+        ],
+      };
+      return {
+        ...state,
+        skills: [...state.skills, newSkill],
+      };
+    }
+    case actionConstants.ADD_EMPLOYMENT_HISTORY: {
+      const newEmployment: IFormSectionParent = {
+        id: uniqueId(),
+        fields: [
+          { id: uniqueId(), label: "job_title", type: "text", value: "" },
+          { id: uniqueId(), label: "employer", type: "text", value: "" },
+          { id: uniqueId(), label: "city", type: "text", value: "" },
+          { id: uniqueId(), label: "state", type: "text", value: "" },
+          { id: uniqueId(), label: "date_start", type: "text", value: "" },
+          { id: uniqueId(), label: "date_end", type: "text", value: "" },
+          { id: uniqueId(), label: "description", type: "html", value: "" },
+        ],
+      };
+      return {
+        ...state,
+        employment_history: [...state.employment_history, newEmployment],
       };
     }
     case actionConstants.UPDATE_EMPLOYMENT_HISTORY: {

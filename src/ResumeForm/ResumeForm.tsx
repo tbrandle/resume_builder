@@ -1,7 +1,7 @@
 import { useReducer } from "react";
 import defaultResume from "../data/defaultResume";
 import { capitalize } from "lodash";
-import { Box, InputLabel, Stack, TextField } from "@mui/material";
+import { Box, Button, InputLabel, Stack, TextField } from "@mui/material";
 import resumeReducer, { actionConstants } from "../reducers/resumeReducer";
 import { IFormSection } from "../types/resumeTypes";
 import ReactQuill from "react-quill";
@@ -28,7 +28,7 @@ const FormSection = ({ data, handleUpdate, title }: FormSectionProps) => {
       {data.fields.map(({ id, label, type, value }) => {
         if (type === "html") {
           return (
-            <div style={{ flexGrow: "1", padding: "27px" }}>
+            <div style={{ width: "100%", padding: "27px" }}>
               <InputLabel>{capitalize(label.replace("_", " "))}</InputLabel>
               <ReactQuill
                 theme="snow"
@@ -90,10 +90,19 @@ const ResumeForm = () => {
             })
           }
         />
+        <p
+          style={{
+            width: "100%",
+            textAlign: "left",
+            paddingLeft: "10px",
+          }}
+        >
+          Skills
+        </p>
         {formData.skills.map((skill) => {
           return (
             <FormSection
-              title={"Skills"}
+              // title={"Skills"}
               data={skill}
               handleUpdate={(fieldPayload) =>
                 dispatch({
@@ -104,6 +113,9 @@ const ResumeForm = () => {
             />
           );
         })}
+        <Button onClick={() => dispatch({ type: actionConstants.ADD_SKILL })}>
+          Add new skill
+        </Button>
 
         {formData.employment_history.map((employment) => {
           return (
@@ -119,6 +131,13 @@ const ResumeForm = () => {
             />
           );
         })}
+        <Button
+          onClick={() =>
+            dispatch({ type: actionConstants.ADD_EMPLOYMENT_HISTORY })
+          }
+        >
+          Add new employment
+        </Button>
       </Stack>
     </Box>
   );

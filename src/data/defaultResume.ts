@@ -36,6 +36,24 @@ const defaultResume: Resume = {
         },
       ],
     },
+    {
+      id: uniqueId(),
+      fields: [
+        {
+          id: uniqueId(),
+          label: "language",
+          type: "text",
+          value: "JavaScript",
+        },
+        {
+          id: uniqueId(),
+          label: "skill_level",
+          type: "select",
+          value: SkillLevel.Expert,
+          options: SkillLevel,
+        },
+      ],
+    },
   ],
   social_media: {
     fields: [
