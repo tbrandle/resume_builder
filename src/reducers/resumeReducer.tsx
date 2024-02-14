@@ -1,11 +1,5 @@
 import { uniqueId } from "lodash";
-import {
-  Field,
-  IFormSection,
-  IFormSectionParent,
-  Resume,
-  SkillLevel,
-} from "../types/resumeTypes";
+import { Field, Resume, SkillLevel } from "../types/resumeTypes";
 
 export const actionConstants = {
   UPDATE_PERSONAL_DETAILS: "UPDATE_PERSONAL_DETAILS",
@@ -17,18 +11,18 @@ export const actionConstants = {
   UPDATE_EDUCATION: "UPDATE_EDUCATION",
 } as const;
 
-type Action =
+export type Action =
   | {
       type: typeof actionConstants.UPDATE_PERSONAL_DETAILS;
-      payload: Partial<Field>;
+      payload: Field;
     }
   | {
       type: typeof actionConstants.UPDATE_SOCIAL_MEDIA;
-      payload: Partial<Field>;
+      payload: Field;
     }
   | {
       type: typeof actionConstants.UPDATE_SKILLS;
-      payload: { parentId: string; fieldPayload: Partial<Field> };
+      payload: { parentId: string; fieldPayload: Field };
     }
   | {
       type: typeof actionConstants.ADD_SKILL;
@@ -38,11 +32,11 @@ type Action =
     }
   | {
       type: typeof actionConstants.UPDATE_EMPLOYMENT_HISTORY;
-      payload: { parentId: string; fieldPayload: Partial<Field> };
+      payload: { parentId: string; fieldPayload: Field };
     }
   | {
       type: typeof actionConstants.UPDATE_EDUCATION;
-      payload: { parentId: string; fieldPayload: Partial<Field> };
+      payload: { parentId: string; fieldPayload: Field };
     };
 
 const updateFieldState = (fields: Field[], payload: Partial<Field>) =>
@@ -58,23 +52,24 @@ const updateFieldState = (fields: Field[], payload: Partial<Field>) =>
 const resumeReducer = (state: Resume, action: Action) => {
   switch (action.type) {
     case actionConstants.UPDATE_PERSONAL_DETAILS: {
+      const { payload } = action;
       return {
         ...state,
         personal_details: {
           ...state.personal_details,
-          fields: updateFieldState(
-            state.personal_details.fields,
-            action.payload
-          ),
+          ...{ [payload.label]: payload.value },
+          fields: updateFieldState(state.personal_details.fields, payload),
         },
       };
     }
     case actionConstants.UPDATE_SOCIAL_MEDIA: {
+      const { payload } = action;
       return {
         ...state,
         social_media: {
           ...state.social_media,
-          fields: updateFieldState(state.social_media.fields, action.payload),
+          ...{ [payload.label]: payload.value },
+          fields: updateFieldState(state.personal_details.fields, payload),
         },
       };
     }
@@ -82,7 +77,11 @@ const resumeReducer = (state: Resume, action: Action) => {
       const { parentId, fieldPayload } = action.payload;
       const newState = state.skills.map((skill) =>
         skill.id === parentId
-          ? { ...skill, fields: updateFieldState(skill.fields, fieldPayload) }
+          ? {
+              ...skill,
+              ...{ [fieldPayload.label]: fieldPayload.value },
+              fields: updateFieldState(skill.fields, fieldPayload),
+            }
           : skill
       );
       return {
@@ -91,12 +90,14 @@ const resumeReducer = (state: Resume, action: Action) => {
       };
     }
     case actionConstants.ADD_SKILL: {
-      const newSkill: IFormSectionParent = {
+      const newSkill: (typeof state.skills)[0] = {
+        skill: "",
+        skill_level: "",
         id: uniqueId(),
         fields: [
           {
             id: uniqueId(),
-            label: "language",
+            label: "skill",
             type: "text",
             value: "",
           },
@@ -115,7 +116,14 @@ const resumeReducer = (state: Resume, action: Action) => {
       };
     }
     case actionConstants.ADD_EMPLOYMENT_HISTORY: {
-      const newEmployment: IFormSectionParent = {
+      const newEmployment: (typeof state.employment_history)[0] = {
+        job_title: "",
+        employer: "",
+        city: "",
+        state: "",
+        date_start: "",
+        date_end: "",
+        description: "",
         id: uniqueId(),
         fields: [
           { id: uniqueId(), label: "job_title", type: "text", value: "" },
@@ -138,6 +146,7 @@ const resumeReducer = (state: Resume, action: Action) => {
         employment.id === parentId
           ? {
               ...employment,
+              ...{ [fieldPayload.label]: fieldPayload.value },
               fields: updateFieldState(employment.fields, fieldPayload),
             }
           : employment
@@ -153,6 +162,7 @@ const resumeReducer = (state: Resume, action: Action) => {
         education.id === parentId
           ? {
               ...education,
+              ...{ [fieldPayload.label]: fieldPayload.value },
               fields: updateFieldState(education.fields, fieldPayload),
             }
           : education

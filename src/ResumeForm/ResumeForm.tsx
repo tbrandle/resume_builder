@@ -1,15 +1,13 @@
-import { useReducer } from "react";
-import defaultResume from "../data/defaultResume";
 import { capitalize } from "lodash";
 import { Box, Button, InputLabel, Stack, TextField } from "@mui/material";
-import resumeReducer, { actionConstants } from "../reducers/resumeReducer";
-import { IFormSection } from "../types/resumeTypes";
+import { Action, actionConstants } from "../reducers/resumeReducer";
+import { Field, IFormSection, Resume } from "../types/resumeTypes";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
 
 interface FormSectionProps {
   data: IFormSection;
-  handleUpdate: (payload: Record<any, any>) => void;
+  handleUpdate: (payload: Field) => void;
   title?: string;
 }
 
@@ -25,28 +23,30 @@ const FormSection = ({ data, handleUpdate, title }: FormSectionProps) => {
       >
         {title}
       </p>
-      {data.fields.map(({ id, label, type, value }) => {
+      {data.fields.map((field) => {
+        const { id, label, type, value } = field;
         if (type === "html") {
           return (
-            <div style={{ width: "100%", padding: "27px" }}>
+            <div key={id} style={{ width: "100%", padding: "27px" }}>
               <InputLabel>{capitalize(label.replace("_", " "))}</InputLabel>
               <ReactQuill
                 theme="snow"
                 value={value as string}
-                onChange={(e) => handleUpdate({ id, value: e })}
+                onChange={(e) => handleUpdate({ ...field, value: e })}
               />
             </div>
           );
         }
         return (
           <TextField
+            key={id}
             id={id}
             select={type === "select"}
             type={type}
             label={capitalize(label.replace("_", " "))}
             value={value}
             sx={{ m: 3, width: "40%" }}
-            onChange={(e) => handleUpdate({ id, value: e.target.value })}
+            onChange={(e) => handleUpdate({ ...field, value: e.target.value })}
           />
         );
       })}
@@ -54,9 +54,13 @@ const FormSection = ({ data, handleUpdate, title }: FormSectionProps) => {
   );
 };
 
-const ResumeForm = () => {
-  const [formData, dispatch] = useReducer(resumeReducer, defaultResume);
-
+const ResumeForm = ({
+  formData,
+  dispatch,
+}: {
+  formData: Resume;
+  dispatch: React.Dispatch<Action>;
+}) => {
   return (
     <Box
       component="form"
@@ -99,10 +103,10 @@ const ResumeForm = () => {
         >
           Skills
         </p>
-        {formData.skills.map((skill) => {
+        {formData.skills.map((skill, i) => {
           return (
             <FormSection
-              // title={"Skills"}
+              key={`${i}-${skill.id}`}
               data={skill}
               handleUpdate={(fieldPayload) =>
                 dispatch({
@@ -117,10 +121,20 @@ const ResumeForm = () => {
           Add new skill
         </Button>
 
-        {formData.employment_history.map((employment) => {
+        <p
+          style={{
+            width: "100%",
+            textAlign: "left",
+            paddingLeft: "10px",
+          }}
+        >
+          Employment History
+        </p>
+
+        {formData.employment_history.map((employment, i) => {
           return (
             <FormSection
-              title={"Employment History"}
+              key={`${i}-${employment.id}`}
               data={employment}
               handleUpdate={(payload) =>
                 dispatch({
