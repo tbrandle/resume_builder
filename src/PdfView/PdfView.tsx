@@ -1,7 +1,6 @@
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 import { ProfileDetails } from "../types/resumeTypes";
-// import sanitizeHtml from "sanitize-html";
-// import DOMPurify from "dompurify";
+import DOMPurify from "isomorphic-dompurify";
 
 // Create styles
 const styles = StyleSheet.create({
@@ -27,7 +26,7 @@ const PdfView = ({ personalDetails }: { personalDetails: ProfileDetails }) => {
           })}
           <div
             dangerouslySetInnerHTML={{
-              __html: personalDetails.professional_summary,
+              __html: DOMPurify.sanitize(personalDetails.professional_summary),
             }}
           ></div>
         </View>
