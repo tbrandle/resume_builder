@@ -44,13 +44,16 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
               <div className="title">Details</div>
 
               <div className="section">
-                <div className="detailSubTitle">Phone</div>
+                <div className="subTitle">Phone</div>
                 <div>{personalDetails.phone_number}</div>
               </div>
               <div className="section">
-                <div className="detailSubTitle">Email</div>
+                <div className="subTitle">Email</div>
                 <div>{personalDetails.email}</div>
               </div>
+            </div>
+            <div className="details section ">
+              <div className="title">Skills</div>
             </div>
           </div>
           <div className="col colRight">
@@ -64,6 +67,19 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
                   ),
                 }}
               />
+            </div>
+            <div className="section">
+              <div className="title">Employment History</div>
+              {employmentHistory.map((employment) => {
+                return (
+                  <div className="subTitle">
+                    {employment.job_title}, {employment.employer}
+                  </div>
+                );
+              })}
+            </div>
+            <div className="section">
+              <div className="title">Education</div>
             </div>
           </div>
         </div>

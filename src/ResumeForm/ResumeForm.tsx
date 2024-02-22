@@ -25,6 +25,7 @@ const FormSection = ({ data, handleUpdate, title }: FormSectionProps) => {
       </p>
       {data.fields.map((field) => {
         const { id, label, type, value } = field;
+        console.log({ value });
         if (type === "html") {
           return (
             <div key={id} style={{ width: "100%", padding: "27px" }}>

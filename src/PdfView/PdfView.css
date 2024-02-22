@@ -44,7 +44,7 @@
   }
 
   .section {
-    margin-bottom: 10px;
+    margin-bottom: 18px;
   }
 
   .title {
@@ -65,9 +65,8 @@
     padding: 12px 33px;
   }
 
-  .detailSubTitle {
+  .subTitle {
     font-weight: 700;
-    text-transform: uppercase;
     padding-bottom: 5px;
   }
 
