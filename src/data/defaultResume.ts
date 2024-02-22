@@ -3,12 +3,12 @@ import { Resume, SkillLevel } from "../types/resumeTypes";
 
 export const defaultResume: Resume = {
   personal_details: {
-    first_name: "",
-    last_name: "",
-    job_title: "",
-    professional_summary: "",
-    phone_number: "",
-    email: "",
+    first_name: "Tim",
+    last_name: "Brandle",
+    job_title: "Senior Software Developer",
+    professional_summary: "This is a test",
+    phone_number: "720-281-6350",
+    email: "tbrandle53@gmail.com",
     fields: [
       { id: uniqueId(), label: "first_name", type: "text", value: "" },
       { id: uniqueId(), label: "last_name", type: "text", value: "" },

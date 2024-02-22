@@ -69,7 +69,7 @@ const resumeReducer = (state: Resume, action: Action) => {
         social_media: {
           ...state.social_media,
           ...{ [payload.label]: payload.value },
-          fields: updateFieldState(state.personal_details.fields, payload),
+          fields: updateFieldState(state.social_media.fields, payload),
         },
       };
     }
