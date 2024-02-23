@@ -72,8 +72,25 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
               <div className="title">Employment History</div>
               {employmentHistory.map((employment) => {
                 return (
-                  <div className="subTitle">
-                    {employment.job_title}, {employment.employer}
+                  <div>
+                    <div className="employmentHeader">
+                      <div className="employmentDetails">
+                        <div className="subTitle">
+                          {employment.job_title}, {employment.employer}
+                        </div>
+                        <div>
+                          {employment.city}, {employment.state}
+                        </div>
+                      </div>
+                      <div>
+                        {employment.date_start} - {employment.date_end}
+                      </div>
+                    </div>
+                    <div
+                      dangerouslySetInnerHTML={{
+                        __html: DOMPurify.sanitize(employment.description),
+                      }}
+                    />
                   </div>
                 );
               })}

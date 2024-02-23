@@ -32,6 +32,11 @@ const FormSection = ({ data, handleUpdate, title }: FormSectionProps) => {
               <InputLabel>{capitalize(label.replace("_", " "))}</InputLabel>
               <ReactQuill
                 theme="snow"
+                modules={{
+                  clipboard: {
+                    matchVisual: false,
+                  },
+                }}
                 value={value as string}
                 onChange={(e) => handleUpdate({ ...field, value: e })}
               />

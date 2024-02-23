@@ -70,6 +70,11 @@
     padding-bottom: 5px;
   }
 
+  .employmentDetails {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .nameTitle {
     z-index: 1;
     background-color: white;
