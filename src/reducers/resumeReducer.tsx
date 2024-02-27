@@ -106,7 +106,7 @@ const resumeReducer = (state: Resume, action: Action) => {
             label: "skill_level",
             type: "select",
             value: "",
-            options: SkillLevel,
+            options: Object.keys(SkillLevel).map((key) => key),
           },
         ],
       };

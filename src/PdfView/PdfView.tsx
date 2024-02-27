@@ -11,6 +11,7 @@ import { Container } from "@mui/material";
 import { useRef } from "react";
 import { useReactToPrint } from "react-to-print";
 import React from "react";
+import { useEventListener } from "usehooks-ts";
 
 interface PdfViewProps {
   personalDetails: ProfileDetails;
@@ -30,73 +31,88 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
       employmentHistory,
       education,
     } = props;
-    return (
-      <div ref={ref}>
-        <div className="page">
-          <div className="nameTitle">
-            <div className="name title">
-              {personalDetails.first_name} {personalDetails.last_name}
-            </div>
-            <div className="jobTitle">{personalDetails.job_title}</div>
-          </div>
-          <div className="col colLeft">
-            <div className="details section firstPageOffset">
-              <div className="title">Details</div>
 
-              <div className="section">
-                <div className="subTitle">Phone</div>
-                <div>{personalDetails.phone_number}</div>
+    return (
+      <div
+        style={{
+          border: "1px #131212 solid",
+          borderRadius: "5px",
+          boxShadow: "0 0 5px rgba(0, 0, 0, 0.1)",
+        }}
+      >
+        <div ref={ref}>
+          <div className="page">
+            <div className="nameTitle">
+              <div className="name title">
+                {personalDetails.first_name} {personalDetails.last_name}
+              </div>
+              <div className="jobTitle">{personalDetails.job_title}</div>
+            </div>
+            <div className="col colLeft">
+              <div className="details section firstPageOffset">
+                <div className="title">Details</div>
+
+                <div className="section">
+                  <div className="subTitle">Phone</div>
+                  <div>{personalDetails.phone_number}</div>
+                </div>
+                <div className="section">
+                  <div className="subTitle">Email</div>
+                  <div>{personalDetails.email}</div>
+                </div>
+              </div>
+              <div className="details section ">
+                <div className="title">Skills</div>
+                {skills.map(({ skill, skill_level }) => (
+                  <>
+                    <div>{skill}</div>
+                    <div>{skill_level}</div>
+                  </>
+                ))}
+              </div>
+            </div>
+            <div className="col colRight">
+              <div className="section firstPageOffset">
+                <div className="title">Profile</div>
+                <div
+                  className="professionalSummary"
+                  dangerouslySetInnerHTML={{
+                    __html: DOMPurify.sanitize(
+                      personalDetails.professional_summary
+                    ),
+                  }}
+                />
               </div>
               <div className="section">
-                <div className="subTitle">Email</div>
-                <div>{personalDetails.email}</div>
-              </div>
-            </div>
-            <div className="details section ">
-              <div className="title">Skills</div>
-            </div>
-          </div>
-          <div className="col colRight">
-            <div className="section firstPageOffset">
-              <div className="title">Profile</div>
-              <div
-                className="professionalSummary"
-                dangerouslySetInnerHTML={{
-                  __html: DOMPurify.sanitize(
-                    personalDetails.professional_summary
-                  ),
-                }}
-              />
-            </div>
-            <div className="section">
-              <div className="title">Employment History</div>
-              {employmentHistory.map((employment) => {
-                return (
-                  <div>
-                    <div className="employmentHeader">
-                      <div className="employmentDetails">
-                        <div className="subTitle">
-                          {employment.job_title}, {employment.employer}
+                <div className="title">Employment History</div>
+                {employmentHistory.map((employment) => {
+                  return (
+                    <div>
+                      <div className="employmentHeader">
+                        <div className="employmentDetails">
+                          <div className="subTitle">
+                            {employment.job_title}, {employment.employer}
+                          </div>
+                          <div>
+                            {employment.city}, {employment.state}
+                          </div>
                         </div>
                         <div>
-                          {employment.city}, {employment.state}
+                          {employment.date_start} - {employment.date_end}
                         </div>
                       </div>
-                      <div>
-                        {employment.date_start} - {employment.date_end}
-                      </div>
+                      <div
+                        dangerouslySetInnerHTML={{
+                          __html: DOMPurify.sanitize(employment.description),
+                        }}
+                      />
                     </div>
-                    <div
-                      dangerouslySetInnerHTML={{
-                        __html: DOMPurify.sanitize(employment.description),
-                      }}
-                    />
-                  </div>
-                );
-              })}
-            </div>
-            <div className="section">
-              <div className="title">Education</div>
+                  );
+                })}
+              </div>
+              <div className="section">
+                <div className="title">Education</div>
+              </div>
             </div>
           </div>
         </div>

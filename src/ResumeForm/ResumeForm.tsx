@@ -1,5 +1,12 @@
 import { capitalize } from "lodash";
-import { Box, Button, InputLabel, Stack, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  InputLabel,
+  MenuItem,
+  Stack,
+  TextField,
+} from "@mui/material";
 import { Action, actionConstants } from "../reducers/resumeReducer";
 import { Field, IFormSection, Resume } from "../types/resumeTypes";
 import ReactQuill from "react-quill";
@@ -25,7 +32,6 @@ const FormSection = ({ data, handleUpdate, title }: FormSectionProps) => {
       </p>
       {data.fields.map((field) => {
         const { id, label, type, value } = field;
-        console.log({ value });
         if (type === "html") {
           return (
             <div key={id} style={{ width: "100%", padding: "27px" }}>
@@ -53,7 +59,14 @@ const FormSection = ({ data, handleUpdate, title }: FormSectionProps) => {
             value={value}
             sx={{ m: 3, width: "40%" }}
             onChange={(e) => handleUpdate({ ...field, value: e.target.value })}
-          />
+          >
+            {field.options &&
+              field.options.map((option: string) => (
+                <MenuItem key={option} value={option}>
+                  {option}
+                </MenuItem>
+              ))}
+          </TextField>
         );
       })}
     </>
