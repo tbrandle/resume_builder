@@ -1,77 +1,10 @@
-import { capitalize } from "lodash";
-import {
-  Box,
-  Button,
-  InputLabel,
-  MenuItem,
-  Stack,
-  TextField,
-} from "@mui/material";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 import { Action, actionConstants } from "../reducers/resumeReducer";
-import { Field, IFormSection, Resume } from "../types/resumeTypes";
-import ReactQuill from "react-quill";
+import { Resume } from "../types/resumeTypes";
 import "react-quill/dist/quill.snow.css";
-
-interface FormSectionProps {
-  data: IFormSection;
-  handleUpdate: (payload: Field) => void;
-  title?: string;
-}
-
-const FormSection = ({ data, handleUpdate, title }: FormSectionProps) => {
-  return (
-    <>
-      <p
-        style={{
-          width: "100%",
-          textAlign: "left",
-          paddingLeft: "10px",
-        }}
-      >
-        {title}
-      </p>
-      {data.fields.map((field) => {
-        const { id, label, type, value } = field;
-        if (type === "html") {
-          return (
-            <div key={id} style={{ width: "100%", padding: "27px" }}>
-              <InputLabel>{capitalize(label.replace("_", " "))}</InputLabel>
-              <ReactQuill
-                theme="snow"
-                modules={{
-                  clipboard: {
-                    matchVisual: false,
-                  },
-                }}
-                value={value as string}
-                onChange={(e) => handleUpdate({ ...field, value: e })}
-              />
-            </div>
-          );
-        }
-        return (
-          <TextField
-            key={id}
-            id={id}
-            select={type === "select"}
-            type={type}
-            label={capitalize(label.replace("_", " "))}
-            value={value}
-            sx={{ m: 3, width: "40%" }}
-            onChange={(e) => handleUpdate({ ...field, value: e.target.value })}
-          >
-            {field.options &&
-              field.options.map((option: string) => (
-                <MenuItem key={option} value={option}>
-                  {option}
-                </MenuItem>
-              ))}
-          </TextField>
-        );
-      })}
-    </>
-  );
-};
+import { FormSection } from "./FormSection";
 
 const ResumeForm = ({
   formData,
@@ -85,7 +18,14 @@ const ResumeForm = ({
       component="form"
       noValidate
       autoComplete="off"
-      sx={{ display: "flex", flexDirection: "column", width: "50%" }}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        width: "40%",
+        padding: "32px",
+        overflow: "scroll",
+        height: "100vh",
+      }}
     >
       <Stack
         direction="row"
@@ -94,7 +34,17 @@ const ResumeForm = ({
         justifyContent={"space-between"}
       >
         <FormSection
-          title={"Personal Details"}
+          title={
+            <h3
+              style={{
+                width: "100%",
+                textAlign: "left",
+                paddingLeft: "10px",
+              }}
+            >
+              Personal Details
+            </h3>
+          }
           data={formData.personal_details}
           handleUpdate={(payload) =>
             dispatch({
@@ -104,7 +54,15 @@ const ResumeForm = ({
           }
         />
         <FormSection
-          title={"Social Media"}
+          title={
+            <h3
+              style={{
+                paddingLeft: "10px",
+              }}
+            >
+              Social Media
+            </h3>
+          }
           data={formData.social_media}
           handleUpdate={(payload) =>
             dispatch({
@@ -113,19 +71,29 @@ const ResumeForm = ({
             })
           }
         />
-        <p
+        <h3
           style={{
-            width: "100%",
-            textAlign: "left",
             paddingLeft: "10px",
           }}
         >
           Skills
-        </p>
+        </h3>
         {formData.skills.map((skill, i) => {
           return (
             <FormSection
               key={`${i}-${skill.id}`}
+              title={
+                <Stack
+                  style={{
+                    padding: "20px",
+                    fontSize: "13px",
+                  }}
+                  spacing={0.5}
+                >
+                  <strong>{skill.skill}</strong>
+                  <div>{skill.skill_level}</div>
+                </Stack>
+              }
               data={skill}
               handleUpdate={(fieldPayload) =>
                 dispatch({
@@ -154,6 +122,22 @@ const ResumeForm = ({
           return (
             <FormSection
               key={`${i}-${employment.id}`}
+              title={
+                <Stack
+                  style={{
+                    padding: "20px",
+                    fontSize: "13px",
+                  }}
+                  spacing={0.5}
+                >
+                  <strong>{employment.job_title}</strong>
+                  {employment.date_start ? (
+                    <div>
+                      {employment.date_start} - {employment.date_end}
+                    </div>
+                  ) : null}
+                </Stack>
+              }
               data={employment}
               handleUpdate={(payload) =>
                 dispatch({

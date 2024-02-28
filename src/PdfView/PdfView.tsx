@@ -38,6 +38,8 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
           border: "1px #131212 solid",
           borderRadius: "5px",
           boxShadow: "0 0 5px rgba(0, 0, 0, 0.1)",
+          margin: "0 auto",
+          width: "fit-content",
         }}
       >
         <div ref={ref}>

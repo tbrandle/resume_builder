@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  Container,
-  Modal,
-  Stack,
-  Typography,
-} from "@mui/material";
+import { Button, Stack } from "@mui/material";
 import ResumeForm from "../ResumeForm/ResumeForm";
 import "./App.css";
 import PdfView from "../PdfView/PdfView";
@@ -49,9 +42,25 @@ function App() {
   );
 
   return (
-    <Stack direction={"row"}>
+    <Stack direction={"row"} useFlexGap>
       <ResumeForm formData={formData} dispatch={dispatch} />
-      <div style={{ margin: "10mm auto" }}>
+      <Stack
+        style={{
+          flexGrow: "1",
+          alignItems: "center",
+          backgroundColor: "#aca8a8",
+          overflow: "scroll",
+          height: "100vh",
+          paddingBottom: "30px",
+        }}
+      >
+        <Button
+          style={{ margin: "30px 0", width: "fit-content" }}
+          variant="contained"
+          onClick={handlePrint}
+        >
+          Generate PDF
+        </Button>
         <PdfView
           ref={pdfRef}
           personalDetails={personlDetails}
@@ -60,8 +69,7 @@ function App() {
           employmentHistory={employmentHistory}
           education={education}
         />
-        <button onClick={handlePrint}>Print this out!</button>
-      </div>
+      </Stack>
     </Stack>
   );
 }
