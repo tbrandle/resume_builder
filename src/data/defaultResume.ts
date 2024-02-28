@@ -2,6 +2,7 @@ import { uniqueId } from "lodash";
 import { Resume, Skill, SkillLevel } from "../types/resumeTypes";
 
 export const defaultResume: Resume = {
+  resume_title: "Master",
   personal_details: {
     first_name: "Tim",
     last_name: "Brandle",

@@ -66,6 +66,7 @@ export enum SkillLevel {
 }
 
 export interface Resume {
+  resume_title: string;
   personal_details: ProfileDetails & IFormSection;
   social_media: SocialMedia & IFormSection;
   skills: (Skill & IFormSectionList)[];

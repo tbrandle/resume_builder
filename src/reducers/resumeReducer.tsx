@@ -9,9 +9,14 @@ export const actionConstants = {
   ADD_SKILL: "ADD_SKILL",
   UPDATE_EMPLOYMENT_HISTORY: "UPDATE_EMPLOYMENT_HISTORY",
   UPDATE_EDUCATION: "UPDATE_EDUCATION",
+  SET_RESUME: "SET_RESUME",
 } as const;
 
 export type Action =
+  | {
+      type: typeof actionConstants.SET_RESUME;
+      payload: Resume;
+    }
   | {
       type: typeof actionConstants.UPDATE_PERSONAL_DETAILS;
       payload: Field;
@@ -51,6 +56,9 @@ const updateFieldState = (fields: Field[], payload: Partial<Field>) =>
 
 const resumeReducer = (state: Resume, action: Action) => {
   switch (action.type) {
+    case "SET_RESUME": {
+      return action.payload;
+    }
     case actionConstants.UPDATE_PERSONAL_DETAILS: {
       const { payload } = action;
       return {
