@@ -7,6 +7,7 @@ export const actionConstants = {
   UPDATE_SKILLS: "UPDATE_SKILLS",
   ADD_EMPLOYMENT_HISTORY: "ADD_EMPLOYMENT_HISTORY",
   ADD_SKILL: "ADD_SKILL",
+  ADD_EDUCATION: "ADD_EDUCATION",
   UPDATE_EMPLOYMENT_HISTORY: "UPDATE_EMPLOYMENT_HISTORY",
   UPDATE_EDUCATION: "UPDATE_EDUCATION",
   SET_RESUME: "SET_RESUME",
@@ -34,6 +35,9 @@ export type Action =
     }
   | {
       type: typeof actionConstants.ADD_EMPLOYMENT_HISTORY;
+    }
+  | {
+      type: typeof actionConstants.ADD_EDUCATION;
     }
   | {
       type: typeof actionConstants.UPDATE_EMPLOYMENT_HISTORY;
@@ -162,6 +166,25 @@ const resumeReducer = (state: Resume, action: Action) => {
       return {
         ...state,
         employment_history: newState,
+      };
+    }
+    case actionConstants.ADD_EDUCATION: {
+      const newEmployment: (typeof state.education)[0] = {
+        school: "",
+        degree: "",
+        city: "",
+        state: "",
+        id: uniqueId(),
+        fields: [
+          { id: uniqueId(), label: "school", type: "text", value: "" },
+          { id: uniqueId(), label: "degree", type: "text", value: "" },
+          { id: uniqueId(), label: "city", type: "text", value: "" },
+          { id: uniqueId(), label: "state", type: "text", value: "" },
+        ],
+      };
+      return {
+        ...state,
+        education: [...state.education, newEmployment],
       };
     }
     case actionConstants.UPDATE_EDUCATION: {

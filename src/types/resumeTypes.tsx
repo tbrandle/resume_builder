@@ -33,7 +33,6 @@ export interface EmploymentHistory {
 }
 export interface Education {
   degree: string;
-  certification: string;
   school: string;
   city: string;
   state: string;

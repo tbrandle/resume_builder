@@ -465,16 +465,14 @@ export const defaultResume: Resume = {
   ],
   education: [
     {
-      degree: "",
-      certification: "",
       school: "",
+      degree: "",
       city: "",
       state: "",
       id: uniqueId(),
       fields: [
-        { id: uniqueId(), label: "degree", type: "text", value: "" },
-        { id: uniqueId(), label: "certification", type: "text", value: "" },
         { id: uniqueId(), label: "school", type: "text", value: "" },
+        { id: uniqueId(), label: "degree", type: "text", value: "" },
         { id: uniqueId(), label: "city", type: "text", value: "" },
         { id: uniqueId(), label: "state", type: "text", value: "" },
       ],

@@ -67,8 +67,8 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
                 <div className="title">Skills</div>
                 {skills.map(({ skill, skill_level }) => (
                   <>
-                    <div>{skill}</div>
-                    <div>{skill_level}</div>
+                    <div className="skill">{skill}</div>
+                    {/* <div>{skill_level}</div> */}
                   </>
                 ))}
               </div>
@@ -114,6 +114,23 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
               </div>
               <div className="section">
                 <div className="title">Education</div>
+                {education.map((ed) => {
+                  return (
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                      }}
+                    >
+                      <div className="subTitle">
+                        {ed.degree}, {ed.school}
+                      </div>
+                      <div>
+                        {ed.city}, {ed.state}
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>

@@ -76,6 +76,14 @@
     justify-content: space-between;
   }
 
+  .skill {
+    border: 1px grey solid;
+    padding: 4px 10px;
+    border-radius: 3px;
+    width: fit-content;
+    margin: 4px 0;
+  }
+
   .nameTitle {
     z-index: 1;
     background-color: #ffffff;

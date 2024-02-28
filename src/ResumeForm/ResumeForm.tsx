@@ -155,6 +155,47 @@ const ResumeForm = ({
         >
           Add new employment
         </Button>
+        <p
+          style={{
+            width: "100%",
+            textAlign: "left",
+            paddingLeft: "10px",
+          }}
+        >
+          Education
+        </p>
+
+        {formData.education.map((education, i) => {
+          return (
+            <FormSection
+              key={`${i}-${education.id}`}
+              title={
+                <Stack
+                  style={{
+                    padding: "20px",
+                    fontSize: "13px",
+                  }}
+                  spacing={0.5}
+                >
+                  <strong>{education.school}</strong>
+                  <div>{education.degree}</div>
+                </Stack>
+              }
+              data={education}
+              handleUpdate={(payload) =>
+                dispatch({
+                  type: actionConstants.UPDATE_EDUCATION,
+                  payload: { parentId: education.id, fieldPayload: payload },
+                })
+              }
+            />
+          );
+        })}
+        <Button
+          onClick={() => dispatch({ type: actionConstants.ADD_EDUCATION })}
+        >
+          Add new education
+        </Button>
       </Stack>
     </Box>
   );

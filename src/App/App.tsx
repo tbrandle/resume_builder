@@ -13,11 +13,12 @@ function App() {
   const [formData, dispatch] = useReducer(resumeReducer, defaultResume);
 
   useEffect(() => {
-    const resumeListString = window.localStorage.getItem("resume_list");
-    const resumeList: Resume[] = JSON.parse(resumeListString || "");
-    if (resumeList[0]) {
-      dispatch({ type: "SET_RESUME", payload: resumeList[0] });
-    }
+    const resumeListString = window.localStorage.getItem("resume_list") || "[]";
+    const resumeList: Resume[] = JSON.parse(resumeListString);
+    dispatch({
+      type: "SET_RESUME",
+      payload: resumeList[0] ? resumeList[0] : defaultResume,
+    });
   }, []);
 
   const pdfRef = useRef<HTMLDivElement | null>(null);
