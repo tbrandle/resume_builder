@@ -5,9 +5,15 @@ import { Action, actionConstants } from "../reducers/resumeReducer";
 import { Resume } from "../types/resumeTypes";
 import "react-quill/dist/quill.snow.css";
 import { FormSection } from "./FormSection";
-import { Cancel, Delete, RestoreFromTrash, Tornado } from "@mui/icons-material";
-import { IconButton } from "@mui/material";
+import Delete from "@mui/icons-material/Delete";
+import { DndContext } from "@dnd-kit/core";
+import {
+  SortableContext,
+  verticalListSortingStrategy,
+} from "@dnd-kit/sortable";
+import IconButton from "@mui/material/IconButton";
 import "./ResumeForm.css";
+import SortableFormItem from "./SortableFormItem";
 
 const ResumeForm = ({
   formData,
@@ -81,11 +87,13 @@ const ResumeForm = ({
         >
           Skills
         </h3>
-        {formData.skills.map((skill, i) => {
-          return (
-            <Stack direction={"row"} width={"100%"} alignItems={"center"}>
-              <FormSection
-                key={`${i}-${skill.id}`}
+        <SortableContext
+          items={formData.skills}
+          strategy={verticalListSortingStrategy}
+        >
+          {formData.skills.map((skill, i) => {
+            return (
+              <SortableFormItem
                 title={
                   <Stack
                     style={{
@@ -98,32 +106,26 @@ const ResumeForm = ({
                     <div>{skill.skill_level}</div>
                   </Stack>
                 }
-                data={skill}
-                handleUpdate={(fieldPayload) =>
+                handleUpdate={(fieldPayload: any) =>
                   dispatch({
                     type: actionConstants.UPDATE_SKILLS,
                     payload: { parentId: skill.id, fieldPayload },
                   })
                 }
-              />
-              <IconButton
-                sx={{ color: "grey", marginLeft: "12px" }}
-                onClick={() => {
+                handleDelete={() => {
                   dispatch({
                     type: actionConstants.DELETE_SKILL,
                     payload: skill.id,
                   });
                 }}
-              >
-                <Delete />
-              </IconButton>
-            </Stack>
-          );
-        })}
+                item={skill}
+              />
+            );
+          })}
+        </SortableContext>
         <Button onClick={() => dispatch({ type: actionConstants.ADD_SKILL })}>
           Add new skill
         </Button>
-
         <p
           style={{
             width: "100%",
@@ -133,7 +135,6 @@ const ResumeForm = ({
         >
           Employment History
         </p>
-
         {formData.employment_history.map((employment, i) => {
           return (
             <Stack direction={"row"} width={"100%"} alignItems={"center"}>
@@ -195,7 +196,6 @@ const ResumeForm = ({
         >
           Education
         </p>
-
         {formData.education.map((education, i) => {
           return (
             <Stack direction={"row"} width={"100%"} alignItems={"center"}>

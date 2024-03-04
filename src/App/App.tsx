@@ -1,5 +1,5 @@
 import { Button, Stack } from "@mui/material";
-import ResumeForm from "../ResumeForm/ResumeForm";
+import ResumeForm from "../ResumeForm/SortableFormItem";
 import "./App.css";
 import PdfView from "../PdfView/PdfView";
 import { useEffect, useMemo, useReducer, useRef } from "react";
@@ -8,6 +8,7 @@ import resumeReducer from "../reducers/resumeReducer";
 import { omit } from "lodash";
 import { useReactToPrint } from "react-to-print";
 import { Resume } from "../types/resumeTypes";
+import { DndContext, closestCorners } from "@dnd-kit/core";
 
 function App() {
   const [formData, dispatch] = useReducer(resumeReducer, defaultResume);
@@ -49,49 +50,51 @@ function App() {
   );
 
   return (
-    <Stack direction={"row"} useFlexGap>
-      <ResumeForm formData={formData} dispatch={dispatch} />
-      <Stack
-        style={{
-          flexGrow: "1",
-          alignItems: "center",
-          backgroundColor: "#aca8a8",
-          overflow: "scroll",
-          height: "100vh",
-          paddingBottom: "30px",
-        }}
-      >
-        <Stack direction={"row"} spacing={2} columnGap={3}>
-          <Button
-            style={{ margin: "30px 0", width: "fit-content" }}
-            variant="contained"
-            onClick={handlePrint}
-          >
-            Generate PDF
-          </Button>
-          <Button
-            style={{ margin: "30px 0", width: "fit-content" }}
-            variant="contained"
-            onClick={() =>
-              window.localStorage.setItem(
-                "resume_list",
-                JSON.stringify([formData])
-              )
-            }
-          >
-            Save PDF
-          </Button>
+    <DndContext collisionDetection={closestCorners}>
+      <Stack direction={"row"} useFlexGap>
+        <ResumeForm formData={formData} dispatch={dispatch} />
+        <Stack
+          style={{
+            flexGrow: "1",
+            alignItems: "center",
+            backgroundColor: "#aca8a8",
+            overflow: "scroll",
+            height: "100vh",
+            paddingBottom: "30px",
+          }}
+        >
+          <Stack direction={"row"} spacing={2} columnGap={3}>
+            <Button
+              style={{ margin: "30px 0", width: "fit-content" }}
+              variant="contained"
+              onClick={handlePrint}
+            >
+              Generate PDF
+            </Button>
+            <Button
+              style={{ margin: "30px 0", width: "fit-content" }}
+              variant="contained"
+              onClick={() =>
+                window.localStorage.setItem(
+                  "resume_list",
+                  JSON.stringify([formData])
+                )
+              }
+            >
+              Save PDF
+            </Button>
+          </Stack>
+          <PdfView
+            ref={pdfRef}
+            personalDetails={personlDetails}
+            socialMedia={socialMedia}
+            skills={skills}
+            employmentHistory={employmentHistory}
+            education={education}
+          />
         </Stack>
-        <PdfView
-          ref={pdfRef}
-          personalDetails={personlDetails}
-          socialMedia={socialMedia}
-          skills={skills}
-          employmentHistory={employmentHistory}
-          education={education}
-        />
       </Stack>
-    </Stack>
+    </DndContext>
   );
 }
 
