@@ -12,29 +12,39 @@ export const defaultResume: Resume = {
     phone_number: "720-281-6350",
     email: "tbrandle53@gmail.com",
     fields: [
-      { id: uniqueId(), label: "first_name", type: "text", value: "Tim" },
-      { id: uniqueId(), label: "last_name", type: "text", value: "Brandle" },
       {
-        id: uniqueId(),
+        id: "1",
+        label: "first_name",
+        type: "text",
+        value: "Tim",
+      },
+      {
+        id: "2",
+        label: "last_name",
+        type: "text",
+        value: "Brandle",
+      },
+      {
+        id: "3",
         label: "job_title",
         type: "text",
         value: "Senior Software Developer",
       },
       {
-        id: uniqueId(),
+        id: "4",
         label: "professional_summary",
         type: "html",
         value:
           "<p>Senior Full Stack Software Developer who specializes in React.js, with experience in Java and Node.js.</p>",
       },
       {
-        id: uniqueId(),
+        id: "5",
         label: "phone_number",
         type: "phone",
         value: "720-281-6350",
       },
       {
-        id: uniqueId(),
+        id: "6",
         label: "email",
         type: "email",
         value: "tbrandle53@gmail.com",
@@ -46,9 +56,24 @@ export const defaultResume: Resume = {
     github: "",
     portfolio: "",
     fields: [
-      { id: uniqueId(), label: "linked_in", type: "text", value: "" },
-      { id: uniqueId(), label: "github", type: "text", value: "" },
-      { id: uniqueId(), label: "portfolio", type: "text", value: "" },
+      {
+        id: "7",
+        label: "linked_in",
+        type: "text",
+        value: "",
+      },
+      {
+        id: "8",
+        label: "github",
+        type: "text",
+        value: "",
+      },
+      {
+        id: "9",
+        label: "portfolio",
+        type: "text",
+        value: "",
+      },
     ],
   },
   skills: [
@@ -302,7 +327,7 @@ export const defaultResume: Resume = {
       date_start: "Jan, 2021",
       date_end: "Present",
       description:
-        "<p>Served as a team technical anchor for a variety of clients, from Fortune 500 corporations to medium-sized startups. &nbsp;Developed tailored solutions to technical problems based on client needs.</p><p><strong>Projects</strong>:</p><p><em>Construction Machinery Auctioneer - Order Invoice Cash Team (OIC)</em></p><ul><li>Charged with building an order and invoice processing engine alongside additional, interconnected workflows for payment status, out-of-band payments, payment allocations, and finalized taxes.</li><li>Team was recognized several times by the client for outstanding performance in velocity and code quality.</li></ul><p>Tech stack: Java, Spring Boot, Kafka, Docker, Kubernetes</p><p><em>Construction Machinery Auctioneer - Experience Checkout&nbsp;Team</em></p><ul><li>Transitioned the manual auction process to an online e-commerce marketplace supporting multiple payment solutions and checkout flows for purchasing construction equipment.</li><li>Tim served as the technical anchor for building out the checkout flow for a greenfield React/Next.js application and a Java backend for frontend (BFF).&nbsp;</li></ul><p>Tech Stack: React, Next.js, Typescript, Java, Stripe API</p><p><em>Pizza Delivery App</em></p><ul><li>Served as the technical anchor to build a more reliable, more responsive digital platform to enhance the online ordering experience for both web and mobile.</li></ul><p>Tech Stack: React, Redux, GraphQL, Next.js, Typescript</p>",
+        '<p>Served as a team technical anchor for a variety of clients, from Fortune 500 corporations to medium-sized startups.&nbsp;Developed tailored solutions to technical problems based on client needs.</p><p><strong>Projects</strong>:</p><p><em>Construction Machinery Auctioneer - Order Invoice Cash Team (OIC)</em></p><ul><li>Charged with building an order and invoice processing engine alongside additional, interconnected workflows for payment status, out-of-band payments, payment allocations, and finalized taxes.</li><li>Orchestrated a series of code optimization sprints resulting<span style="color: rgb(82, 87, 92);">&nbsp;</span>in a 30% reduction in time-to-market; client accolades for exceptional performance highlighted a 30% increase in velocity and unparalleled code quality consistency.</li></ul><p>Tech stack: Java, Spring Boot, Kafka, Docker, Kubernetes</p><p><em>Construction Machinery Auctioneer - Experience Checkout&nbsp;Team</em></p><ul><li>Transformed the manual auction process into a dynamic online e-commerce platform, facilitating the automation of construction equipment sales through various payment solutions and streamlined checkout flows. This resulted in a 50% increase in auction event revenue. </li></ul><p>Tech Stack: React, Next.js, Typescript, Java, Stripe API</p><p><em>Pizza Delivery App</em></p><ul><li>Spearheaded the development of a robust digital platform, implementing performance enhancements that boosted online ordering speed by 40% for web and mobile applications, enhancing user experience and increasing customer satisfaction.</li></ul><p>Tech Stack: React, Redux, GraphQL, Next.js, Typescript</p>',
       id: "13",
       fields: [
         {
@@ -346,7 +371,7 @@ export const defaultResume: Resume = {
           label: "description",
           type: "html",
           value:
-            "<p>Served as a team technical anchor for a variety of clients, from Fortune 500 corporations to medium-sized startups. &nbsp;Developed tailored solutions to technical problems based on client needs.</p><p><strong>Projects</strong>:</p><p><em>Construction Machinery Auctioneer - Order Invoice Cash Team (OIC)</em></p><ul><li>Charged with building an order and invoice processing engine alongside additional, interconnected workflows for payment status, out-of-band payments, payment allocations, and finalized taxes.</li><li>Team was recognized several times by the client for outstanding performance in velocity and code quality.</li></ul><p>Tech stack: Java, Spring Boot, Kafka, Docker, Kubernetes</p><p><em>Construction Machinery Auctioneer - Experience Checkout&nbsp;Team</em></p><ul><li>Transitioned the manual auction process to an online e-commerce marketplace supporting multiple payment solutions and checkout flows for purchasing construction equipment.</li><li>Tim served as the technical anchor for building out the checkout flow for a greenfield React/Next.js application and a Java backend for frontend (BFF).&nbsp;</li></ul><p>Tech Stack: React, Next.js, Typescript, Java, Stripe API</p><p><em>Pizza Delivery App</em></p><ul><li>Served as the technical anchor to build a more reliable, more responsive digital platform to enhance the online ordering experience for both web and mobile.</li></ul><p>Tech Stack: React, Redux, GraphQL, Next.js, Typescript</p>",
+            '<p>Served as a team technical anchor for a variety of clients, from Fortune 500 corporations to medium-sized startups.&nbsp;Developed tailored solutions to technical problems based on client needs.</p><p><strong>Projects</strong>:</p><p><em>Construction Machinery Auctioneer - Order Invoice Cash Team (OIC)</em></p><ul><li>Charged with building an order and invoice processing engine alongside additional, interconnected workflows for payment status, out-of-band payments, payment allocations, and finalized taxes.</li><li>Orchestrated a series of code optimization sprints resulting<span style="color: rgb(82, 87, 92);">&nbsp;</span>in a 30% reduction in time-to-market; client accolades for exceptional performance highlighted a 30% increase in velocity and unparalleled code quality consistency.</li></ul><p>Tech stack: Java, Spring Boot, Kafka, Docker, Kubernetes</p><p><em>Construction Machinery Auctioneer - Experience Checkout&nbsp;Team</em></p><ul><li>Transformed the manual auction process into a dynamic online e-commerce platform, facilitating the automation of construction equipment sales through various payment solutions and streamlined checkout flows. This resulted in a 50% increase in auction event revenue. </li></ul><p>Tech Stack: React, Next.js, Typescript, Java, Stripe API</p><p><em>Pizza Delivery App</em></p><ul><li>Spearheaded the development of a robust digital platform, implementing performance enhancements that boosted online ordering speed by 40% for web and mobile applications, enhancing user experience and increasing customer satisfaction.</li></ul><p>Tech Stack: React, Redux, GraphQL, Next.js, Typescript</p>',
         },
       ],
     },
@@ -465,16 +490,69 @@ export const defaultResume: Resume = {
   ],
   education: [
     {
-      school: "",
-      degree: "",
-      city: "",
-      state: "",
-      id: uniqueId(),
+      school: "Turing School of Software and Design",
+      degree: "Front-end Development",
+      city: "Denver",
+      state: "CO",
+      id: "10",
       fields: [
-        { id: uniqueId(), label: "school", type: "text", value: "" },
-        { id: uniqueId(), label: "degree", type: "text", value: "" },
-        { id: uniqueId(), label: "city", type: "text", value: "" },
-        { id: uniqueId(), label: "state", type: "text", value: "" },
+        {
+          id: "11",
+          label: "school",
+          type: "text",
+          value: "Turing School of Software and Design",
+        },
+        {
+          id: "12",
+          label: "degree",
+          type: "text",
+          value: "Front-end Development",
+        },
+        {
+          id: "13",
+          label: "city",
+          type: "text",
+          value: "Denver",
+        },
+        {
+          id: "14",
+          label: "state",
+          type: "text",
+          value: "CO",
+        },
+      ],
+    },
+    {
+      school: "Colorado State University",
+      degree: "BS, Business Administration",
+      city: "Fort Collins",
+      state: "CO",
+      id: "30",
+      fields: [
+        {
+          id: "31",
+          label: "school",
+          type: "text",
+          value: "Colorado State University",
+        },
+        {
+          id: "32",
+          label: "degree",
+          type: "text",
+          value: "BS, Business Administration",
+        },
+        {
+          id: "33",
+          label: "city",
+          type: "text",
+          value: "Fort Collins",
+        },
+        {
+          id: "34",
+          label: "state",
+          type: "text",
+          value: "CO",
+        },
       ],
     },
   ],

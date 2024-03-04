@@ -36,11 +36,15 @@ export const FormSection = ({
   const [expanded, setExpanded] = useState(false);
   return (
     <Card style={{ width: "100%", margin: "12px auto" }}>
-      <Stack direction={"row"} alignItems={"center"}>
+      <Stack
+        direction={"row"}
+        alignItems={"center"}
+        onClick={() => setExpanded(!expanded)}
+        style={{ backgroundColor: "#f7f7f7" }}
+      >
         {title}
         <ExpandMore
           expand={expanded}
-          onClick={() => setExpanded(!expanded)}
           aria-expanded={expanded}
           aria-label="show more"
         >

@@ -11,9 +11,24 @@ export const actionConstants = {
   UPDATE_EMPLOYMENT_HISTORY: "UPDATE_EMPLOYMENT_HISTORY",
   UPDATE_EDUCATION: "UPDATE_EDUCATION",
   SET_RESUME: "SET_RESUME",
+  DELETE_SKILL: "DELETE_SKILL",
+  DELETE_EMPLOYMENT: "DELETE_EMPLOYMENT",
+  DELETE_EDUCATION: "DELETE_EDUCATION",
 } as const;
 
 export type Action =
+  | {
+      type: typeof actionConstants.DELETE_EDUCATION;
+      payload: string;
+    }
+  | {
+      type: typeof actionConstants.DELETE_EMPLOYMENT;
+      payload: string;
+    }
+  | {
+      type: typeof actionConstants.DELETE_SKILL;
+      payload: string;
+    }
   | {
       type: typeof actionConstants.SET_RESUME;
       payload: Resume;
@@ -125,6 +140,26 @@ const resumeReducer = (state: Resume, action: Action) => {
       return {
         ...state,
         skills: [...state.skills, newSkill],
+      };
+    }
+    case actionConstants.DELETE_SKILL: {
+      return {
+        ...state,
+        skills: state.skills.filter((skill) => skill.id !== action.payload),
+      };
+    }
+    case actionConstants.DELETE_EMPLOYMENT: {
+      return {
+        ...state,
+        employment_history: state.employment_history.filter(
+          (employment) => employment.id !== action.payload
+        ),
+      };
+    }
+    case actionConstants.DELETE_EDUCATION: {
+      return {
+        ...state,
+        education: state.education.filter((edu) => edu.id !== action.payload),
       };
     }
     case actionConstants.ADD_EMPLOYMENT_HISTORY: {
