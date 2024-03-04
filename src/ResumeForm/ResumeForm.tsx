@@ -2,18 +2,18 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { Action, actionConstants } from "../reducers/resumeReducer";
-import { Resume } from "../types/resumeTypes";
+import { Resume, Skill } from "../types/resumeTypes";
 import "react-quill/dist/quill.snow.css";
 import { FormSection } from "./FormSection";
 import Delete from "@mui/icons-material/Delete";
-import { DndContext } from "@dnd-kit/core";
+import { DndContext, closestCorners } from "@dnd-kit/core";
 import {
   SortableContext,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import IconButton from "@mui/material/IconButton";
 import "./ResumeForm.css";
-import SortableFormItem from "./SortableFormItem";
+import SortableColumn from "./SortableColumn";
 
 const ResumeForm = ({
   formData,
@@ -80,49 +80,57 @@ const ResumeForm = ({
             })
           }
         />
-        <h3
-          style={{
-            paddingLeft: "10px",
+        <DndContext
+          collisionDetection={closestCorners}
+          onDragEnd={(event) => {
+            const { active, over } = event;
+            if (!over || active.id === over.id) return;
+            dispatch({
+              type: actionConstants.REORDER_SKILLS,
+              payload: {
+                activeId: active.id.toString(),
+                overId: over.id.toString(),
+              },
+            });
           }}
         >
-          Skills
-        </h3>
-        <SortableContext
-          items={formData.skills}
-          strategy={verticalListSortingStrategy}
-        >
-          {formData.skills.map((skill, i) => {
-            return (
-              <SortableFormItem
-                title={
-                  <Stack
-                    style={{
-                      padding: "20px",
-                      fontSize: "13px",
-                    }}
-                    spacing={0.5}
-                  >
-                    <strong>{skill.skill}</strong>
-                    <div>{skill.skill_level}</div>
-                  </Stack>
-                }
-                handleUpdate={(fieldPayload: any) =>
-                  dispatch({
-                    type: actionConstants.UPDATE_SKILLS,
-                    payload: { parentId: skill.id, fieldPayload },
-                  })
-                }
-                handleDelete={() => {
-                  dispatch({
-                    type: actionConstants.DELETE_SKILL,
-                    payload: skill.id,
-                  });
+          <SortableColumn
+            columnTitle={
+              <h3
+                style={{
+                  paddingLeft: "10px",
                 }}
-                item={skill}
-              />
-            );
-          })}
-        </SortableContext>
+              >
+                Skills
+              </h3>
+            }
+            listItemTitle={(skill) => (
+              <Stack
+                style={{
+                  padding: "20px",
+                  fontSize: "13px",
+                }}
+                spacing={0.5}
+              >
+                <strong>{skill.skill}</strong>
+                <div>{skill.skill_level}</div>
+              </Stack>
+            )}
+            handleUpdate={(parentId: string) => (fieldPayload: any) => {
+              dispatch({
+                type: actionConstants.UPDATE_SKILLS,
+                payload: { parentId, fieldPayload },
+              });
+            }}
+            handleDelete={(parentId: string) => () => {
+              dispatch({
+                type: actionConstants.DELETE_SKILL,
+                payload: parentId,
+              });
+            }}
+            items={formData.skills}
+          />
+        </DndContext>
         <Button onClick={() => dispatch({ type: actionConstants.ADD_SKILL })}>
           Add new skill
         </Button>

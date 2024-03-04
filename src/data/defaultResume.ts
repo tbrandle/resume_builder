@@ -138,6 +138,26 @@ export const defaultResume: Resume = {
       ],
     },
     {
+      skill: "Typescript",
+      skill_level: "Expert",
+      id: "100",
+      fields: [
+        {
+          id: "101",
+          label: "skill",
+          type: "text",
+          value: "Typescript",
+        },
+        {
+          id: "102",
+          label: "skill_level",
+          type: "select",
+          value: "Expert",
+          options: ["Novice", "Beginner", "Skillful", "Experienced", "Expert"],
+        },
+      ],
+    },
+    {
       skill: "Next.js",
       skill_level: "Experienced",
       id: "34",

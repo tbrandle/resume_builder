@@ -1,10 +1,12 @@
 import { uniqueId } from "lodash";
 import { Field, Resume, SkillLevel } from "../types/resumeTypes";
+import { arrayMove } from "@dnd-kit/sortable";
 
 export const actionConstants = {
   UPDATE_PERSONAL_DETAILS: "UPDATE_PERSONAL_DETAILS",
   UPDATE_SOCIAL_MEDIA: "UPDATE_SOCIAL_MEDIA",
   UPDATE_SKILLS: "UPDATE_SKILLS",
+  REORDER_SKILLS: "REORDER_SKILLS",
   ADD_EMPLOYMENT_HISTORY: "ADD_EMPLOYMENT_HISTORY",
   ADD_SKILL: "ADD_SKILL",
   ADD_EDUCATION: "ADD_EDUCATION",
@@ -44,6 +46,10 @@ export type Action =
   | {
       type: typeof actionConstants.UPDATE_SKILLS;
       payload: { parentId: string; fieldPayload: Field };
+    }
+  | {
+      type: typeof actionConstants.REORDER_SKILLS;
+      payload: { activeId: string; overId: string };
     }
   | {
       type: typeof actionConstants.ADD_SKILL;
@@ -140,6 +146,18 @@ const resumeReducer = (state: Resume, action: Action) => {
       return {
         ...state,
         skills: [...state.skills, newSkill],
+      };
+    }
+    case actionConstants.REORDER_SKILLS: {
+      const { activeId, overId } = action.payload;
+      const getTaskPos = (id: string) =>
+        state.skills.findIndex((skill) => skill.id === id);
+      const originalPos = getTaskPos(activeId);
+      const newPos = getTaskPos(overId);
+
+      return {
+        ...state,
+        skills: arrayMove(state.skills, originalPos, newPos),
       };
     }
     case actionConstants.DELETE_SKILL: {
