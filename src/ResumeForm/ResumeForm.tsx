@@ -80,57 +80,44 @@ const ResumeForm = ({
             })
           }
         />
-        <DndContext
-          collisionDetection={closestCorners}
-          onDragEnd={(event) => {
-            const { active, over } = event;
-            if (!over || active.id === over.id) return;
+
+        <SortableColumn
+          columnTitle={"Skills"}
+          onDragEnd={(activeId, overId) => {
             dispatch({
               type: actionConstants.REORDER_SKILLS,
               payload: {
-                activeId: active.id.toString(),
-                overId: over.id.toString(),
+                activeId,
+                overId,
               },
             });
           }}
-        >
-          <SortableColumn
-            columnTitle={
-              <h3
-                style={{
-                  paddingLeft: "10px",
-                }}
-              >
-                Skills
-              </h3>
-            }
-            listItemTitle={(skill) => (
-              <Stack
-                style={{
-                  padding: "20px",
-                  fontSize: "13px",
-                }}
-                spacing={0.5}
-              >
-                <strong>{skill.skill}</strong>
-                <div>{skill.skill_level}</div>
-              </Stack>
-            )}
-            handleUpdate={(parentId: string) => (fieldPayload: any) => {
-              dispatch({
-                type: actionConstants.UPDATE_SKILLS,
-                payload: { parentId, fieldPayload },
-              });
-            }}
-            handleDelete={(parentId: string) => () => {
-              dispatch({
-                type: actionConstants.DELETE_SKILL,
-                payload: parentId,
-              });
-            }}
-            items={formData.skills}
-          />
-        </DndContext>
+          listItemTitle={(skill) => (
+            <Stack
+              style={{
+                padding: "20px",
+                fontSize: "13px",
+              }}
+              spacing={0.5}
+            >
+              <strong>{skill.skill}</strong>
+              <div>{skill.skill_level}</div>
+            </Stack>
+          )}
+          handleUpdate={(parentId: string) => (fieldPayload: any) => {
+            dispatch({
+              type: actionConstants.UPDATE_SKILLS,
+              payload: { parentId, fieldPayload },
+            });
+          }}
+          handleDelete={(parentId: string) => () => {
+            dispatch({
+              type: actionConstants.DELETE_SKILL,
+              payload: parentId,
+            });
+          }}
+          items={formData.skills}
+        />
         <Button onClick={() => dispatch({ type: actionConstants.ADD_SKILL })}>
           Add new skill
         </Button>

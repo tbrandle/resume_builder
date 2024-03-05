@@ -1,4 +1,4 @@
-import { Delete } from "@mui/icons-material";
+import { Delete, DragIndicator } from "@mui/icons-material";
 import { Stack, IconButton } from "@mui/material";
 import { actionConstants } from "../reducers/resumeReducer";
 import FormSection from "./FormSection";
@@ -6,6 +6,7 @@ import { Field, IFormSection, IFormSectionList } from "../types/resumeTypes";
 import { ReactElement } from "react";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
+import { DndContext, closestCorners } from "@dnd-kit/core";
 
 interface SortableFormItemProps {
   item: IFormSectionList;
@@ -17,9 +18,10 @@ interface SortableFormItemProps {
 interface SortableColumnProps {
   items: IFormSectionList[];
   listItemTitle: (item: any) => JSX.Element;
-  columnTitle: ReactElement<any, any>;
+  columnTitle: string;
   handleUpdate: (parentId: string) => any;
   handleDelete: (parentId: string) => any;
+  onDragEnd: (activeId: string, overId: string) => void;
 }
 
 const SortableFormItem = ({
@@ -44,8 +46,10 @@ const SortableFormItem = ({
       ref={setNodeRef}
       style={style}
       {...attributes}
-      {...listeners}
     >
+      <IconButton {...listeners}>
+        <DragIndicator />
+      </IconButton>
       <FormSection title={title} data={item} handleUpdate={handleUpdate} />
       <IconButton
         sx={{ color: "grey", marginLeft: "12px" }}
@@ -63,11 +67,24 @@ const SortableColumn = ({
   columnTitle,
   handleUpdate,
   handleDelete,
+  onDragEnd,
 }: SortableColumnProps) => {
   return (
-    <>
-      {columnTitle}
-
+    <DndContext
+      collisionDetection={closestCorners}
+      onDragEnd={(event) => {
+        const { active, over } = event;
+        if (!over || active.id === over.id) return;
+        onDragEnd(active.id.toString(), over.id.toString());
+      }}
+    >
+      <h3
+        style={{
+          paddingLeft: "10px",
+        }}
+      >
+        {columnTitle}
+      </h3>
       <SortableContext items={items}>
         {items.map((item, i) => {
           return (
@@ -81,7 +98,7 @@ const SortableColumn = ({
           );
         })}
       </SortableContext>
-    </>
+    </DndContext>
   );
 };
 
