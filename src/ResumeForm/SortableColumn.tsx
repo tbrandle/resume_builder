@@ -81,6 +81,8 @@ const SortableColumn = ({
       <h3
         style={{
           paddingLeft: "10px",
+          textAlign: "left",
+          width: "100%",
         }}
       >
         {columnTitle}

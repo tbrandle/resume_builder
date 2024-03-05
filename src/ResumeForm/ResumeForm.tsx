@@ -2,7 +2,7 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { Action, actionConstants } from "../reducers/resumeReducer";
-import { Resume, Skill } from "../types/resumeTypes";
+import { Field, Resume, Skill } from "../types/resumeTypes";
 import "react-quill/dist/quill.snow.css";
 import { FormSection } from "./FormSection";
 import Delete from "@mui/icons-material/Delete";
@@ -104,7 +104,7 @@ const ResumeForm = ({
               <div>{skill.skill_level}</div>
             </Stack>
           )}
-          handleUpdate={(parentId: string) => (fieldPayload: any) => {
+          handleUpdate={(parentId: string) => (fieldPayload: Field) => {
             dispatch({
               type: actionConstants.UPDATE_SKILLS,
               payload: { parentId, fieldPayload },
@@ -121,60 +121,50 @@ const ResumeForm = ({
         <Button onClick={() => dispatch({ type: actionConstants.ADD_SKILL })}>
           Add new skill
         </Button>
-        <p
-          style={{
-            width: "100%",
-            textAlign: "left",
-            paddingLeft: "10px",
+
+        <SortableColumn
+          columnTitle={"Employment History"}
+          onDragEnd={(activeId, overId) => {
+            dispatch({
+              type: actionConstants.REORDER_EMPLOYMENT_HISTORY,
+              payload: {
+                activeId,
+                overId,
+              },
+            });
           }}
-        >
-          Employment History
-        </p>
-        {formData.employment_history.map((employment, i) => {
-          return (
-            <Stack direction={"row"} width={"100%"} alignItems={"center"}>
-              <FormSection
-                key={`${i}-${employment.id}`}
-                title={
-                  <Stack
-                    style={{
-                      padding: "20px",
-                      fontSize: "13px",
-                    }}
-                    spacing={0.5}
-                  >
-                    <strong>
-                      {employment.job_title}, {employment.employer}
-                    </strong>
-                    {employment.date_start ? (
-                      <div>
-                        {employment.date_start} - {employment.date_end}
-                      </div>
-                    ) : null}
-                  </Stack>
-                }
-                data={employment}
-                handleUpdate={(payload) =>
-                  dispatch({
-                    type: actionConstants.UPDATE_EMPLOYMENT_HISTORY,
-                    payload: { parentId: employment.id, fieldPayload: payload },
-                  })
-                }
-              />
-              <IconButton
-                sx={{ color: "grey", marginLeft: "12px" }}
-                onClick={() => {
-                  dispatch({
-                    type: actionConstants.DELETE_EMPLOYMENT,
-                    payload: employment.id,
-                  });
-                }}
-              >
-                <Delete />
-              </IconButton>
+          listItemTitle={(employment) => (
+            <Stack
+              style={{
+                padding: "20px",
+                fontSize: "13px",
+              }}
+              spacing={0.5}
+            >
+              <strong>
+                {employment.job_title}, {employment.employer}
+              </strong>
+              {employment.date_start ? (
+                <div>
+                  {employment.date_start} - {employment.date_end}
+                </div>
+              ) : null}
             </Stack>
-          );
-        })}
+          )}
+          handleUpdate={(parentId: string) => (fieldPayload: Field) =>
+            dispatch({
+              type: actionConstants.UPDATE_EMPLOYMENT_HISTORY,
+              payload: { parentId, fieldPayload },
+            })
+          }
+          handleDelete={(parentId: string) => () => {
+            dispatch({
+              type: actionConstants.DELETE_EMPLOYMENT,
+              payload: parentId,
+            });
+          }}
+          items={formData.employment_history}
+        />
         <Button
           onClick={() =>
             dispatch({ type: actionConstants.ADD_EMPLOYMENT_HISTORY })
@@ -182,54 +172,45 @@ const ResumeForm = ({
         >
           Add new employment
         </Button>
-        <p
-          style={{
-            width: "100%",
-            textAlign: "left",
-            paddingLeft: "10px",
+
+        <SortableColumn
+          columnTitle={"Education"}
+          onDragEnd={(activeId, overId) => {
+            dispatch({
+              type: actionConstants.REORDER_EDUCATION,
+              payload: {
+                activeId,
+                overId,
+              },
+            });
           }}
-        >
-          Education
-        </p>
-        {formData.education.map((education, i) => {
-          return (
-            <Stack direction={"row"} width={"100%"} alignItems={"center"}>
-              <FormSection
-                key={`${i}-${education.id}`}
-                title={
-                  <Stack
-                    style={{
-                      padding: "20px",
-                      fontSize: "13px",
-                    }}
-                    spacing={0.5}
-                  >
-                    <strong>{education.school}</strong>
-                    <div>{education.degree}</div>
-                  </Stack>
-                }
-                data={education}
-                handleUpdate={(payload) =>
-                  dispatch({
-                    type: actionConstants.UPDATE_EDUCATION,
-                    payload: { parentId: education.id, fieldPayload: payload },
-                  })
-                }
-              />
-              <IconButton
-                sx={{ color: "grey", marginLeft: "12px" }}
-                onClick={() => {
-                  dispatch({
-                    type: actionConstants.DELETE_EDUCATION,
-                    payload: education.id,
-                  });
-                }}
-              >
-                <Delete />
-              </IconButton>
+          listItemTitle={(education) => (
+            <Stack
+              style={{
+                padding: "20px",
+                fontSize: "13px",
+              }}
+              spacing={0.5}
+            >
+              <strong>{education.school}</strong>
+              <div>{education.degree}</div>
             </Stack>
-          );
-        })}
+          )}
+          handleUpdate={(parentId: string) => (fieldPayload: Field) =>
+            dispatch({
+              type: actionConstants.UPDATE_EDUCATION,
+              payload: { parentId, fieldPayload },
+            })
+          }
+          handleDelete={(parentId: string) => () => {
+            dispatch({
+              type: actionConstants.DELETE_EDUCATION,
+              payload: parentId,
+            });
+          }}
+          items={formData.education}
+        />
+
         <Button
           onClick={() => dispatch({ type: actionConstants.ADD_EDUCATION })}
         >

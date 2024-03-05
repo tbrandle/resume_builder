@@ -7,6 +7,8 @@ export const actionConstants = {
   UPDATE_SOCIAL_MEDIA: "UPDATE_SOCIAL_MEDIA",
   UPDATE_SKILLS: "UPDATE_SKILLS",
   REORDER_SKILLS: "REORDER_SKILLS",
+  REORDER_EMPLOYMENT_HISTORY: "REORDER_EMPLOYMENT_HISTORY",
+  REORDER_EDUCATION: "REORDER_EDUCATION",
   ADD_EMPLOYMENT_HISTORY: "ADD_EMPLOYMENT_HISTORY",
   ADD_SKILL: "ADD_SKILL",
   ADD_EDUCATION: "ADD_EDUCATION",
@@ -55,7 +57,15 @@ export type Action =
       type: typeof actionConstants.ADD_SKILL;
     }
   | {
+      type: typeof actionConstants.REORDER_EMPLOYMENT_HISTORY;
+      payload: { activeId: string; overId: string };
+    }
+  | {
       type: typeof actionConstants.ADD_EMPLOYMENT_HISTORY;
+    }
+  | {
+      type: typeof actionConstants.REORDER_EDUCATION;
+      payload: { activeId: string; overId: string };
     }
   | {
       type: typeof actionConstants.ADD_EDUCATION;
@@ -203,6 +213,36 @@ const resumeReducer = (state: Resume, action: Action) => {
       return {
         ...state,
         employment_history: [...state.employment_history, newEmployment],
+      };
+    }
+    case actionConstants.REORDER_EMPLOYMENT_HISTORY: {
+      const { activeId, overId } = action.payload;
+      const getTaskPos = (id: string) =>
+        state.employment_history.findIndex(
+          (employment) => employment.id === id
+        );
+      const originalPos = getTaskPos(activeId);
+      const newPos = getTaskPos(overId);
+
+      return {
+        ...state,
+        employment_history: arrayMove(
+          state.employment_history,
+          originalPos,
+          newPos
+        ),
+      };
+    }
+    case actionConstants.REORDER_EDUCATION: {
+      const { activeId, overId } = action.payload;
+      const getTaskPos = (id: string) =>
+        state.education.findIndex((edu) => edu.id === id);
+      const originalPos = getTaskPos(activeId);
+      const newPos = getTaskPos(overId);
+
+      return {
+        ...state,
+        education: arrayMove(state.education, originalPos, newPos),
       };
     }
     case actionConstants.UPDATE_EMPLOYMENT_HISTORY: {
