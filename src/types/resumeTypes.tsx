@@ -3,7 +3,7 @@ export interface Location {
   state: string;
 }
 
-export interface ProfileDetails {
+export interface PersonalDetails {
   first_name: string;
   last_name: string;
   job_title: string;
@@ -66,7 +66,7 @@ export enum SkillLevel {
 
 export interface Resume {
   resume_title: string;
-  personal_details: ProfileDetails & IFormSection;
+  personal_details: PersonalDetails & IFormSection;
   social_media: SocialMedia & IFormSection;
   skills: (Skill & IFormSectionList)[];
   employment_history: (EmploymentHistory & IFormSectionList)[];

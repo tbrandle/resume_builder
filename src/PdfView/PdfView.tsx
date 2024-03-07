@@ -1,7 +1,7 @@
 import {
   Education,
   EmploymentHistory,
-  ProfileDetails,
+  PersonalDetails,
   Skill,
   SocialMedia,
 } from "../types/resumeTypes";
@@ -14,7 +14,7 @@ import React from "react";
 import { useEventListener } from "usehooks-ts";
 
 interface PdfViewProps {
-  personalDetails: ProfileDetails;
+  personalDetails: PersonalDetails;
   socialMedia: SocialMedia;
   skills: Skill[];
   employmentHistory: EmploymentHistory[];

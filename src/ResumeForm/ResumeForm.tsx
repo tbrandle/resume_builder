@@ -2,16 +2,9 @@ import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import { Action, actionConstants } from "../reducers/resumeReducer";
-import { Field, Resume, Skill } from "../types/resumeTypes";
+import { Field, Resume } from "../types/resumeTypes";
 import "react-quill/dist/quill.snow.css";
 import { FormSection } from "./FormSection";
-import Delete from "@mui/icons-material/Delete";
-import { DndContext, closestCorners } from "@dnd-kit/core";
-import {
-  SortableContext,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
-import IconButton from "@mui/material/IconButton";
 import "./ResumeForm.css";
 import SortableColumn from "./SortableColumn";
 
