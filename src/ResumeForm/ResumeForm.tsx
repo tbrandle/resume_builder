@@ -7,6 +7,7 @@ import "react-quill/dist/quill.snow.css";
 import { FormSection } from "./FormSection";
 import "./ResumeForm.css";
 import SortableColumn from "./SortableColumn";
+import TextField from "@mui/material/TextField";
 
 const ResumeForm = ({
   formData,
@@ -35,6 +36,18 @@ const ResumeForm = ({
         flexWrap="wrap"
         justifyContent={"space-between"}
       >
+        <TextField
+          id="standard-basic"
+          label={"Resume Title"}
+          value={formData.resume_title}
+          variant="standard"
+          onChange={(e) => {
+            dispatch({
+              type: actionConstants.UPDATE_RESUME_TITLE,
+              payload: e.target.value,
+            });
+          }}
+        />
         <FormSection
           title={
             <h3

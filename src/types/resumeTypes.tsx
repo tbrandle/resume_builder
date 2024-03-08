@@ -65,10 +65,16 @@ export enum SkillLevel {
 }
 
 export interface Resume {
+  id?: string;
   resume_title: string;
   personal_details: PersonalDetails & IFormSection;
   social_media: SocialMedia & IFormSection;
   skills: (Skill & IFormSectionList)[];
   employment_history: (EmploymentHistory & IFormSectionList)[];
   education: (Education & IFormSectionList)[];
+}
+
+export interface ReduxState {
+  isSaved: boolean;
+  resume: Resume;
 }
