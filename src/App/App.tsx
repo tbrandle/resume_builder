@@ -10,7 +10,7 @@ import {
 import "./App.css";
 import PdfView from "../PdfView/PdfView";
 import { useEffect, useMemo, useReducer, useRef, useState } from "react";
-import { defaultResume } from "../data/defaultResume";
+import { defaultResume } from "../data/defaultData";
 import resumeReducer, {
   Action,
   actionConstants,
@@ -24,7 +24,7 @@ import useApi from "../hooks/useApi";
 
 
 function App() {
-  const [formData, dispatch] = useReducer(resumeReducer, defaultResume);
+  const [formData, dispatch] = useReducer(resumeReducer, defaultResume());
   const [masterList, setMasterList] = useState([]);
 
   const {api, error, isLoading} = useApi();
@@ -33,7 +33,7 @@ function App() {
     if (e.target.value === "new") {
       dispatch({
         type: actionConstants.SET_RESUME,
-        payload: defaultResume,
+        payload: defaultResume(),
       });
     } else {
       const resume = await api.get(e.target.value);
@@ -62,7 +62,7 @@ function App() {
     const resumeList: Resume[] = JSON.parse(resumeListString);
     dispatch({
       type: actionConstants.SET_RESUME,
-      payload: resumeList[0] ? resumeList[0] : defaultResume,
+      payload: resumeList[0] ? resumeList[0] : defaultResume(),
     });
   }, []);
 
@@ -157,7 +157,7 @@ function App() {
               }
               dispatch({
                 type: actionConstants.SET_RESUME,
-                payload: defaultResume,
+                payload: defaultResume(),
               });
             }}
           >
