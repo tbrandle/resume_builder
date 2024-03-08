@@ -41,6 +41,7 @@ const ResumeForm = ({
           label={"Resume Title"}
           value={formData.resume_title}
           variant="standard"
+          fullWidth
           onChange={(e) => {
             dispatch({
               type: actionConstants.UPDATE_RESUME_TITLE,

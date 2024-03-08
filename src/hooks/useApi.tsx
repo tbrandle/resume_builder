@@ -34,7 +34,7 @@ const useApi = () => {
   };
 
   const api = {
-    get: async (id?: string) => fetchResume({ method: "GET", url: id }),
+    get: async (id?: string) => await fetchResume({ method: "GET", url: id }),
     post: async (body: Resume) => fetchResume({ method: "POST", body }),
     patch: async (id: string, body: Resume) =>
       fetchResume({ method: "PATCH", url: id, body }),
