@@ -1,0 +1,11 @@
+rebuild-image: prune build-image 
+prune: 
+  @echo "y" | docker system prune
+
+build-image:
+  @echo "building server image"
+  docker build -t resume-builder-backend .
+
+build-ui-image: 
+  @echo "building ui image"
+  @cd ./ui && docker build -t resume-builder .

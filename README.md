@@ -1,6 +1,11 @@
 # Getting Started with Create React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Make sure you have the following packages installed on your machine:
+- docker
+- docker-compose 
+- colima
+
+Once colima is installed, run `just colima` to configure your vm memory needed to run the containers
 
 ## Available Scripts
 
