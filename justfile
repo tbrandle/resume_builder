@@ -13,3 +13,6 @@ build-ui:
 restart-colima:
   colima stop
   colima start --cpu 4 --memory 8 --disk 100
+
+up: 
+  docker-compose up

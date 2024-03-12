@@ -9,8 +9,7 @@
     "start": "nodemon script.ts",
     "preserve": "npm run build",
     "serve": "concurrently \"npx tsc -w\" \"NODE_ENV=local nodemon dist/server.js\"",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "prismaScript": "nodemon script.ts"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",

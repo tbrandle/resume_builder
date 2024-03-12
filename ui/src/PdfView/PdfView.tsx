@@ -7,11 +7,7 @@ import {
 } from "../types/resumeTypes";
 import DOMPurify from "isomorphic-dompurify";
 import "./PdfView.css";
-import { Container } from "@mui/material";
-import { useRef } from "react";
-import { useReactToPrint } from "react-to-print";
 import React from "react";
-import { useEventListener } from "usehooks-ts";
 
 interface PdfViewProps {
   personalDetails: PersonalDetails;
