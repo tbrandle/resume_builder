@@ -79,12 +79,8 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
 
   const createNewResume = async () => {
     const { id } = await api.post(defaultResume({ resume_title: "New" }));
-    const newResume = await api.get(id);
-    await fetchAndSetMasterList();
-    dispatch({
-      type: actionConstants.SET_RESUME,
-      payload: newResume,
-    });
+    setSearchParams({ resumeId: id})
+   
   };
 
   const handleSelectResume = async (e: any) => {
@@ -106,7 +102,7 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
           labelId="resume-select-label"
           id="demo-simple-select"
           onChange={handleSelectResume}
-          // value={selectResumeList.find((resume) => resume.id === searchParams.get("resumeId"))?.id}
+          value={selectResumeList.find((resume) => resume.id === searchParams.get("resumeId"))?.id || ""}
         >
           {selectResumeList.map(({ id, title }, i) => {
             return <MenuItem key={`${id}-${i}`} value={id}> {title}</MenuItem>;

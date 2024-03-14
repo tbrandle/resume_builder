@@ -11,6 +11,7 @@ import Header from "../Header/Header";
 import useBuildPdfData from "../../hooks/useBuildPdfData";
 import { useSearchParams } from "react-router-dom";
 import useApi from "../../hooks/useApi";
+import { ConstructionOutlined } from "@mui/icons-material";
 
 function App() {
   const [formData, dispatch] = useReducer(resumeReducer, defaultResume());
@@ -23,6 +24,7 @@ function App() {
     const fetchResume = async () => {
       const resumeId = params.get("resumeId");
       if (resumeId) {
+        console.log("fetch resume")
         const resume = await api.get(resumeId)
         dispatch({
           type: actionConstants.SET_RESUME,
