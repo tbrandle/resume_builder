@@ -1,5 +1,4 @@
-import { uniqueId } from "lodash";
-import { Field, Resume, SkillLevel } from "../types/resumeTypes";
+import { Field, Resume } from "../types/resumeTypes";
 import { arrayMove } from "@dnd-kit/sortable";
 import { defaultEducation, defaultEmployment, defaultSkill } from "../data/defaultData";
 

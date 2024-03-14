@@ -1,4 +1,4 @@
-import { ErrorInfo, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { Resume } from "../types/resumeTypes";
 
 interface FetchArgs <T>{
@@ -14,6 +14,7 @@ const useApi = () => {
   const baseUrl = "http://localhost:8080/resumes";
 
   const fetchResume = async <T,>({ method, url, body }: FetchArgs<T>) => {
+    console.log(`[${method}]: ${url}`)
     setIsLoading(true);
 
     try {

@@ -7,7 +7,7 @@ import {
 } from "../../types/resumeTypes";
 import DOMPurify from "isomorphic-dompurify";
 import "./PdfView.css";
-import React from "react";
+import React, { Fragment } from "react";
 
 interface PdfViewProps {
   personalDetails: PersonalDetails;
@@ -22,7 +22,6 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
   (props, ref) => {
     const {
       personalDetails,
-      socialMedia,
       skills,
       employmentHistory,
       education,
@@ -61,11 +60,11 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
               </div>
               <div className="details section ">
                 <div className="title">Skills</div>
-                {skills.map(({ skill, skill_level }) => (
-                  <>
+                {skills.map(({ skill, skill_level }, i) => (
+                  <Fragment key={`${skill}-${i}`}>
                     <div className="skill">{skill}</div>
                     {/* <div>{skill_level}</div> */}
-                  </>
+                  </Fragment>
                 ))}
               </div>
             </div>
@@ -83,9 +82,9 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
               </div>
               <div className="section">
                 <div className="title">Employment History</div>
-                {employmentHistory.map((employment) => {
+                {employmentHistory.map((employment, i) => {
                   return (
-                    <div>
+                    <div key={i}>
                       <div className="employmentHeader">
                         <div className="employmentDetails">
                           <div className="subTitle">
@@ -110,9 +109,10 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
               </div>
               <div className="section">
                 <div className="title">Education</div>
-                {education.map((ed) => {
+                {education.map((ed, i) => {
                   return (
                     <div
+                      key={i}
                       style={{
                         display: "flex",
                         justifyContent: "space-between",
