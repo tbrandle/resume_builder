@@ -75,12 +75,13 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
   const handleDelete = async (id: string) => {
     console.log("DELETE", id);
     await api.delete(id);
+    searchParams.delete("resumeId");
+    setSearchParams(searchParams);
   };
 
   const createNewResume = async () => {
     const { id } = await api.post(defaultResume({ resume_title: "New" }));
-    setSearchParams({ resumeId: id})
-   
+    setSearchParams({ resumeId: id })
   };
 
   const handleSelectResume = async (e: any) => {
