@@ -1,4 +1,4 @@
-import { ErrorInfo, useState } from "react";
+import { ErrorInfo, useMemo, useState } from "react";
 import { Resume } from "../types/resumeTypes";
 
 interface FetchArgs <T>{
@@ -33,13 +33,13 @@ const useApi = () => {
     }
   };
 
-  const api = {
+  const api = useMemo(() =>({
     get: async (id?: string) => await fetchResume({ method: "GET", url: id }),
     post: async (body: Resume) => fetchResume({ method: "POST", body }),
     patch: async (id: string, body: Resume) =>
       fetchResume({ method: "PATCH", url: id, body }),
     delete: async (id: string) => fetchResume({ method: "DELETE", url: id }),
-  };
+  }), []);
 
   return { api, error, isLoading };
 };
