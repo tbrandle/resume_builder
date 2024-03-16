@@ -3,8 +3,8 @@
 # Local start up
 
 Make sure you have the following packages installed on your machine:
-- docker
-- docker-compose 
+- [docker](https://docs.docker.com/desktop/install/mac-install/)
+- docker-compose (`brew install docker-compose`)
 - colima
 
 1. Once colima is installed, run `just colima` to configure your vm memory needed to run the containers.
