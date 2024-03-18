@@ -8,4 +8,4 @@ RUN npm install
 COPY . .
 
 EXPOSE 8080
-CMD ["./scripts/startup.sh"]
+CMD ["npm", "run", "serve"]
