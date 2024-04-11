@@ -39,14 +39,16 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
       >
         <div ref={ref}>
           <div className="page">
-            <div className="nameTitle">
-              <div className="name title">
-                {personalDetails.first_name} {personalDetails.last_name}
+            <div className="nameTitleContainer">
+              <div className="nameTitle">
+                <div className="name title">
+                  {personalDetails.first_name} {personalDetails.last_name}
+                </div>
+                <div className="jobTitle">{personalDetails.job_title}</div>
               </div>
-              <div className="jobTitle">{personalDetails.job_title}</div>
             </div>
             <div className="col colLeft">
-              <div className="details section firstPageOffset">
+              <div className="details section">
                 <div className="title">Details</div>
 
                 <div className="section">
@@ -69,7 +71,7 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
               </div>
             </div>
             <div className="col colRight">
-              <div className="section firstPageOffset">
+              <div className="section">
                 <div className="title">Profile</div>
                 <div
                   className="professionalSummary"
