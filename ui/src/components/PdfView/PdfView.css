@@ -11,6 +11,12 @@
   position: relative;
 }
 
+@media screen {
+  .page {
+    padding: 20px 0;
+  }
+}
+
 @media print, screen {
   header,
   footer {
