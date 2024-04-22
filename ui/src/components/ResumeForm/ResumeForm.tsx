@@ -21,14 +21,7 @@ const ResumeForm = ({
       component="form"
       noValidate
       autoComplete="off"
-      sx={{
-        display: "flex",
-        flexDirection: "column",
-        width: "40%",
-        padding: "32px",
-        overflow: "scroll",
-        height: "94vh",
-      }}
+      className={"formContainer"}
     >
       <Stack
         direction="row"
