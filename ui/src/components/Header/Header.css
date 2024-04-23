@@ -1,12 +1,13 @@
 .headerContainer {
   background-color: rgb(172, 168, 168);
   justify-content: space-between;
-  padding: 0 20px;
+  padding: 10px 20px;
 }
 
 .iconButton {
   width: "fit-content";
-  &:hover {
-    color: black;
-  }
+}
+
+.iconButton:hover {
+  color: black;
 }
