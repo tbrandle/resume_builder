@@ -92,15 +92,16 @@
     width: 53%;
     margin: auto;
     padding: 46px;
-    .name {
-      font-size: 22px;
-      margin-bottom: 9px;
-      border-bottom: none;
-      padding: unset;
-    }
-    .jobTitle {
-      font-size: 12px;
-    }
+  }
+  .name {
+    font-size: 22px;
+    margin-bottom: 9px;
+    border-bottom: none;
+    padding: unset;
+  }
+
+  .jobTitle {
+    font-size: 12px;
   }
 }
 
