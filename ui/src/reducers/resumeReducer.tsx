@@ -1,6 +1,10 @@
 import { Field, Resume } from "../types/resumeTypes";
 import { arrayMove } from "@dnd-kit/sortable";
-import { defaultEducation, defaultEmployment, defaultSkill } from "../data/defaultData";
+import {
+  defaultEducation,
+  defaultEmployment,
+  defaultSkill,
+} from "../data/defaultData";
 
 export const actionConstants = {
   UPDATE_RESUME_TITLE: "UPDATE_RESUME_TITLE",
@@ -91,7 +95,7 @@ const updateFieldState = (fields: Field[], payload: Partial<Field>) =>
           ...field,
           ...payload,
         }
-      : field
+      : field,
   );
 
 const resumeReducer = (state: Resume, action: Action) => {
@@ -138,7 +142,7 @@ const resumeReducer = (state: Resume, action: Action) => {
               ...{ [fieldPayload.label]: fieldPayload.value },
               fields: updateFieldState(skill.fields, fieldPayload),
             }
-          : skill
+          : skill,
       );
       return {
         ...state,
@@ -173,7 +177,7 @@ const resumeReducer = (state: Resume, action: Action) => {
       return {
         ...state,
         employment_history: state.employment_history.filter(
-          (employment) => employment.id !== action.payload
+          (employment) => employment.id !== action.payload,
         ),
       };
     }
@@ -193,7 +197,7 @@ const resumeReducer = (state: Resume, action: Action) => {
       const { activeId, overId } = action.payload;
       const getTaskPos = (id: string) =>
         state.employment_history.findIndex(
-          (employment) => employment.id === id
+          (employment) => employment.id === id,
         );
       const originalPos = getTaskPos(activeId);
       const newPos = getTaskPos(overId);
@@ -203,7 +207,7 @@ const resumeReducer = (state: Resume, action: Action) => {
         employment_history: arrayMove(
           state.employment_history,
           originalPos,
-          newPos
+          newPos,
         ),
       };
     }
@@ -228,7 +232,7 @@ const resumeReducer = (state: Resume, action: Action) => {
               ...{ [fieldPayload.label]: fieldPayload.value },
               fields: updateFieldState(employment.fields, fieldPayload),
             }
-          : employment
+          : employment,
       );
       return {
         ...state,
@@ -250,7 +254,7 @@ const resumeReducer = (state: Resume, action: Action) => {
               ...{ [fieldPayload.label]: fieldPayload.value },
               fields: updateFieldState(education.fields, fieldPayload),
             }
-          : education
+          : education,
       );
 
       return {

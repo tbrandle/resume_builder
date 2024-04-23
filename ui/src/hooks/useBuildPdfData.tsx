@@ -5,11 +5,11 @@ import { Resume } from "../types/resumeTypes";
 const useBuildPdfData = (formData: Resume) => {
   const personlDetails = useMemo(
     () => omit(formData.personal_details, ["fields"]),
-    [formData.personal_details]
+    [formData.personal_details],
   );
   const socialMedia = useMemo(
     () => omit(formData.social_media, ["fields"]),
-    [formData.social_media]
+    [formData.social_media],
   );
   const skills = useMemo(() => {
     return formData.skills.map((skill) => omit(skill, ["fields"]));
@@ -17,11 +17,11 @@ const useBuildPdfData = (formData: Resume) => {
   const employmentHistory = useMemo(
     () =>
       formData.employment_history.map((history) => omit(history, ["fields"])),
-    [formData.employment_history]
+    [formData.employment_history],
   );
   const education = useMemo(
     () => formData.education.map((education) => omit(education, ["fields"])),
-    [formData.education]
+    [formData.education],
   );
 
   return {

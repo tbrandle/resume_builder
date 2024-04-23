@@ -45,15 +45,16 @@ export interface Field {
   label: string;
   type: InputType;
   value: string;
-  options?: any;
+  options?: string[];
 }
 
-export interface IFormSection {
+export interface FormItemSingle {
   fields: Field[];
 }
 
-export interface IFormSectionList extends IFormSection {
+export interface FormItemSingleList extends FormItemSingle {
   id: string;
+  // type: "skill" | "education" | "employment";
 }
 
 export enum SkillLevel {
@@ -64,14 +65,16 @@ export enum SkillLevel {
   Expert = "Expert",
 }
 
+// export type SortableColumnItems =
+
 export interface Resume {
   id?: string;
   resume_title: string;
-  personal_details: PersonalDetails & IFormSection;
-  social_media: SocialMedia & IFormSection;
-  skills: (Skill & IFormSectionList)[];
-  employment_history: (EmploymentHistory & IFormSectionList)[];
-  education: (Education & IFormSectionList)[];
+  personal_details: PersonalDetails & FormItemSingle;
+  social_media: SocialMedia & FormItemSingle;
+  skills: (Skill & FormItemSingleList)[];
+  employment_history: (EmploymentHistory & FormItemSingleList)[];
+  education: (Education & FormItemSingleList)[];
 }
 
 export interface ReduxState {

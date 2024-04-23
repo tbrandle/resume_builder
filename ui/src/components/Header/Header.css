@@ -1,9 +1,9 @@
 .headerContainer {
-    background-color: rgb(172, 168, 168);
-    justify-content: space-between;
-    padding: 0 20px;
-  }
+  background-color: rgb(172, 168, 168);
+  justify-content: space-between;
+  padding: 0 20px;
+}
 
-  .iconButton {
-    width: "fit-content";
-  }
+.iconButton {
+  width: "fit-content";
+}

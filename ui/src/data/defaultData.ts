@@ -1,7 +1,13 @@
 import { uniqueId } from "lodash";
-import { Education, EmploymentHistory, IFormSectionList, Resume, Skill } from "../types/resumeTypes";
+import {
+  Education,
+  EmploymentHistory,
+  FormItemSingleList,
+  Resume,
+  Skill,
+} from "../types/resumeTypes";
 
-// eslint-disable-next-line 
+// eslint-disable-next-line
 const masterResume: Resume = {
   resume_title: "Master",
   personal_details: {
@@ -579,7 +585,7 @@ const masterResume: Resume = {
   ],
 };
 
-export const defaultSkill = (): Skill & IFormSectionList => ({
+export const defaultSkill = (): Skill & FormItemSingleList => ({
   skill: "",
   skill_level: "",
   id: uniqueId(),
@@ -600,7 +606,8 @@ export const defaultSkill = (): Skill & IFormSectionList => ({
   ],
 });
 
-export const defaultEmployment = (): EmploymentHistory & IFormSectionList => ({
+export const defaultEmployment = (): EmploymentHistory &
+  FormItemSingleList => ({
   job_title: "",
   employer: "",
   city: "",
@@ -655,7 +662,7 @@ export const defaultEmployment = (): EmploymentHistory & IFormSectionList => ({
   ],
 });
 
-export const defaultEducation = (): Education & IFormSectionList => ({
+export const defaultEducation = (): Education & FormItemSingleList => ({
   school: "",
   degree: "",
   city: "",
@@ -765,5 +772,5 @@ export const defaultResume = (override?: Partial<Resume>): Resume => ({
   skills: [],
   employment_history: [],
   education: [],
-  ...override
+  ...override,
 });

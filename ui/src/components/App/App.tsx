@@ -1,4 +1,3 @@
-
 import Stack from "@mui/material/Stack";
 
 import "./App.css";
@@ -15,23 +14,23 @@ import useApi from "../../hooks/useApi";
 function App() {
   const [formData, dispatch] = useReducer(resumeReducer, defaultResume());
 
-  let [searchParams] = useSearchParams();
-  const params = useMemo(() => searchParams, [searchParams])
+  const [searchParams] = useSearchParams();
+  const params = useMemo(() => searchParams, [searchParams]);
   const { api } = useApi();
 
   useEffect(() => {
     const fetchResume = async () => {
       const resumeId = params.get("resumeId");
       if (resumeId) {
-        const resume = await api.get(resumeId)
+        const resume = await api.get(resumeId);
         dispatch({
           type: actionConstants.SET_RESUME,
           payload: resume,
         });
       }
-    }
+    };
 
-    fetchResume()
+    fetchResume();
   }, [params, api]);
 
   const pdfRef = useRef<HTMLDivElement | null>(null);
@@ -43,22 +42,25 @@ function App() {
     <>
       <Header formData={formData} dispatch={dispatch} pdfRef={pdfRef} />
       <Stack direction={"row"} useFlexGap>
-        {formData.id ? <>
-        <ResumeForm formData={formData} dispatch={dispatch} />
-        <Stack
-          className={"pdfViewContainer"}
-        >
-          <PdfView
-            ref={pdfRef}
-            personalDetails={personlDetails}
-            socialMedia={socialMedia}
-            skills={skills}
-            employmentHistory={employmentHistory}
-            education={education}
-          />
-        </Stack>
-        </>
-        : <Stack className={"emptyStateContainer"}>Select a resume or create new</Stack>}
+        {formData.id ? (
+          <>
+            <ResumeForm formData={formData} dispatch={dispatch} />
+            <Stack className={"pdfViewContainer"}>
+              <PdfView
+                ref={pdfRef}
+                personalDetails={personlDetails}
+                socialMedia={socialMedia}
+                skills={skills}
+                employmentHistory={employmentHistory}
+                education={education}
+              />
+            </Stack>
+          </>
+        ) : (
+          <Stack className={"emptyStateContainer"}>
+            Select a resume or create new
+          </Stack>
+        )}
       </Stack>
     </>
   );
