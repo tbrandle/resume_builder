@@ -12,7 +12,10 @@ import { useSearchParams } from "react-router-dom";
 import useApi from "../../hooks/useApi";
 
 function App() {
-  const [formData, dispatch] = useReducer(resumeReducer, defaultResume());
+  const [{ resume, isSaved }, dispatch] = useReducer(resumeReducer, {
+    isSaved: true,
+    resume: defaultResume(),
+  });
 
   const [searchParams] = useSearchParams();
   const params = useMemo(() => searchParams, [searchParams]);
@@ -22,10 +25,10 @@ function App() {
     const fetchResume = async () => {
       const resumeId = params.get("resumeId");
       if (resumeId) {
-        const resume = await api.get(resumeId);
+        const savedResume = await api.get(resumeId);
         dispatch({
           type: actionConstants.SET_RESUME,
-          payload: resume,
+          payload: savedResume,
         });
       }
     };
@@ -36,15 +39,20 @@ function App() {
   const pdfRef = useRef<HTMLDivElement | null>(null);
 
   const { personlDetails, socialMedia, skills, employmentHistory, education } =
-    useBuildPdfData(formData);
+    useBuildPdfData(resume);
 
   return (
     <>
-      <Header formData={formData} dispatch={dispatch} pdfRef={pdfRef} />
+      <Header
+        resume={resume}
+        isSaved={isSaved}
+        dispatch={dispatch}
+        pdfRef={pdfRef}
+      />
       <Stack direction={"row"} useFlexGap>
-        {formData.id ? (
+        {resume.id ? (
           <>
-            <ResumeForm formData={formData} dispatch={dispatch} />
+            <ResumeForm resume={resume} dispatch={dispatch} />
             <Stack className={"pdfViewContainer"}>
               <PdfView
                 ref={pdfRef}

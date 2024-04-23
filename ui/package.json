@@ -52,12 +52,6 @@
     "lint": "npx eslint .",
     "lint:fix": "npx eslint . --fix"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "browserslist": {
     "production": [
       ">0.2%",

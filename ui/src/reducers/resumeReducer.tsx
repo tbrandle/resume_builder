@@ -1,4 +1,4 @@
-import { Field, Resume } from "../types/resumeTypes";
+import { Field, ReduxState, Resume } from "../types/resumeTypes";
 import { arrayMove } from "@dnd-kit/sortable";
 import {
   defaultEducation,
@@ -20,6 +20,7 @@ export const actionConstants = {
   UPDATE_EMPLOYMENT_HISTORY: "UPDATE_EMPLOYMENT_HISTORY",
   UPDATE_EDUCATION: "UPDATE_EDUCATION",
   SET_RESUME: "SET_RESUME",
+  SAVE_RESUME: "SAVE_RESUME",
   DELETE_SKILL: "DELETE_SKILL",
   DELETE_EMPLOYMENT: "DELETE_EMPLOYMENT",
   DELETE_EDUCATION: "DELETE_EDUCATION",
@@ -41,6 +42,9 @@ export type Action =
   | {
       type: typeof actionConstants.SET_RESUME;
       payload: Resume;
+    }
+  | {
+      type: typeof actionConstants.SAVE_RESUME;
     }
   | {
       type: typeof actionConstants.UPDATE_RESUME_TITLE;
@@ -98,44 +102,56 @@ const updateFieldState = (fields: Field[], payload: Partial<Field>) =>
       : field,
   );
 
-const resumeReducer = (state: Resume, action: Action) => {
+const resumeReducer = (state: ReduxState, action: Action) => {
+  const updateResume = (resumeValue: Partial<Resume>) => ({
+    isSaved: false,
+    resume: {
+      ...state.resume,
+      ...resumeValue,
+    },
+  });
   switch (action.type) {
     case actionConstants.SET_RESUME: {
-      return action.payload;
+      return { isSaved: true, resume: action.payload };
+    }
+    case actionConstants.SAVE_RESUME: {
+      return { ...state, isSaved: true };
     }
     case actionConstants.UPDATE_RESUME_TITLE: {
       const { payload } = action;
-      return {
-        ...state,
-        resume_title: payload,
-      };
+      return updateResume({ resume_title: payload });
     }
 
     case actionConstants.UPDATE_PERSONAL_DETAILS: {
       const { payload } = action;
-      return {
-        ...state,
+      const newPersonalDetails = {
         personal_details: {
-          ...state.personal_details,
+          ...state.resume.personal_details,
           ...{ [payload.label]: payload.value },
-          fields: updateFieldState(state.personal_details.fields, payload),
+          fields: updateFieldState(
+            state.resume.personal_details.fields,
+            payload,
+          ),
         },
       };
+      return updateResume(newPersonalDetails);
     }
     case actionConstants.UPDATE_SOCIAL_MEDIA: {
       const { payload } = action;
-      return {
-        ...state,
+
+      const newSocialMedia = {
         social_media: {
-          ...state.social_media,
+          ...state.resume.social_media,
           ...{ [payload.label]: payload.value },
-          fields: updateFieldState(state.social_media.fields, payload),
+          fields: updateFieldState(state.resume.social_media.fields, payload),
         },
       };
+
+      return updateResume(newSocialMedia);
     }
     case actionConstants.UPDATE_SKILLS: {
       const { parentId, fieldPayload } = action.payload;
-      const newState = state.skills.map((skill) =>
+      const skills = state.resume.skills.map((skill) =>
         skill.id === parentId
           ? {
               ...skill,
@@ -144,88 +160,82 @@ const resumeReducer = (state: Resume, action: Action) => {
             }
           : skill,
       );
-      return {
-        ...state,
-        skills: newState,
-      };
+      return updateResume({ skills });
     }
     case actionConstants.ADD_SKILL: {
-      return {
-        ...state,
-        skills: [...state.skills, defaultSkill()],
-      };
+      return updateResume({ skills: [...state.resume.skills, defaultSkill()] });
     }
     case actionConstants.REORDER_SKILLS: {
       const { activeId, overId } = action.payload;
       const getTaskPos = (id: string) =>
-        state.skills.findIndex((skill) => skill.id === id);
+        state.resume.skills.findIndex((skill) => skill.id === id);
       const originalPos = getTaskPos(activeId);
       const newPos = getTaskPos(overId);
-
-      return {
-        ...state,
-        skills: arrayMove(state.skills, originalPos, newPos),
-      };
+      return updateResume({
+        skills: arrayMove(state.resume.skills, originalPos, newPos),
+      });
     }
     case actionConstants.DELETE_SKILL: {
-      return {
-        ...state,
-        skills: state.skills.filter((skill) => skill.id !== action.payload),
-      };
+      return updateResume({
+        skills: state.resume.skills.filter(
+          (skill) => skill.id !== action.payload,
+        ),
+      });
     }
     case actionConstants.DELETE_EMPLOYMENT: {
-      return {
-        ...state,
-        employment_history: state.employment_history.filter(
+      return updateResume({
+        employment_history: state.resume.employment_history.filter(
           (employment) => employment.id !== action.payload,
         ),
-      };
+      });
     }
+
     case actionConstants.DELETE_EDUCATION: {
-      return {
-        ...state,
-        education: state.education.filter((edu) => edu.id !== action.payload),
-      };
+      return updateResume({
+        education: state.resume.education.filter(
+          (edu) => edu.id !== action.payload,
+        ),
+      });
     }
     case actionConstants.ADD_EMPLOYMENT_HISTORY: {
-      return {
-        ...state,
-        employment_history: [...state.employment_history, defaultEmployment()],
-      };
+      return updateResume({
+        employment_history: [
+          ...state.resume.employment_history,
+          defaultEmployment(),
+        ],
+      });
     }
     case actionConstants.REORDER_EMPLOYMENT_HISTORY: {
       const { activeId, overId } = action.payload;
       const getTaskPos = (id: string) =>
-        state.employment_history.findIndex(
+        state.resume.employment_history.findIndex(
           (employment) => employment.id === id,
         );
       const originalPos = getTaskPos(activeId);
       const newPos = getTaskPos(overId);
 
-      return {
-        ...state,
+      return updateResume({
         employment_history: arrayMove(
-          state.employment_history,
+          state.resume.employment_history,
           originalPos,
           newPos,
         ),
-      };
+      });
     }
     case actionConstants.REORDER_EDUCATION: {
       const { activeId, overId } = action.payload;
       const getTaskPos = (id: string) =>
-        state.education.findIndex((edu) => edu.id === id);
+        state.resume.education.findIndex((edu) => edu.id === id);
       const originalPos = getTaskPos(activeId);
       const newPos = getTaskPos(overId);
 
-      return {
-        ...state,
-        education: arrayMove(state.education, originalPos, newPos),
-      };
+      return updateResume({
+        education: arrayMove(state.resume.education, originalPos, newPos),
+      });
     }
     case actionConstants.UPDATE_EMPLOYMENT_HISTORY: {
       const { parentId, fieldPayload } = action.payload;
-      const newState = state.employment_history.map((employment) =>
+      const newState = state.resume.employment_history.map((employment) =>
         employment.id === parentId
           ? {
               ...employment,
@@ -234,20 +244,18 @@ const resumeReducer = (state: Resume, action: Action) => {
             }
           : employment,
       );
-      return {
-        ...state,
+      return updateResume({
         employment_history: newState,
-      };
+      });
     }
     case actionConstants.ADD_EDUCATION: {
-      return {
-        ...state,
-        education: [...state.education, defaultEducation()],
-      };
+      return updateResume({
+        education: [...state.resume.education, defaultEducation()],
+      });
     }
     case actionConstants.UPDATE_EDUCATION: {
       const { parentId, fieldPayload } = action.payload;
-      const newState = state.education.map((education) =>
+      const newState = state.resume.education.map((education) =>
         education.id === parentId
           ? {
               ...education,
@@ -257,10 +265,9 @@ const resumeReducer = (state: Resume, action: Action) => {
           : education,
       );
 
-      return {
-        ...state,
+      return updateResume({
         education: newState,
-      };
+      });
     }
     default:
       return state;

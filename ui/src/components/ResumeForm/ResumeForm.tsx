@@ -10,10 +10,10 @@ import SortableColumn from "./SortableColumn";
 import TextField from "@mui/material/TextField";
 
 const ResumeForm = ({
-  formData,
+  resume,
   dispatch,
 }: {
-  formData: Resume;
+  resume: Resume;
   dispatch: React.Dispatch<Action>;
 }) => {
   return (
@@ -32,7 +32,7 @@ const ResumeForm = ({
         <TextField
           id="standard-basic"
           label={"Resume Title"}
-          value={formData.resume_title}
+          value={resume.resume_title}
           variant="standard"
           fullWidth
           onChange={(e) => {
@@ -54,7 +54,7 @@ const ResumeForm = ({
               Personal Details
             </h3>
           }
-          data={formData.personal_details}
+          data={resume.personal_details}
           handleUpdate={(payload) =>
             dispatch({
               type: actionConstants.UPDATE_PERSONAL_DETAILS,
@@ -72,7 +72,7 @@ const ResumeForm = ({
               Social Media
             </h3>
           }
-          data={formData.social_media}
+          data={resume.social_media}
           handleUpdate={(payload) =>
             dispatch({
               type: actionConstants.UPDATE_SOCIAL_MEDIA,
@@ -116,7 +116,7 @@ const ResumeForm = ({
               payload: parentId,
             });
           }}
-          items={formData.skills}
+          items={resume.skills}
         />
         <Button onClick={() => dispatch({ type: actionConstants.ADD_SKILL })}>
           Add new skill
@@ -163,7 +163,7 @@ const ResumeForm = ({
               payload: parentId,
             });
           }}
-          items={formData.employment_history}
+          items={resume.employment_history}
         />
         <Button
           onClick={() =>
@@ -208,7 +208,7 @@ const ResumeForm = ({
               payload: parentId,
             });
           }}
-          items={formData.education}
+          items={resume.education}
         />
 
         <Button
