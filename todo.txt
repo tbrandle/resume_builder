@@ -1,8 +1,8 @@
+add unsaved indicator
+linting
+TODO: batch delete
 TODO: add page length
-TODO: add unsaved indicator
 TODO: change styling...remove inline styling to css stylesheets
 TODO: Add themes?...Bot friendly...stylistic
 TODO: performance
-TODO: linting
 TODO: testing
-TODO: batch delete

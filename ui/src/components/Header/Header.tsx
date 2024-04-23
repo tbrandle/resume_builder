@@ -104,7 +104,7 @@ const Header = ({ resume, isSaved, dispatch, pdfRef }: HeaderProps) => {
           onChange={handleSelectResume}
           value={
             selectResumeList.find(
-              (resume) => resume.id === searchParams.get("resumeId"),
+              (resume) => resume.id === searchParams.get("resumeId")
             )?.id || ""
           }
         >
@@ -121,10 +121,7 @@ const Header = ({ resume, isSaved, dispatch, pdfRef }: HeaderProps) => {
 
       <Stack direction={"row"} columnGap={3} alignItems="center">
         <Tooltip title="New resume">
-          <IconButton
-            style={{ width: "fit-content" }}
-            onClick={createNewResume}
-          >
+          <IconButton className={"iconButton"} onClick={createNewResume}>
             <AddCircleOutline />
           </IconButton>
         </Tooltip>
@@ -148,7 +145,7 @@ const Header = ({ resume, isSaved, dispatch, pdfRef }: HeaderProps) => {
           </IconButton>
         </Tooltip>
         <Tooltip title="Delete">
-          <IconButton onClick={handleDelete}>
+          <IconButton className={"iconButton"} onClick={handleDelete}>
             <Delete />
           </IconButton>
         </Tooltip>
