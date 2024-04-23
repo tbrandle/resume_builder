@@ -2,11 +2,13 @@ import express from "express";
 import { Prisma, PrismaClient } from "@prisma/client";
 import cors from 'cors';
 
+
 const prisma = new PrismaClient();
 
 const port = 8080;
 
 const app = express();
+
 app.use(express.json());
 
 const whitelist = ["http://localhost:3000"]; // assuming front-end application is running on localhost port 3000
@@ -113,5 +115,9 @@ app.delete("/resumes/:id", async (req, res) => {
 });
 
 
+if (process.env.NODE_ENV !== "test") {
+  app.listen(port, () => console.log(`Server has started on port ${port}`));
+}
 
-app.listen(port, () => console.log(`Server has started on port ${port}`));
+
+export default app;

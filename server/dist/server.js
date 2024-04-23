@@ -1,24 +1,10 @@
-"use strict";
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-const express_1 = __importDefault(require("express"));
-const client_1 = require("@prisma/client");
-const cors_1 = __importDefault(require("cors"));
-const prisma = new client_1.PrismaClient();
+import express from "express";
+import { PrismaClient } from "@prisma/client";
+import cors from 'cors';
+const prisma = new PrismaClient();
 const port = 8080;
-const app = (0, express_1.default)();
-app.use(express_1.default.json());
+const app = express();
+app.use(express.json());
 const whitelist = ["http://localhost:3000"]; // assuming front-end application is running on localhost port 3000
 const corsOptions = {
     origin: function (origin, callback) {
@@ -30,20 +16,20 @@ const corsOptions = {
         }
     },
 };
-app.use((0, cors_1.default)(corsOptions));
-app.get("/resumes", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+app.use(cors(corsOptions));
+app.get("/resumes", async (req, res) => {
     try {
-        const allResumes = yield prisma.resume.findMany();
+        const allResumes = await prisma.resume.findMany();
         res.status(200).send(allResumes);
     }
     catch (error) {
         console.log(error);
         res.sendStatus(500);
     }
-}));
-app.get("/resumes/list_ids", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+app.get("/resumes/list_ids", async (req, res) => {
     try {
-        const allResumes = yield prisma.resume.findMany();
+        const allResumes = await prisma.resume.findMany();
         res.status(200).send(allResumes.map(({ resume, id }) => {
             const resumeObject = resume;
             return { id, title: resumeObject.resume_title };
@@ -53,23 +39,23 @@ app.get("/resumes/list_ids", (req, res) => __awaiter(void 0, void 0, void 0, fun
         console.log(error);
         res.sendStatus(500);
     }
-}));
-app.get("/resumes/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+app.get("/resumes/:id", async (req, res) => {
     try {
-        const response = yield prisma.resume.findUnique({
+        const response = await prisma.resume.findUnique({
             where: { id: req.params.id },
         });
-        const resumeObj = response === null || response === void 0 ? void 0 : response.resume;
-        res.status(200).send(Object.assign(Object.assign({}, resumeObj), { id: response === null || response === void 0 ? void 0 : response.id }));
+        const resumeObj = response?.resume;
+        res.status(200).send({ ...resumeObj, id: response?.id });
     }
     catch (error) {
         console.log(error);
         res.sendStatus(500);
     }
-}));
-app.post("/resumes", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+app.post("/resumes", async (req, res) => {
     try {
-        const resume = yield prisma.resume.create({
+        const resume = await prisma.resume.create({
             data: {
                 resume: req.body,
             },
@@ -82,10 +68,10 @@ app.post("/resumes", (req, res) => __awaiter(void 0, void 0, void 0, function* (
         console.log(error);
         res.sendStatus(500);
     }
-}));
-app.patch("/resumes/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+app.patch("/resumes/:id", async (req, res) => {
     try {
-        const resume = yield prisma.resume.update({
+        const resume = await prisma.resume.update({
             data: {
                 resume: req.body,
             },
@@ -101,10 +87,10 @@ app.patch("/resumes/:id", (req, res) => __awaiter(void 0, void 0, void 0, functi
         console.log(error);
         res.sendStatus(500);
     }
-}));
-app.delete("/resumes/:id", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+});
+app.delete("/resumes/:id", async (req, res) => {
     try {
-        const resume = yield prisma.resume.delete({
+        const resume = await prisma.resume.delete({
             where: {
                 id: req.params.id,
             },
@@ -117,5 +103,6 @@ app.delete("/resumes/:id", (req, res) => __awaiter(void 0, void 0, void 0, funct
         console.log(error);
         res.sendStatus(500);
     }
-}));
+});
 app.listen(port, () => console.log(`Server has started on port ${port}`));
+export default app;
