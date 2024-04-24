@@ -43,7 +43,12 @@ export const FormSection = ({
         direction={"row"}
         alignItems={"center"}
         onClick={() => setExpanded(!expanded)}
-        style={{ backgroundColor: "#f7f7f7" }}
+        sx={{
+          backgroundColor: "#f7f7f7",
+          "&:hover": {
+            cursor: "pointer",
+          }
+        }}
       >
         {title}
         <ExpandMore
