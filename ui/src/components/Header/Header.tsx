@@ -164,13 +164,15 @@ const Header = ({
           </IconButton>
         </Tooltip>
         <Tooltip title="Save">
-          <IconButton
-            className={"iconButton"}
-            onClick={handleSave}
-            disabled={isSaved}
-          >
-            <Save />
-          </IconButton>
+          <span>
+            <IconButton
+              className={"iconButton"}
+              onClick={handleSave}
+              disabled={isSaved}
+            >
+              <Save />
+            </IconButton>
+          </span>
         </Tooltip>
         <Tooltip title="Delete">
           <IconButton className={"iconButton"} onClick={handleDelete}>
