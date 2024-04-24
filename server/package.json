@@ -9,7 +9,8 @@
     "prisma:generate": "npx prisma generate",
     "prestart": "npm run build",
     "start": "nodemon script.ts",
-    "start:dev": "npm run prisma:migrate && npm run prisma:generate && concurrently \"npx tsc -w\" \"NODE_ENV=local nodemon dist/server.js\"",
+    "start:dev": "npm run prisma:migrate && npm run prisma:generate && concurrently \"npx tsc -w\" \"nodemon dist/server.js\"",
+    "start:local": "dotenvx run --env-file=.env.local -- npm run prisma:migrate && npm run prisma:generate && concurrently \"npx tsc -w\" \"dotenvx run --env-file=.env.local -- nodemon dist/server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
