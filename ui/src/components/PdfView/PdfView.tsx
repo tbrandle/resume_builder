@@ -7,8 +7,10 @@ import {
 } from "../../types/resumeTypes";
 import DOMPurify from "isomorphic-dompurify";
 import "./PdfView.css";
-import React, { Fragment } from "react";
+import React, { Fragment, useRef } from "react";
 import Stack from "@mui/material/Stack";
+import { useResizeObserver } from "usehooks-ts";
+import { useReactToPrint } from "react-to-print";
 
 interface PdfViewProps {
   isBotTheme: boolean;
@@ -30,10 +32,15 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
       isBotTheme,
     } = props;
 
+    const pageRef = useRef<HTMLDivElement>(null);
+    const { width = 0, height = 0 } = useResizeObserver({
+      ref: pageRef,
+      box: "border-box",
+    });
+
     return (
       <div className="pageContainer">
-        <div ref={ref}>
-          <Stack className="page">
+          <Stack ref={ref} className="page">
             <div className="nameTitleContainer">
               <div
                 className="nameTitle"
@@ -96,7 +103,7 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
                     className="professionalSummary"
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(
-                        personalDetails.professional_summary,
+                        personalDetails.professional_summary
                       ),
                     }}
                   />
@@ -156,7 +163,6 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
             </Stack>
           </Stack>
         </div>
-      </div>
     );
   },
 );

@@ -75,6 +75,7 @@ const Header = ({
 
   const handlePrint = useReactToPrint({
     content: () => pdfRef.current,
+    documentTitle: resume.resume_title,
   });
 
   const handleSave = async () => {
