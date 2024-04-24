@@ -21,3 +21,6 @@ up:
 
 backend:
   docker-compose up db server
+
+db:
+  docker-compose up db
