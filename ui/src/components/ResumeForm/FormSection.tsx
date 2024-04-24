@@ -47,7 +47,7 @@ export const FormSection = ({
           backgroundColor: "#f7f7f7",
           "&:hover": {
             cursor: "pointer",
-          }
+          },
         }}
       >
         {title}

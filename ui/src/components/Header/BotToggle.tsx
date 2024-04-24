@@ -1,5 +1,7 @@
 import { styled } from "@mui/material/styles";
-import { SwitchProps, Switch, Stack, Tooltip } from "@mui/material";
+import Switch, { SwitchProps } from "@mui/material/Switch";
+import Stack from "@mui/material/Stack";
+import Tooltip from "@mui/material/Tooltip";
 
 const BotToggle = styled((props: SwitchProps) => (
   <Tooltip title="Switch to a bot friendly theme">
