@@ -7,13 +7,13 @@ import {
 } from "../../types/resumeTypes";
 import DOMPurify from "isomorphic-dompurify";
 import "./PdfView.css";
-import React, { Fragment, useRef } from "react";
+import React, { Fragment } from "react";
 import Stack from "@mui/material/Stack";
-import { useResizeObserver } from "usehooks-ts";
-import { useReactToPrint } from "react-to-print";
+
 
 interface PdfViewProps {
   isBotTheme: boolean;
+  pageRef: React.RefObject<HTMLDivElement>;
   personalDetails: PersonalDetails;
   socialMedia: SocialMedia;
   skills: Skill[];
@@ -30,17 +30,13 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
       employmentHistory,
       education,
       isBotTheme,
+      pageRef
     } = props;
-
-    const pageRef = useRef<HTMLDivElement>(null);
-    const { width = 0, height = 0 } = useResizeObserver({
-      ref: pageRef,
-      box: "border-box",
-    });
 
     return (
       <div className="pageContainer">
-          <Stack ref={ref} className="page">
+        <div ref={ref}>
+          <Stack ref={pageRef} className="page">
             <div className="nameTitleContainer">
               <div
                 className="nameTitle"
@@ -163,6 +159,7 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
             </Stack>
           </Stack>
         </div>
+      </div>
     );
   },
 );
