@@ -24,11 +24,10 @@ const corsOptions = {
 
 const app = express();
 app.use(express.json());
-
-
 app.use(cors(corsOptions));
+
 app.use('/api', rootRouter)
-// app.use(errorMiddleware);
+app.use(errorMiddleware);
 
 app.listen(process.env.PORT, () =>
   console.log(`Server has started on port ${process.env.PORT}`)
