@@ -26,7 +26,7 @@ const useBuildPdfData = (resume: Resume) => {
       resume.employment_history.length
         ? resume.employment_history.map((history) => omit(history, ["fields"]))
         : resume.employment_history,
-    [resume.employment_history]
+    [resume.employment_history],
   );
 
   const education = useMemo(
@@ -34,7 +34,7 @@ const useBuildPdfData = (resume: Resume) => {
       resume.education.length
         ? resume.education.map((education) => omit(education, ["fields"]))
         : resume.education,
-    [resume.education]
+    [resume.education],
   );
 
   return {

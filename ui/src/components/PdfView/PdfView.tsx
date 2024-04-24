@@ -10,7 +10,6 @@ import "./PdfView.css";
 import React, { Fragment } from "react";
 import Stack from "@mui/material/Stack";
 
-
 interface PdfViewProps {
   isBotTheme: boolean;
   pageRef: React.RefObject<HTMLDivElement>;
@@ -30,7 +29,7 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
       employmentHistory,
       education,
       isBotTheme,
-      pageRef
+      pageRef,
     } = props;
 
     return (
@@ -99,7 +98,7 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
                     className="professionalSummary"
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(
-                        personalDetails.professional_summary
+                        personalDetails.professional_summary,
                       ),
                     }}
                   />

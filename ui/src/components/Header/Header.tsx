@@ -54,8 +54,12 @@ const Header = ({
   >([]);
 
   const fetchAndSetMasterList = useCallback(async () => {
-    const response = await api.get("list_ids");
-    setSelectResumeList(response);
+    try {
+      const response = await api.get("list_ids");
+      setSelectResumeList(response);
+    } catch (error) {
+      console.log({ error });
+    }
   }, [setSelectResumeList, api]);
 
   useEffect(() => {
@@ -71,8 +75,12 @@ const Header = ({
       resume_title: `${resume.resume_title} (duplicate)`,
     };
     delete duplicateResume.id;
-    const newResume = await api.post(duplicateResume);
-    setSearchParams({ resumeId: newResume.id });
+    try {
+      const newResume = await api.post(duplicateResume);
+      setSearchParams({ resumeId: newResume.id });
+    } catch (error) {
+      console.log({ error });
+    }
   };
 
   const handlePrint = useReactToPrint({
@@ -131,7 +139,7 @@ const Header = ({
           onChange={handleSelectResume}
           value={
             selectResumeList.find(
-              (resume) => resume.id === searchParams.get("resumeId")
+              (resume) => resume.id === searchParams.get("resumeId"),
             )?.id || ""
           }
         >
