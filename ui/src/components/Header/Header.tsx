@@ -131,30 +131,32 @@ const Header = ({
 
   return (
     <Stack direction={"row"} className={"headerContainer"}>
-      <FormControl variant="standard" sx={{ m: 1, minWidth: 300 }}>
-        <InputLabel id="resume-select-label">Select resume</InputLabel>
-        <Select
-          labelId="resume-select-label"
-          id="demo-simple-select"
-          onChange={handleSelectResume}
-          value={
-            selectResumeList.find(
-              (resume) => resume.id === searchParams.get("resumeId"),
-            )?.id || ""
-          }
-        >
-          {selectResumeList.map(({ id, title }, i) => {
-            return (
-              <MenuItem key={`${id}-${i}`} value={id}>
-                {" "}
-                {title}
-              </MenuItem>
-            );
-          })}
-        </Select>
-      </FormControl>
-      <BotToggle checked={isBotTheme} onChange={handleBotToggle} />
-      {numberOfPages}
+      <Stack direction={"row"} columnGap={4}>
+        <FormControl variant="standard" sx={{ m: 1, minWidth: 300 }}>
+          <InputLabel id="resume-select-label">Select resume</InputLabel>
+          <Select
+            labelId="resume-select-label"
+            id="demo-simple-select"
+            onChange={handleSelectResume}
+            value={
+              selectResumeList.find(
+                (resume) => resume.id === searchParams.get("resumeId")
+              )?.id || ""
+            }
+          >
+            {selectResumeList.map(({ id, title }, i) => {
+              return (
+                <MenuItem key={`${id}-${i}`} value={id}>
+                  {" "}
+                  {title}
+                </MenuItem>
+              );
+            })}
+          </Select>
+        </FormControl>
+        <BotToggle checked={isBotTheme} onChange={handleBotToggle} />
+      </Stack>
+        <div>{numberOfPages} {numberOfPages < 2 ? "page" : "pages"}</div>
       <Stack direction={"row"} columnGap={3} alignItems="center">
         <Tooltip title="New resume">
           <IconButton className={"iconButton"} onClick={createNewResume}>
