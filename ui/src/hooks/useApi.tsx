@@ -11,7 +11,7 @@ const useApi = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>();
 
-  const baseUrl = "http://localhost:8080/api/resumes";
+  const baseUrl = process.env.REACT_APP_API_URL;
 
   const fetchResume = async <T,>({ method, url, body }: FetchArgs<T>) => {
     console.log(`[${method}]: ${url}`);
