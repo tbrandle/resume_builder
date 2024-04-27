@@ -1,0 +1,8 @@
+.formContainer {
+  display: flex;
+  flex-direction: column;
+  width: 40%;
+  padding: 32px;
+  overflow: scroll;
+  height: 92vh;
+}

@@ -1,0 +1,15 @@
+.pdfViewContainer {
+  flex-grow: 1;
+  align-items: center;
+  background-color: #aca8a8;
+  overflow: scroll;
+  height: 92vh;
+  padding-bottom: 30px;
+}
+
+.emptyStateContainer {
+  height: 95vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
