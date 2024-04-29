@@ -1,4 +1,4 @@
-import { omit } from "lodash";
+import omit from "lodash/omit";
 import { useMemo } from "react";
 import { Resume } from "../types/resumeTypes";
 
