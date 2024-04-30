@@ -1,8 +1,14 @@
-setup: restart-colima build-node build-ui
+setup: restart-colima install-ui install-node build-node build-ui
 
 rebuild-images: prune build-node build-ui
 prune: 
   @echo "y" | docker system prune
+
+install-ui:
+  @cd ./ui && npm i
+
+install-node:
+  @cd ./server && npm i
 
 build-node:
   @echo "building server image"

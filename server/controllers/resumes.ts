@@ -18,7 +18,6 @@ export const getListIds = async (
   res: Response,
   next: NextFunction
 ) => {
-  console.log("getListIds");
   try {
     const allResumes = await prisma.resume.findMany();
     res.status(200).send(
@@ -38,16 +37,16 @@ export const getSingleResume = async (
   res: Response,
   next: NextFunction
 ) => {
-    const response = await prisma.resume.findUnique({
-      where: { id: req.params.id },
-    });
+  const response = await prisma.resume.findUnique({
+    where: { id: req.params.id },
+  });
 
-    if (!response) {
-      return next(new NotFoundException("Resume not found."));
-    }
+  if (!response) {
+    return next(new NotFoundException("Resume not found."));
+  }
 
-    const resumeObj = response?.resume as Prisma.JsonObject;
-    res.status(200).send({ ...resumeObj, id: response?.id });
+  const resumeObj = response?.resume as Prisma.JsonObject;
+  res.status(200).send({ ...resumeObj, id: response?.id });
 };
 
 export const createResume = async (
@@ -63,7 +62,9 @@ export const createResume = async (
     });
 
     if (!resume) {
-      return next(new BadRequestException("Something went wrong! Resume was not created."));
+      return next(
+        new BadRequestException("Something went wrong! Resume was not created.")
+      );
     }
 
     res
@@ -89,10 +90,10 @@ export const updateResume = async (
       },
     });
 
-     if (!resume) {
-       return next(new NotFoundException("Resume not found."));
-     }
-    
+    if (!resume) {
+      return next(new NotFoundException("Resume not found."));
+    }
+
     res
       .status(200)
       .send({ message: `Successfully updated resume`, id: resume.id });

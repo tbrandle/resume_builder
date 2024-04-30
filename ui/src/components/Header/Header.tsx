@@ -140,7 +140,7 @@ const Header = ({
             onChange={handleSelectResume}
             value={
               selectResumeList.find(
-                (resume) => resume.id === searchParams.get("resumeId")
+                (resume) => resume.id === searchParams.get("resumeId"),
               )?.id || ""
             }
           >
@@ -156,7 +156,9 @@ const Header = ({
         </FormControl>
         <BotToggle checked={isBotTheme} onChange={handleBotToggle} />
       </Stack>
-        <div>{numberOfPages} {numberOfPages < 2 ? "page" : "pages"}</div>
+      <div className={"numberOfPages"}>
+        {numberOfPages} {numberOfPages < 2 ? "page" : "pages"}
+      </div>
       <Stack direction={"row"} columnGap={3} alignItems="center">
         <Tooltip title="New resume">
           <IconButton className={"iconButton"} onClick={createNewResume}>

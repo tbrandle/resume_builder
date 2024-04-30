@@ -11,3 +11,7 @@
 .iconButton:hover {
   color: black;
 }
+
+.numberOfPages {
+  align-content: center;
+}

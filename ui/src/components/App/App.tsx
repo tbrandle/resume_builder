@@ -46,10 +46,10 @@ function App() {
   }, [params, api]);
 
   const { ref, height = 0 } = useResizeObserver({
-    box: "content-box"
+    box: "content-box",
   });
 
-  if(height) {
+  if (height) {
     console.log({ height }, new Date(Date.now()).toLocaleString());
   }
 
