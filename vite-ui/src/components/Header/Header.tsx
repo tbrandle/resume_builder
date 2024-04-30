@@ -157,7 +157,7 @@ const Header = ({
         </FormControl>
         <BotToggle checked={isBotTheme} onChange={handleBotToggle} />
       </Stack>
-      <div>
+      <div className="numberOfPages">
         {numberOfPages} {numberOfPages < 2 ? "page" : "pages"}
       </div>
       <Stack direction={"row"} columnGap={3} alignItems="center">

@@ -7,8 +7,8 @@ import {
   Skill,
 } from "../types/resumeTypes";
 
-export const testResume: Resume = {
-  id:"123",
+// eslint-disable-next-line
+const masterResume: Resume = {
   resume_title: "Master",
   personal_details: {
     first_name: "Tim",

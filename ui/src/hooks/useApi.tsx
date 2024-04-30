@@ -11,19 +11,20 @@ const useApi = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>();
 
-  const baseUrl = process.env.REACT_APP_API_URL;
-
   const fetchResume = async <T,>({ method, url, body }: FetchArgs<T>) => {
     console.log(`[${method}]: ${url}`);
     setIsLoading(true);
 
-    const response = await fetch(`${baseUrl}${url ? `/${url}` : ""}`, {
-      method,
-      headers: {
-        "Content-Type": "application/json",
+    const response = await fetch(
+      `${process.env.REACT_APP_BASE_URL}${url ? `/${url}` : ""}`,
+      {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(body),
       },
-      body: JSON.stringify(body),
-    });
+    );
     const responseJson = await response.json();
     if (response.ok) {
       setIsLoading(false);
