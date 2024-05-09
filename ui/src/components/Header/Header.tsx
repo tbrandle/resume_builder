@@ -11,15 +11,20 @@ import Download from "@mui/icons-material/Download";
 import Save from "@mui/icons-material/Save";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
-import { ChangeEvent, Dispatch, RefObject, useCallback, useEffect, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  RefObject,
+  useCallback,
+  useEffect,
+  useState,
+} from "react";
 import { useReactToPrint } from "react-to-print";
 import { defaultResume } from "../../data/defaultData";
 import useApi from "../../hooks/useApi";
 import { Action, actionConstants } from "../../reducers/resumeReducer";
 import { Resume } from "../../types/resumeTypes";
 import { useSearchParams } from "react-router-dom";
-import Button from "@mui/material/Button";
-import { Switch } from "@mui/material";
 import BotToggle from "./BotToggle";
 
 interface HeaderProps {
@@ -106,7 +111,10 @@ const Header = ({
     setSearchParams({ resumeId: e.target.value });
   };
 
-  const handleBotToggle = async (_e: ChangeEvent<HTMLInputElement>, checked: boolean) => {
+  const handleBotToggle = async (
+    _e: ChangeEvent<HTMLInputElement>,
+    checked: boolean,
+  ) => {
     setIsBotTheme(checked);
   };
 
@@ -136,10 +144,7 @@ const Header = ({
       </FormControl>
 
       <Stack direction={"row"} columnGap={3} alignItems="center">
-        <BotToggle
-          checked={isBotTheme}
-          onChange={handleBotToggle}
-        />
+        <BotToggle checked={isBotTheme} onChange={handleBotToggle} />
         <Tooltip title="New resume">
           <IconButton className={"iconButton"} onClick={createNewResume}>
             <AddCircleOutline />
