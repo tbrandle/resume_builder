@@ -11,6 +11,7 @@ import React, { Fragment } from "react";
 import Stack from "@mui/material/Stack";
 
 interface PdfViewProps {
+  isBotTheme: boolean;
   personalDetails: PersonalDetails;
   socialMedia: SocialMedia;
   skills: Skill[];
@@ -21,22 +22,31 @@ interface PdfViewProps {
 // Create Document Component
 const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
   function PdfView(props, ref) {
-    const { personalDetails, skills, employmentHistory, education } = props;
+    const {
+      personalDetails,
+      skills,
+      employmentHistory,
+      education,
+      isBotTheme,
+    } = props;
 
     return (
-      <div
-        style={{
-          border: "1px #131212 solid",
-          borderRadius: "5px",
-          boxShadow: "0 0 5px rgba(0, 0, 0, 0.1)",
-          margin: "0 auto",
-          width: "fit-content",
-        }}
-      >
+      <div className="pageContainer">
         <div ref={ref}>
           <Stack className="page">
             <div className="nameTitleContainer">
-              <div className="nameTitle">
+              <div
+                className="nameTitle"
+                style={
+                  isBotTheme
+                    ? {
+                        backgroundImage: "unset",
+                        border: "unset",
+                        padding: "unset",
+                      }
+                    : undefined
+                }
+              >
                 <div className="name title">
                   {personalDetails.first_name} {personalDetails.last_name}
                 </div>
@@ -61,7 +71,19 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
                   <div className="title">Skills</div>
                   {skills.map(({ skill, skill_level }, i) => (
                     <Fragment key={`${skill}-${i}`}>
-                      <div className="skill">{skill}</div>
+                      <div
+                        className="skill"
+                        style={
+                          isBotTheme
+                            ? {
+                                border: "unset",
+                                padding: "unset",
+                              }
+                            : undefined
+                        }
+                      >
+                        {skill}
+                      </div>
                       {/* <div>{skill_level}</div> */}
                     </Fragment>
                   ))}

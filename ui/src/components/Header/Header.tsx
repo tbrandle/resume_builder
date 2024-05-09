@@ -18,15 +18,27 @@ import useApi from "../../hooks/useApi";
 import { Action, actionConstants } from "../../reducers/resumeReducer";
 import { Resume } from "../../types/resumeTypes";
 import { useSearchParams } from "react-router-dom";
+import Button from "@mui/material/Button";
+import { Switch } from "@mui/material";
+import BotToggle from "./BotToggle";
 
 interface HeaderProps {
   resume: Resume;
   isSaved: boolean;
+  isBotTheme: boolean;
+  setIsBotTheme: Dispatch<React.SetStateAction<boolean>>;
   dispatch: Dispatch<Action>;
   pdfRef: RefObject<HTMLDivElement>;
 }
 
-const Header = ({ resume, isSaved, dispatch, pdfRef }: HeaderProps) => {
+const Header = ({
+  resume,
+  isSaved,
+  isBotTheme,
+  setIsBotTheme,
+  dispatch,
+  pdfRef,
+}: HeaderProps) => {
   const { api } = useApi();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -104,7 +116,7 @@ const Header = ({ resume, isSaved, dispatch, pdfRef }: HeaderProps) => {
           onChange={handleSelectResume}
           value={
             selectResumeList.find(
-              (resume) => resume.id === searchParams.get("resumeId")
+              (resume) => resume.id === searchParams.get("resumeId"),
             )?.id || ""
           }
         >
@@ -120,6 +132,10 @@ const Header = ({ resume, isSaved, dispatch, pdfRef }: HeaderProps) => {
       </FormControl>
 
       <Stack direction={"row"} columnGap={3} alignItems="center">
+        <BotToggle
+          checked={isBotTheme}
+          onChange={(e) => setIsBotTheme(e.target.checked)}
+        />
         <Tooltip title="New resume">
           <IconButton className={"iconButton"} onClick={createNewResume}>
             <AddCircleOutline />

@@ -2,7 +2,7 @@ import Stack from "@mui/material/Stack";
 
 import "./App.css";
 import PdfView from "../PdfView/PdfView";
-import { useEffect, useMemo, useReducer, useRef } from "react";
+import { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { defaultResume } from "../../data/defaultData";
 import resumeReducer, { actionConstants } from "../../reducers/resumeReducer";
 import ResumeForm from "../ResumeForm/ResumeForm";
@@ -16,6 +16,8 @@ function App() {
     isSaved: true,
     resume: defaultResume(),
   });
+
+  const [isBotTheme, setIsBotTheme] = useState(false);
 
   const [searchParams] = useSearchParams();
   const params = useMemo(() => searchParams, [searchParams]);
@@ -48,6 +50,8 @@ function App() {
         isSaved={isSaved}
         dispatch={dispatch}
         pdfRef={pdfRef}
+        isBotTheme={isBotTheme}
+        setIsBotTheme={setIsBotTheme}
       />
       <Stack direction={"row"} useFlexGap>
         {resume.id ? (
@@ -56,6 +60,7 @@ function App() {
             <Stack className={"pdfViewContainer"}>
               <PdfView
                 ref={pdfRef}
+                isBotTheme={isBotTheme}
                 personalDetails={personlDetails}
                 socialMedia={socialMedia}
                 skills={skills}
