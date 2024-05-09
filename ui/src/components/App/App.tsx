@@ -11,7 +11,6 @@ import Header from "../Header/Header";
 import useBuildPdfData from "../../hooks/useBuildPdfData";
 import { useSearchParams } from "react-router-dom";
 import useApi from "../../hooks/useApi";
-import { ConstructionOutlined } from "@mui/icons-material";
 
 function App() {
   const [formData, dispatch] = useReducer(resumeReducer, defaultResume());
@@ -24,7 +23,6 @@ function App() {
     const fetchResume = async () => {
       const resumeId = params.get("resumeId");
       if (resumeId) {
-        console.log("fetch resume")
         const resume = await api.get(resumeId)
         dispatch({
           type: actionConstants.SET_RESUME,
@@ -45,6 +43,7 @@ function App() {
     <>
       <Header formData={formData} dispatch={dispatch} pdfRef={pdfRef} />
       <Stack direction={"row"} useFlexGap>
+        {formData.id ? <>
         <ResumeForm formData={formData} dispatch={dispatch} />
         <Stack
           style={{
@@ -65,6 +64,8 @@ function App() {
             education={education}
           />
         </Stack>
+        </>
+        : <Stack sx={{height: "95vh", width:"100%", justifyContent: "center", alignItems:"center"}}>Select a resume or create new</Stack>}
       </Stack>
     </>
   );
