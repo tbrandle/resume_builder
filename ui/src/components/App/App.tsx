@@ -1,5 +1,4 @@
 import Stack from "@mui/material/Stack";
-
 import "./App.css";
 import PdfView from "../PdfView/PdfView";
 import { useEffect, useMemo, useReducer, useRef, useState } from "react";
@@ -11,7 +10,6 @@ import useBuildPdfData from "../../hooks/useBuildPdfData";
 import { useSearchParams } from "react-router-dom";
 import useApi from "../../hooks/useApi";
 import { useResizeObserver } from "usehooks-ts";
-import { setSelectionRange } from "@testing-library/user-event/dist/utils";
 
 function App() {
   const [{ resume, isSaved }, dispatch] = useReducer(resumeReducer, {
@@ -23,7 +21,7 @@ function App() {
 
   const [searchParams, setSearchParams] = useSearchParams();
   const params = useMemo(() => searchParams, [searchParams]);
-  const { api, isLoading } = useApi();
+  const { api, isLoading, error } = useApi();
 
   console.log({ isLoading });
   const pageRef = useRef<HTMLDivElement>(null);
@@ -38,15 +36,14 @@ function App() {
       if (resumeId) {
         try {
           const savedResume = await api.get(resumeId);
+          console.log({ savedResume });
           dispatch({
             type: actionConstants.SET_RESUME,
             payload: savedResume,
           });
         } catch (error) {
-          console.error({error})
           setSearchParams();
         }
-        
       }
     };
 

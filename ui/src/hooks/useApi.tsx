@@ -17,20 +17,22 @@ const useApi = () => {
     console.log(`[${method}]: ${url}`);
     setIsLoading(true);
 
-    try {
-      const response = await fetch(`${baseUrl}${url ? `/${url}` : ""}`, {
-        method,
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(body),
-      });
-      const responseJson = await response.json();
+    const response = await fetch(`${baseUrl}${url ? `/${url}` : ""}`, {
+      method,
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    const responseJson = await response.json();
+    if (response.ok) {
       setIsLoading(false);
       return responseJson;
-    } catch (error) {
+    } else {
+      console.log({ responseJson });
       setIsLoading(false);
-      setError(error);
+      setError(responseJson);
+      throw Error(responseJson);
     }
   };
 
