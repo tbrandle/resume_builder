@@ -12,7 +12,7 @@ import Stack from "@mui/material/Stack";
 
 interface PdfViewProps {
   isBotTheme: boolean;
-  pageRef: React.RefObject<HTMLDivElement>;
+  pageRef: (instance: Element | null) => void;
   personalDetails: PersonalDetails;
   socialMedia: SocialMedia;
   skills: Skill[];
@@ -31,7 +31,7 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
       isBotTheme,
       pageRef,
     } = props;
-
+console.log("rerender")
     return (
       <div className="pageContainer">
         <div ref={ref}>
