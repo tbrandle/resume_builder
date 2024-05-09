@@ -20,12 +20,13 @@ import { Resume } from "../../types/resumeTypes";
 import { useSearchParams } from "react-router-dom";
 
 interface HeaderProps {
-  formData: Resume;
+  resume: Resume;
+  isSaved: boolean;
   dispatch: Dispatch<Action>;
   pdfRef: RefObject<HTMLDivElement>;
 }
 
-const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
+const Header = ({ resume, isSaved, dispatch, pdfRef }: HeaderProps) => {
   const { api } = useApi();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -47,8 +48,8 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
 
   const handleDuplicate = async () => {
     const duplicateResume: Resume = {
-      ...formData,
-      resume_title: `${formData.resume_title} (duplicate)`,
+      ...resume,
+      resume_title: `${resume.resume_title} (duplicate)`,
     };
     delete duplicateResume.id;
     const newResume = await api.post(duplicateResume);
@@ -60,15 +61,20 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
   });
 
   const handleSave = async () => {
-    formData.id
-      ? await api.patch(formData.id, formData)
-      : await api.post(formData);
-    fetchAndSetMasterList();
+    try {
+      resume.id ? await api.patch(resume.id, resume) : await api.post(resume);
+      dispatch({
+        type: actionConstants.SAVE_RESUME,
+      });
+      fetchAndSetMasterList();
+    } catch (e) {
+      console.error(e);
+    }
   };
 
   const handleDelete = async () => {
-    if (formData.id) {
-      await api.delete(formData.id);
+    if (resume.id) {
+      await api.delete(resume.id);
       searchParams.delete("resumeId");
       setSearchParams(searchParams);
       fetchAndSetMasterList();
@@ -133,7 +139,11 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
           </IconButton>
         </Tooltip>
         <Tooltip title="Save">
-          <IconButton className={"iconButton"} onClick={handleSave}>
+          <IconButton
+            className={"iconButton"}
+            onClick={handleSave}
+            disabled={isSaved}
+          >
             <Save />
           </IconButton>
         </Tooltip>
