@@ -10,6 +10,8 @@ import Header from "../Header/Header";
 import useBuildPdfData from "../../hooks/useBuildPdfData";
 import { useSearchParams } from "react-router-dom";
 import useApi from "../../hooks/useApi";
+import { useResizeObserver } from "usehooks-ts";
+
 
 function App() {
   const [{ resume, isSaved }, dispatch] = useReducer(resumeReducer, {
@@ -22,6 +24,15 @@ function App() {
   const [searchParams] = useSearchParams();
   const params = useMemo(() => searchParams, [searchParams]);
   const { api } = useApi();
+
+
+    const pageRef = useRef<HTMLDivElement>(null);
+    const { height = 0 } = useResizeObserver({
+      ref: pageRef,
+      box: "border-box",
+    });
+
+
 
   useEffect(() => {
     const fetchResume = async () => {
@@ -47,6 +58,7 @@ function App() {
     <>
       <Header
         resume={resume}
+        numberOfPages={Math.ceil(height / 1136.53125)}
         isSaved={isSaved}
         dispatch={dispatch}
         pdfRef={pdfRef}
@@ -60,6 +72,7 @@ function App() {
             <Stack className={"pdfViewContainer"}>
               <PdfView
                 ref={pdfRef}
+                pageRef={pageRef}
                 isBotTheme={isBotTheme}
                 personalDetails={personlDetails}
                 socialMedia={socialMedia}

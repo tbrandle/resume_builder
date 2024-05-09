@@ -29,6 +29,7 @@ import BotToggle from "./BotToggle";
 
 interface HeaderProps {
   resume: Resume;
+  numberOfPages: number;
   isSaved: boolean;
   isBotTheme: boolean;
   setIsBotTheme: Dispatch<React.SetStateAction<boolean>>;
@@ -38,6 +39,7 @@ interface HeaderProps {
 
 const Header = ({
   resume,
+  numberOfPages,
   isSaved,
   isBotTheme,
   setIsBotTheme,
@@ -129,7 +131,7 @@ const Header = ({
           onChange={handleSelectResume}
           value={
             selectResumeList.find(
-              (resume) => resume.id === searchParams.get("resumeId"),
+              (resume) => resume.id === searchParams.get("resumeId")
             )?.id || ""
           }
         >
@@ -143,9 +145,9 @@ const Header = ({
           })}
         </Select>
       </FormControl>
-
+      <BotToggle checked={isBotTheme} onChange={handleBotToggle} />
+      {numberOfPages}
       <Stack direction={"row"} columnGap={3} alignItems="center">
-        <BotToggle checked={isBotTheme} onChange={handleBotToggle} />
         <Tooltip title="New resume">
           <IconButton className={"iconButton"} onClick={createNewResume}>
             <AddCircleOutline />
