@@ -24,7 +24,7 @@
   }
   .page {
     width: 210mm;
-    min-height: 297mm;
+    min-height: 286mm;
     overflow: hidden;
     flex-wrap: wrap;
     background: white;
@@ -32,8 +32,8 @@
     font-optical-sizing: auto;
     font-style: normal;
     font-size: 11px;
-    break-after: always;
-    break-inside: always;
+    /* break-after: always;
+    break-inside: always; */
     position: relative;
   }
 
