@@ -23,8 +23,6 @@ function App() {
   const params = useMemo(() => searchParams, [searchParams]);
   const { api, isLoading, error } = useApi();
 
-  console.log({ isLoading });
-
   useEffect(() => {
     const fetchResume = async () => {
       const resumeId = params.get("resumeId");
