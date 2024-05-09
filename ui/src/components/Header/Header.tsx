@@ -1,3 +1,4 @@
+import "./Header.css";
 import FormControl from "@mui/material/FormControl";
 import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
@@ -10,13 +11,7 @@ import Download from "@mui/icons-material/Download";
 import Save from "@mui/icons-material/Save";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
-import {
-  Dispatch,
-  RefObject,
-  useCallback,
-  useEffect,
-  useState,
-} from "react";
+import { Dispatch, RefObject, useCallback, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import { defaultResume } from "../../data/defaultData";
 import useApi from "../../hooks/useApi";
@@ -71,15 +66,22 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
     fetchAndSetMasterList();
   };
 
-  const handleDelete = async (id: string) => {
-    await api.delete(id);
-    searchParams.delete("resumeId");
-    setSearchParams(searchParams);
+  const handleDelete = async () => {
+    if (formData.id) {
+      await api.delete(formData.id);
+      searchParams.delete("resumeId");
+      setSearchParams(searchParams);
+      fetchAndSetMasterList();
+    }
+    dispatch({
+      type: actionConstants.SET_RESUME,
+      payload: defaultResume(),
+    });
   };
 
   const createNewResume = async () => {
     const { id } = await api.post(defaultResume({ resume_title: "New" }));
-    setSearchParams({ resumeId: id })
+    setSearchParams({ resumeId: id });
   };
 
   const handleSelectResume = async (e: any) => {
@@ -87,24 +89,26 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
   };
 
   return (
-    <Stack
-      direction={"row"}
-      sx={{
-        backgroundColor: "rgb(172, 168, 168)",
-        justifyContent: "space-between",
-        padding: "0 20px",
-      }}
-    >
+    <Stack direction={"row"} className={"headerContainer"}>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 300 }}>
         <InputLabel id="resume-select-label">Select resume</InputLabel>
         <Select
           labelId="resume-select-label"
           id="demo-simple-select"
           onChange={handleSelectResume}
-          value={selectResumeList.find((resume) => resume.id === searchParams.get("resumeId"))?.id || ""}
+          value={
+            selectResumeList.find(
+              (resume) => resume.id === searchParams.get("resumeId")
+            )?.id || ""
+          }
         >
           {selectResumeList.map(({ id, title }, i) => {
-            return <MenuItem key={`${id}-${i}`} value={id}> {title}</MenuItem>;
+            return (
+              <MenuItem key={`${id}-${i}`} value={id}>
+                {" "}
+                {title}
+              </MenuItem>
+            );
           })}
         </Select>
       </FormControl>
@@ -119,35 +123,26 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
           </IconButton>
         </Tooltip>
         <Tooltip title="Download PDF">
-          <IconButton style={{ width: "fit-content" }} onClick={handlePrint}>
+          <IconButton className={"iconButton"} onClick={handlePrint}>
             <Download />
           </IconButton>
         </Tooltip>
         <Tooltip title="Duplicate">
           <IconButton
-            style={{ width: "fit-content" }}
+            className={"iconButton"}
             onClick={handleDuplicate}
           >
             <ContentCopy />
           </IconButton>
         </Tooltip>
         <Tooltip title="Save">
-          <IconButton style={{ width: "fit-content" }} onClick={handleSave}>
+          <IconButton className={"iconButton"} onClick={handleSave}>
             <Save />
           </IconButton>
         </Tooltip>
         <Tooltip title="Delete">
           <IconButton
-            onClick={async () => {
-              if (formData.id) {
-                await handleDelete(formData.id);
-                fetchAndSetMasterList();
-              }
-              dispatch({
-                type: actionConstants.SET_RESUME,
-                payload: defaultResume(),
-              });
-            }}
+            onClick={handleDelete}
           >
             <Delete />
           </IconButton>
