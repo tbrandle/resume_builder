@@ -22,8 +22,6 @@
     overflow: hidden;
     flex-wrap: wrap;
     background: white;
-    display: flex;
-    flex-direction: row;
     font-family: "Montserrat", sans-serif;
     font-optical-sizing: auto;
     font-style: normal;
@@ -60,16 +58,9 @@
     margin-bottom: 12px;
   }
 
-
-
   .subTitle {
     font-weight: 700;
     padding-bottom: 5px;
-  }
-
-  .employmentDetails {
-    display: flex;
-    justify-content: space-between;
   }
 
   .skill {
