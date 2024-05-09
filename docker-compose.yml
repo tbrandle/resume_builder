@@ -1,0 +1,28 @@
+version: "3"
+services:
+  db:
+    image: postgres
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_PASSWORD: password123
+      POSTGRES_USER: user123
+      POSTGRES_DB: db123
+    volumes:
+      - resumeData:/var/lib/postgresql/data
+  server:
+    image: resume-builder-backend
+    build: server
+    ports:
+      - 8080:8080
+    expose:
+      - 8080
+  ui:
+    image: resume-builder
+    build: ui
+    ports:
+      - 3000:3000
+    expose:
+      - 3000
+volumes:
+  resumeData:

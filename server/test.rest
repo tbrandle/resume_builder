@@ -1,0 +1,56 @@
+###
+GET http://localhost:8080/ddb2bec9-d655-4de8-9671-39a88e661de7
+###
+GET http://localhost:8080
+
+###
+POST http://localhost:8080/resume
+Content-Type: application/json
+
+{
+  "resume_title": "Tim",
+  "personal_details": {
+    "first_name": "Tim",
+    "last_name": "Brandle",
+    "job_title": "Senior Software Developer",
+    "professional_summary": "<p>Senior Full Stack Software Developer who specializes in React.js, with experience in Java and Node.js.</p>",
+    "phone_number": "720-281-6350",
+    "email": "tbrandle53@gmail.com",
+    "fields": [
+      {
+        "label": "first_name",
+        "type": "text",
+        "value": "Tim"
+      },
+      {
+        "label": "last_name",
+        "type": "text",
+        "value": "Brandle"
+      },
+      {
+        "label": "job_title",
+        "type": "text",
+        "value": "Senior Software Developer"
+      },
+      {
+        "label": "professional_summary",
+        "type": "html",
+        "value": "<p>Senior Full Stack Software Developer who specializes in React.js, with experience in Java and Node.js.</p>"
+      },
+      {
+        "label": "phone_number",
+        "type": "phone",
+        "value": "720-281-6350"
+      },
+      {
+        "label": "email",
+        "type": "email",
+        "value": "tbrandle53@gmail.com"
+      }
+    ]
+  },
+  "social_media": "Tim",
+  "skills": "Tim",
+  "employment_history": "Tim",
+  "education": "Tim"
+}
