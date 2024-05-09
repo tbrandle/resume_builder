@@ -11,7 +11,7 @@ import useBuildPdfData from "../../hooks/useBuildPdfData";
 import { useSearchParams } from "react-router-dom";
 import useApi from "../../hooks/useApi";
 import { useResizeObserver } from "usehooks-ts";
-
+import { setSelectionRange } from "@testing-library/user-event/dist/utils";
 
 function App() {
   const [{ resume, isSaved }, dispatch] = useReducer(resumeReducer, {
@@ -21,28 +21,32 @@ function App() {
 
   const [isBotTheme, setIsBotTheme] = useState(false);
 
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const params = useMemo(() => searchParams, [searchParams]);
-  const { api } = useApi();
+  const { api, isLoading } = useApi();
 
-
-    const pageRef = useRef<HTMLDivElement>(null);
-    const { height = 0 } = useResizeObserver({
-      ref: pageRef,
-      box: "border-box",
-    });
-
-
+  console.log({ isLoading });
+  const pageRef = useRef<HTMLDivElement>(null);
+  const { height = 0 } = useResizeObserver({
+    ref: pageRef,
+    box: "border-box",
+  });
 
   useEffect(() => {
     const fetchResume = async () => {
       const resumeId = params.get("resumeId");
       if (resumeId) {
-        const savedResume = await api.get(resumeId);
-        dispatch({
-          type: actionConstants.SET_RESUME,
-          payload: savedResume,
-        });
+        try {
+          const savedResume = await api.get(resumeId);
+          dispatch({
+            type: actionConstants.SET_RESUME,
+            payload: savedResume,
+          });
+        } catch (error) {
+          console.error({error})
+          setSearchParams();
+        }
+        
       }
     };
 
