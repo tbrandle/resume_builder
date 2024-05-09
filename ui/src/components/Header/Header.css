@@ -6,4 +6,7 @@
 
 .iconButton {
   width: "fit-content";
+  &:hover {
+    color: black;
+  }
 }
