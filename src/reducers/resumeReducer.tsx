@@ -3,6 +3,7 @@ import { Field, Resume, SkillLevel } from "../types/resumeTypes";
 import { arrayMove } from "@dnd-kit/sortable";
 
 export const actionConstants = {
+  UPDATE_RESUME_TITLE: "UPDATE_RESUME_TITLE",
   UPDATE_PERSONAL_DETAILS: "UPDATE_PERSONAL_DETAILS",
   UPDATE_SOCIAL_MEDIA: "UPDATE_SOCIAL_MEDIA",
   UPDATE_SKILLS: "UPDATE_SKILLS",
@@ -36,6 +37,10 @@ export type Action =
   | {
       type: typeof actionConstants.SET_RESUME;
       payload: Resume;
+    }
+  | {
+      type: typeof actionConstants.UPDATE_RESUME_TITLE;
+      payload: string;
     }
   | {
       type: typeof actionConstants.UPDATE_PERSONAL_DETAILS;
@@ -91,9 +96,17 @@ const updateFieldState = (fields: Field[], payload: Partial<Field>) =>
 
 const resumeReducer = (state: Resume, action: Action) => {
   switch (action.type) {
-    case "SET_RESUME": {
+    case actionConstants.SET_RESUME: {
       return action.payload;
     }
+    case actionConstants.UPDATE_RESUME_TITLE: {
+      const { payload } = action;
+      return {
+        ...state,
+        resume_title: payload,
+      };
+    }
+
     case actionConstants.UPDATE_PERSONAL_DETAILS: {
       const { payload } = action;
       return {
