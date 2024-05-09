@@ -3,10 +3,12 @@ import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
 import TextField from "@mui/material/TextField";
+import Card from "@mui/material/Card";
+import Collapse from "@mui/material/Collapse";
+import IconButton, { IconButtonProps } from "@mui/material/IconButton";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { Field, IFormSection } from "../types/resumeTypes";
 import ReactQuill from "react-quill";
-import { Card, Collapse, IconButton, IconButtonProps } from "@mui/material";
 import { styled } from "@mui/material/styles";
 import { ReactElement, useState } from "react";
 

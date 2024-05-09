@@ -689,701 +689,80 @@ export const defaultEducation = (): Education & IFormSectionList => ({
 });
 
 export const defaultResume = (override?: Partial<Resume>): Resume => ({
-  "id": "afe15d82-dac0-4f04-91a6-b3245af6fafd",
-  "skills": [
-    {
-      "id": "100",
-      "skill": "Typescript",
-      "fields": [
-        {
-          "id": "101",
-          "type": "text",
-          "label": "skill",
-          "value": "Typescript"
-        },
-        {
-          "id": "102",
-          "type": "select",
-          "label": "skill_level",
-          "value": "Expert",
-          "options": [
-            "Novice",
-            "Beginner",
-            "Skillful",
-            "Experienced",
-            "Expert"
-          ]
-        }
-      ],
-      "skill_level": "Expert"
-    },
-    {
-      "id": "10",
-      "skill": "JavaScript",
-      "fields": [
-        {
-          "id": "11",
-          "type": "text",
-          "label": "skill",
-          "value": "JavaScript"
-        },
-        {
-          "id": "12",
-          "type": "select",
-          "label": "skill_level",
-          "value": "Expert",
-          "options": [
-            "Novice",
-            "Beginner",
-            "Skillful",
-            "Experienced",
-            "Expert"
-          ]
-        }
-      ],
-      "skill_level": "Expert"
-    },
-    {
-      "id": "22",
-      "skill": "React",
-      "fields": [
-        {
-          "id": "23",
-          "type": "text",
-          "label": "skill",
-          "value": "React"
-        },
-        {
-          "id": "24",
-          "type": "select",
-          "label": "skill_level",
-          "value": "Expert",
-          "options": [
-            "Novice",
-            "Beginner",
-            "Skillful",
-            "Experienced",
-            "Expert"
-          ]
-        }
-      ],
-      "skill_level": "Expert"
-    },
-    {
-      "id": "28",
-      "skill": "Redux",
-      "fields": [
-        {
-          "id": "29",
-          "type": "text",
-          "label": "skill",
-          "value": "Redux"
-        },
-        {
-          "id": "30",
-          "type": "select",
-          "label": "skill_level",
-          "value": "Experienced",
-          "options": [
-            "Novice",
-            "Beginner",
-            "Skillful",
-            "Experienced",
-            "Expert"
-          ]
-        }
-      ],
-      "skill_level": "Experienced"
-    },
-    {
-      "id": "1261",
-      "skill": "Vite",
-      "fields": [
-        {
-          "id": "1262",
-          "type": "text",
-          "label": "skill",
-          "value": "Vite"
-        },
-        {
-          "id": "1263",
-          "type": "select",
-          "label": "skill_level",
-          "value": "",
-          "options": [
-            "Novice",
-            "Beginner",
-            "Skillful",
-            "Experienced",
-            "Expert"
-          ]
-        }
-      ],
-      "skill_level": ""
-    },
-    {
-      "id": "1357",
-      "skill": "Storybook",
-      "fields": [
-        {
-          "id": "1358",
-          "type": "text",
-          "label": "skill",
-          "value": "Storybook"
-        },
-        {
-          "id": "1359",
-          "type": "select",
-          "label": "skill_level",
-          "value": "",
-          "options": [
-            "Novice",
-            "Beginner",
-            "Skillful",
-            "Experienced",
-            "Expert"
-          ]
-        }
-      ],
-      "skill_level": ""
-    },
-    {
-      "id": "34",
-      "skill": "Next.js",
-      "fields": [
-        {
-          "id": "35",
-          "type": "text",
-          "label": "skill",
-          "value": "Next.js"
-        },
-        {
-          "id": "36",
-          "type": "select",
-          "label": "skill_level",
-          "value": "Experienced",
-          "options": [
-            "Novice",
-            "Beginner",
-            "Skillful",
-            "Experienced",
-            "Expert"
-          ]
-        }
-      ],
-      "skill_level": "Experienced"
-    },
-    {
-      "id": "967",
-      "skill": "Material UI",
-      "fields": [
-        {
-          "id": "968",
-          "type": "text",
-          "label": "skill",
-          "value": "Material UI"
-        },
-        {
-          "id": "969",
-          "type": "select",
-          "label": "skill_level",
-          "value": "",
-          "options": [
-            "Novice",
-            "Beginner",
-            "Skillful",
-            "Experienced",
-            "Expert"
-          ]
-        }
-      ],
-      "skill_level": ""
-    },
-    {
-      "id": "40",
-      "skill": "Node.js",
-      "fields": [
-        {
-          "id": "41",
-          "type": "text",
-          "label": "skill",
-          "value": "Node.js"
-        },
-        {
-          "id": "42",
-          "type": "select",
-          "label": "skill_level",
-          "value": "Skillful",
-          "options": [
-            "Novice",
-            "Beginner",
-            "Skillful",
-            "Experienced",
-            "Expert"
-          ]
-        }
-      ],
-      "skill_level": "Skillful"
-    },
-    {
-      "id": "1723",
-      "skill": "Ruby on Rails",
-      "fields": [
-        {
-          "id": "1724",
-          "type": "text",
-          "label": "skill",
-          "value": "Ruby on Rails"
-        },
-        {
-          "id": "1725",
-          "type": "select",
-          "label": "skill_level",
-          "value": "",
-          "options": [
-            "Novice",
-            "Beginner",
-            "Skillful",
-            "Experienced",
-            "Expert"
-          ]
-        }
-      ],
-      "skill_level": ""
-    },
-    {
-      "id": "46",
-      "skill": "Java",
-      "fields": [
-        {
-          "id": "47",
-          "type": "text",
-          "label": "skill",
-          "value": "Java"
-        },
-        {
-          "id": "48",
-          "type": "select",
-          "label": "skill_level",
-          "value": "Skillful",
-          "options": [
-            "Novice",
-            "Beginner",
-            "Skillful",
-            "Experienced",
-            "Expert"
-          ]
-        }
-      ],
-      "skill_level": "Skillful"
-    },
-    {
-      "id": "52",
-      "skill": "Spring Boot",
-      "fields": [
-        {
-          "id": "53",
-          "type": "text",
-          "label": "skill",
-          "value": "Spring Boot"
-        },
-        {
-          "id": "54",
-          "type": "select",
-          "label": "skill_level",
-          "value": "Skillful",
-          "options": [
-            "Novice",
-            "Beginner",
-            "Skillful",
-            "Experienced",
-            "Expert"
-          ]
-        }
-      ],
-      "skill_level": "Skillful"
-    },
-    {
-      "id": "58",
-      "skill": "Docker",
-      "fields": [
-        {
-          "id": "59",
-          "type": "text",
-          "label": "skill",
-          "value": "Docker"
-        },
-        {
-          "id": "60",
-          "type": "select",
-          "label": "skill_level",
-          "value": "Experienced",
-          "options": [
-            "Novice",
-            "Beginner",
-            "Skillful",
-            "Experienced",
-            "Expert"
-          ]
-        }
-      ],
-      "skill_level": "Experienced"
-    },
-    {
-      "id": "76",
-      "skill": "CSS",
-      "fields": [
-        {
-          "id": "77",
-          "type": "text",
-          "label": "skill",
-          "value": "CSS"
-        },
-        {
-          "id": "78",
-          "type": "select",
-          "label": "skill_level",
-          "value": "Experienced",
-          "options": [
-            "Novice",
-            "Beginner",
-            "Skillful",
-            "Experienced",
-            "Expert"
-          ]
-        }
-      ],
-      "skill_level": "Experienced"
-    },
-    {
-      "id": "82",
-      "skill": "PostgresQL",
-      "fields": [
-        {
-          "id": "83",
-          "type": "text",
-          "label": "skill",
-          "value": "PostgresQL"
-        },
-        {
-          "id": "84",
-          "type": "select",
-          "label": "skill_level",
-          "value": "Skillful",
-          "options": [
-            "Novice",
-            "Beginner",
-            "Skillful",
-            "Experienced",
-            "Expert"
-          ]
-        }
-      ],
-      "skill_level": "Skillful"
-    }
-  ],
-  "education": [
-    {
-      "id": "10",
-      "city": "Denver",
-      "state": "CO",
-      "degree": "Front-end Development",
-      "fields": [
-        {
-          "id": "11",
-          "type": "text",
-          "label": "school",
-          "value": "Turing School of Software and Design"
-        },
-        {
-          "id": "12",
-          "type": "text",
-          "label": "degree",
-          "value": "Front-end Development"
-        },
-        {
-          "id": "13",
-          "type": "text",
-          "label": "city",
-          "value": "Denver"
-        },
-        {
-          "id": "14",
-          "type": "text",
-          "label": "state",
-          "value": "CO"
-        }
-      ],
-      "school": "Turing School of Software and Design"
-    },
-    {
-      "id": "30",
-      "city": "Fort Collins",
-      "state": "CO",
-      "degree": "BS, Business Administration",
-      "fields": [
-        {
-          "id": "31",
-          "type": "text",
-          "label": "school",
-          "value": "Colorado State University"
-        },
-        {
-          "id": "32",
-          "type": "text",
-          "label": "degree",
-          "value": "BS, Business Administration"
-        },
-        {
-          "id": "33",
-          "type": "text",
-          "label": "city",
-          "value": "Fort Collins"
-        },
-        {
-          "id": "34",
-          "type": "text",
-          "label": "state",
-          "value": "CO"
-        }
-      ],
-      "school": "Colorado State University"
-    }
-  ],
-  "resume_title": "Fountain - Full Stack Engineer",
-  "social_media": {
-    "fields": [
+  resume_title: "",
+  personal_details: {
+    first_name: "",
+    last_name: "",
+    job_title: "",
+    professional_summary: "",
+    phone_number: "",
+    email: "",
+    fields: [
       {
-        "id": "7",
-        "type": "text",
-        "label": "linked_in",
-        "value": "https://www.linkedin.com/in/timbrandle/"
+        id: uniqueId(),
+        label: "first_name",
+        type: "text",
+        value: "",
       },
       {
-        "id": "8",
-        "type": "text",
-        "label": "github",
-        "value": "https://github.com/tbrandle"
+        id: uniqueId(),
+        label: "last_name",
+        type: "text",
+        value: "",
       },
       {
-        "id": "9",
-        "type": "text",
-        "label": "portfolio",
-        "value": ""
-      }
+        id: uniqueId(),
+        label: "job_title",
+        type: "text",
+        value: "",
+      },
+      {
+        id: uniqueId(),
+        label: "professional_summary",
+        type: "html",
+        value: "",
+      },
+      {
+        id: uniqueId(),
+        label: "phone_number",
+        type: "phone",
+        value: "",
+      },
+      {
+        id: uniqueId(),
+        label: "email",
+        type: "email",
+        value: "",
+      },
     ],
-    "github": "https://github.com/tbrandle",
-    "linked_in": "https://www.linkedin.com/in/timbrandle/",
-    "portfolio": ""
   },
-  "personal_details": {
-    "email": "tbrandle53@gmail.com",
-    "fields": [
+  social_media: {
+    linked_in: "",
+    github: "",
+    portfolio: "",
+    fields: [
       {
-        "id": "1",
-        "type": "text",
-        "label": "first_name",
-        "value": "Tim"
+        id: uniqueId(),
+        label: "linked_in",
+        type: "text",
+        value: "",
       },
       {
-        "id": "2",
-        "type": "text",
-        "label": "last_name",
-        "value": "Brandle"
+        id: uniqueId(),
+        label: "github",
+        type: "text",
+        value: "",
       },
       {
-        "id": "3",
-        "type": "text",
-        "label": "job_title",
-        "value": "Senior Full-Stack Engineer"
+        id: uniqueId(),
+        label: "portfolio",
+        type: "text",
+        value: "",
       },
-      {
-        "id": "4",
-        "type": "html",
-        "label": "professional_summary",
-        "value": "<p>Senior Full-Stack Engineer with 7 years of experience in building modern, user-focused web applications with a proven track record of delivering high-quality production code. Skilled in optimizing frontend performance and reliability, and collaborating in fast-paced, distributed teams. Passionate about building exceptional UIs and driving impactful results.</p>"
-      },
-      {
-        "id": "5",
-        "type": "phone",
-        "label": "phone_number",
-        "value": "720-281-6350"
-      },
-      {
-        "id": "6",
-        "type": "email",
-        "label": "email",
-        "value": "tbrandle53@gmail.com"
-      }
     ],
-    "job_title": "Senior Full-Stack Engineer",
-    "last_name": "Brandle",
-    "first_name": "Tim",
-    "phone_number": "720-281-6350",
-    "professional_summary": "<p>Senior Full-Stack Engineer with 7 years of experience in building modern, user-focused web applications with a proven track record of delivering high-quality production code. Skilled in optimizing frontend performance and reliability, and collaborating in fast-paced, distributed teams. Passionate about building exceptional UIs and driving impactful results.</p>"
   },
-  "employment_history": [
-    {
-      "id": "13",
-      "city": "Denver",
-      "state": "CO",
-      "fields": [
-        {
-          "id": "14",
-          "type": "text",
-          "label": "job_title",
-          "value": "Senior Software Developer"
-        },
-        {
-          "id": "15",
-          "type": "text",
-          "label": "employer",
-          "value": "ThoughtWorks"
-        },
-        {
-          "id": "16",
-          "type": "text",
-          "label": "city",
-          "value": "Denver"
-        },
-        {
-          "id": "17",
-          "type": "text",
-          "label": "state",
-          "value": "CO"
-        },
-        {
-          "id": "18",
-          "type": "text",
-          "label": "date_start",
-          "value": "Jan, 2021"
-        },
-        {
-          "id": "19",
-          "type": "text",
-          "label": "date_end",
-          "value": "Present"
-        },
-        {
-          "id": "20",
-          "type": "html",
-          "label": "description",
-          "value": "<p>Served as a team technical anchor for a variety of clients, from Fortune 500 corporations to medium-sized startups.&nbsp;Developed tailored solutions to technical problems based on client needs.</p><p><strong>Projects</strong>:</p><p><em>Construction Machinery Auctioneer - Order Invoice Cash Team (OIC)</em></p><ul><li>Charged with building an order and invoice processing engine alongside additional, interconnected workflows for payment status, out-of-band payments, payment allocations, and finalized taxes.</li><li>Orchestrated a series of code optimization sprints resulting<span style=\"color: rgb(82, 87, 92);\">&nbsp;</span>in a 30% reduction in time-to-market; client accolades for exceptional performance highlighted a 30% increase in velocity and unparalleled code quality consistency.</li></ul><p>Tech stack: Java, Spring Boot, Kafka, Docker, Kubernetes</p><p><em>Construction Machinery Auctioneer - Experience Checkout&nbsp;Team</em></p><ul><li>Transformed the manual auction process into an online e-commerce platform, facilitating the automation of construction equipment sales through various payment solutions and streamlined checkout flows.</li><li>The new checkout flow resulted in a 50% increase in auction event revenue.</li></ul><p>Tech Stack: React, Next.js, Typescript, Java, Stripe API</p><p><em>Pizza Delivery App</em></p><ul><li>Spearheaded the development of a robust digital platform, implementing performance enhancements that boosted online ordering speed by 40% for web and mobile applications, enhancing user experience and increasing customer satisfaction.</li></ul><p>Tech Stack: React, Redux, GraphQL, Next.js, Typescript</p>"
-        }
-      ],
-      "date_end": "Present",
-      "employer": "ThoughtWorks",
-      "job_title": "Senior Software Developer",
-      "date_start": "Jan, 2021",
-      "description": "<p>Served as a team technical anchor for a variety of clients, from Fortune 500 corporations to medium-sized startups.&nbsp;Developed tailored solutions to technical problems based on client needs.</p><p><strong>Projects</strong>:</p><p><em>Construction Machinery Auctioneer - Order Invoice Cash Team (OIC)</em></p><ul><li>Charged with building an order and invoice processing engine alongside additional, interconnected workflows for payment status, out-of-band payments, payment allocations, and finalized taxes.</li><li>Orchestrated a series of code optimization sprints resulting<span style=\"color: rgb(82, 87, 92);\">&nbsp;</span>in a 30% reduction in time-to-market; client accolades for exceptional performance highlighted a 30% increase in velocity and unparalleled code quality consistency.</li></ul><p>Tech stack: Java, Spring Boot, Kafka, Docker, Kubernetes</p><p><em>Construction Machinery Auctioneer - Experience Checkout&nbsp;Team</em></p><ul><li>Transformed the manual auction process into an online e-commerce platform, facilitating the automation of construction equipment sales through various payment solutions and streamlined checkout flows.</li><li>The new checkout flow resulted in a 50% increase in auction event revenue.</li></ul><p>Tech Stack: React, Next.js, Typescript, Java, Stripe API</p><p><em>Pizza Delivery App</em></p><ul><li>Spearheaded the development of a robust digital platform, implementing performance enhancements that boosted online ordering speed by 40% for web and mobile applications, enhancing user experience and increasing customer satisfaction.</li></ul><p>Tech Stack: React, Redux, GraphQL, Next.js, Typescript</p>"
-    },
-    {
-      "id": "21",
-      "city": "Denver",
-      "state": "CO",
-      "fields": [
-        {
-          "id": "22",
-          "type": "text",
-          "label": "job_title",
-          "value": "Software Developer"
-        },
-        {
-          "id": "23",
-          "type": "text",
-          "label": "employer",
-          "value": "ThoughtWorks"
-        },
-        {
-          "id": "24",
-          "type": "text",
-          "label": "city",
-          "value": "Denver"
-        },
-        {
-          "id": "25",
-          "type": "text",
-          "label": "state",
-          "value": "CO"
-        },
-        {
-          "id": "26",
-          "type": "text",
-          "label": "date_start",
-          "value": "Jun, 2019"
-        },
-        {
-          "id": "27",
-          "type": "text",
-          "label": "date_end",
-          "value": "Jan 2021"
-        },
-        {
-          "id": "28",
-          "type": "html",
-          "label": "description",
-          "value": "<p><strong>Projects:</strong></p><p><em>Small Business App - Accounts Payable Team</em></p><ul><li>Tim worked as a full stack developer with the Accounts Payable dev team to modernize their existing .NET monolith to a React app with .NET-CORE backend.&nbsp;</li><li>Responsible for managing the life cycle of bills and credit notes for accountants.</li></ul><p>Tech Stack: React, Redux, Typescript, C#, .NET Core</p><p><em>Green Cloud - Internal ThoughtWorks Initiative</em></p><ul><li>Worked on the Green Cloud initiative to build an application that provides visibility and tooling to measure the user's cloud carbon footprint.&nbsp;</li></ul><p>Tech Stack: React, Material UI, AWS, GCP</p><p><em>Cyber Security Startup - Batch Enrollment Team</em></p><ul><li>Tim delivered a scalable batch user enrollment tool under a short deadline</li></ul><p>Tech Stack: React</p><p><em>Retail Corporation - Sitewide Team</em></p><ul><li>Tim helped spearhead the homepage micro-frontend service which was the entry point for third-party services as well as building and maintaining headers, footers, and homepage content&nbsp;</li><li>The sitewide micro-frontend was actively utilized on the homepage of the client's main company site and 5 subsidiary company homepages.&nbsp;</li></ul><p>Tech Stack: React</p>"
-        }
-      ],
-      "date_end": "Jan 2021",
-      "employer": "ThoughtWorks",
-      "job_title": "Software Developer",
-      "date_start": "Jun, 2019",
-      "description": "<p><strong>Projects:</strong></p><p><em>Small Business App - Accounts Payable Team</em></p><ul><li>Tim worked as a full stack developer with the Accounts Payable dev team to modernize their existing .NET monolith to a React app with .NET-CORE backend.&nbsp;</li><li>Responsible for managing the life cycle of bills and credit notes for accountants.</li></ul><p>Tech Stack: React, Redux, Typescript, C#, .NET Core</p><p><em>Green Cloud - Internal ThoughtWorks Initiative</em></p><ul><li>Worked on the Green Cloud initiative to build an application that provides visibility and tooling to measure the user's cloud carbon footprint.&nbsp;</li></ul><p>Tech Stack: React, Material UI, AWS, GCP</p><p><em>Cyber Security Startup - Batch Enrollment Team</em></p><ul><li>Tim delivered a scalable batch user enrollment tool under a short deadline</li></ul><p>Tech Stack: React</p><p><em>Retail Corporation - Sitewide Team</em></p><ul><li>Tim helped spearhead the homepage micro-frontend service which was the entry point for third-party services as well as building and maintaining headers, footers, and homepage content&nbsp;</li><li>The sitewide micro-frontend was actively utilized on the homepage of the client's main company site and 5 subsidiary company homepages.&nbsp;</li></ul><p>Tech Stack: React</p>"
-    },
-    {
-      "id": "52",
-      "city": "Denver",
-      "state": "CO",
-      "fields": [
-        {
-          "id": "53",
-          "type": "text",
-          "label": "job_title",
-          "value": "Software Developer"
-        },
-        {
-          "id": "54",
-          "type": "text",
-          "label": "employer",
-          "value": "Bowtie.co"
-        },
-        {
-          "id": "55",
-          "type": "text",
-          "label": "city",
-          "value": "Denver"
-        },
-        {
-          "id": "56",
-          "type": "text",
-          "label": "state",
-          "value": "CO"
-        },
-        {
-          "id": "57",
-          "type": "text",
-          "label": "date_start",
-          "value": "Oct, 2017"
-        },
-        {
-          "id": "58",
-          "type": "text",
-          "label": "date_end",
-          "value": "Jun, 2019"
-        },
-        {
-          "id": "59",
-          "type": "html",
-          "label": "description",
-          "value": "<p>Led the development of the React component library and application boilerplates following the Atomic Design Methodology. Developed greenfield React applications custom-designed to solve client needs.&nbsp;</p><p><strong>Projects:</strong></p><p><em>ASIRD</em></p><ul><li>Built an administrative tool to manage all doctors within the ASIRD association.&nbsp;</li><li>Tim automated the process of creating, editing, and viewing a model page increasing developer velocity and efficiency.</li></ul><p>Tech Stack: React, Recompose, Ruby on Rails, Docker, Bootstrap</p><p><em>BriteBee</em></p><ul><li>Tim led the frontend development of BriteBee which allowed users to anonymously request insurance quotes from agents for home, auto, or life.</li></ul><p>Tech Stack: React, Recompose, Ruby on Rails, Docker</p><p><em>Homebot - First Time Home Buyer App</em></p><ul><li>Tim led the development of the frontend application designed to provide real estate market data for first-time homebuyers.&nbsp;</li></ul><p>Tech Stack: React, Recompose, D3, Ruby on Rails, Docker</p><p><em>Houndstooth</em></p><ul><li>Tim created an open-sourced text and Jekyll CMS editor. Built to accompany the Bowtie Web hosting service, RazorSite.&nbsp;</li></ul><p>Tech Stack: Serverless, React, Recompose, Docker, Atomic Design Methodology</p>"
-        }
-      ],
-      "date_end": "Jun, 2019",
-      "employer": "Bowtie.co",
-      "job_title": "Software Developer",
-      "date_start": "Oct, 2017",
-      "description": "<p>Led the development of the React component library and application boilerplates following the Atomic Design Methodology. Developed greenfield React applications custom-designed to solve client needs.&nbsp;</p><p><strong>Projects:</strong></p><p><em>ASIRD</em></p><ul><li>Built an administrative tool to manage all doctors within the ASIRD association.&nbsp;</li><li>Tim automated the process of creating, editing, and viewing a model page increasing developer velocity and efficiency.</li></ul><p>Tech Stack: React, Recompose, Ruby on Rails, Docker, Bootstrap</p><p><em>BriteBee</em></p><ul><li>Tim led the frontend development of BriteBee which allowed users to anonymously request insurance quotes from agents for home, auto, or life.</li></ul><p>Tech Stack: React, Recompose, Ruby on Rails, Docker</p><p><em>Homebot - First Time Home Buyer App</em></p><ul><li>Tim led the development of the frontend application designed to provide real estate market data for first-time homebuyers.&nbsp;</li></ul><p>Tech Stack: React, Recompose, D3, Ruby on Rails, Docker</p><p><em>Houndstooth</em></p><ul><li>Tim created an open-sourced text and Jekyll CMS editor. Built to accompany the Bowtie Web hosting service, RazorSite.&nbsp;</li></ul><p>Tech Stack: Serverless, React, Recompose, Docker, Atomic Design Methodology</p>"
-    }
-  ]
+  skills: [],
+  employment_history: [],
+  education: [],
+  ...override
 });

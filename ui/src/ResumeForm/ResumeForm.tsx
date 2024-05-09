@@ -27,7 +27,7 @@ const ResumeForm = ({
         width: "40%",
         padding: "32px",
         overflow: "scroll",
-        height: "100vh",
+        height: "94vh",
       }}
     >
       <Stack
