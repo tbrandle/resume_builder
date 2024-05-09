@@ -30,6 +30,7 @@ const ExpandMore = styled((props: ExpandMoreProps) => {
     duration: theme.transitions.duration.shortest,
   }),
 }));
+
 export const FormSection = ({
   data,
   handleUpdate,

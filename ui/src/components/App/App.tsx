@@ -46,14 +46,7 @@ function App() {
         {formData.id ? <>
         <ResumeForm formData={formData} dispatch={dispatch} />
         <Stack
-          style={{
-            flexGrow: "1",
-            alignItems: "center",
-            backgroundColor: "#aca8a8",
-            overflow: "scroll",
-            height: "94vh",
-            paddingBottom: "30px",
-          }}
+          className={"pdfViewContainer"}
         >
           <PdfView
             ref={pdfRef}
@@ -65,7 +58,7 @@ function App() {
           />
         </Stack>
         </>
-        : <Stack sx={{height: "95vh", width:"100%", justifyContent: "center", alignItems:"center"}}>Select a resume or create new</Stack>}
+        : <Stack className={"emptyStateContainer"}>Select a resume or create new</Stack>}
       </Stack>
     </>
   );
