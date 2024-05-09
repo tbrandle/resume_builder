@@ -1,8 +1,8 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import { Action, actionConstants } from "../reducers/resumeReducer";
-import { Field, Resume } from "../types/resumeTypes";
+import { Action, actionConstants } from "../../reducers/resumeReducer";
+import { Field, Resume } from "../../types/resumeTypes";
 import "react-quill/dist/quill.snow.css";
 import { FormSection } from "./FormSection";
 import "./ResumeForm.css";

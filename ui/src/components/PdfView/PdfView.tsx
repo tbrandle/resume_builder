@@ -4,7 +4,7 @@ import {
   PersonalDetails,
   Skill,
   SocialMedia,
-} from "../types/resumeTypes";
+} from "../../types/resumeTypes";
 import DOMPurify from "isomorphic-dompurify";
 import "./PdfView.css";
 import React from "react";

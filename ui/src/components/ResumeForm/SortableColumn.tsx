@@ -3,7 +3,7 @@ import DragIndicator from "@mui/icons-material/DragIndicator";
 import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
 import FormSection from "./FormSection";
-import { Field, IFormSectionList } from "../types/resumeTypes";
+import { Field, IFormSectionList } from "../../types/resumeTypes";
 import { ReactElement } from "react";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";

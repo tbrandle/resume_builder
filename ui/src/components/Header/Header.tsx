@@ -10,12 +10,20 @@ import Download from "@mui/icons-material/Download";
 import Save from "@mui/icons-material/Save";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
-import { Dispatch, RefObject, useEffect, useState } from "react";
+import {
+  Dispatch,
+  RefObject,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { useReactToPrint } from "react-to-print";
-import { defaultResume } from "../data/defaultData";
-import useApi from "../hooks/useApi";
-import { Action, actionConstants } from "../reducers/resumeReducer";
-import { Resume } from "../types/resumeTypes";
+import { defaultResume } from "../../data/defaultData";
+import useApi from "../../hooks/useApi";
+import { Action, actionConstants } from "../../reducers/resumeReducer";
+import { Resume } from "../../types/resumeTypes";
+import { useSearchParams } from "react-router-dom";
 
 interface HeaderProps {
   formData: Resume;
@@ -25,22 +33,23 @@ interface HeaderProps {
 
 const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
   const { api, error, isLoading } = useApi();
+  let [searchParams, setSearchParams] = useSearchParams();
+
   const [selectResumeList, setSelectResumeList] = useState<
     { id: string; title: string }[]
   >([]);
 
+  const fetchAndSetMasterList = async () => {
+    const response = await api.get("list_ids");
+    setSelectResumeList(response);
+  };
+
   useEffect(() => {
     const fetchResumes = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/resumes/list_ids");
-        const resumes = await response.json();
-        setSelectResumeList(resumes);
-      } catch (error) {
-        console.log({ error });
-      }
+      await fetchAndSetMasterList();
     };
     fetchResumes();
-  }, []);
+  }, [setSelectResumeList, searchParams]);
 
   const handleDuplicate = async () => {
     const duplicateResume: Resume = {
@@ -49,21 +58,12 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
     };
     delete duplicateResume.id;
     const newResume = await api.post(duplicateResume);
-    await fetchAndSetMasterList();
-    dispatch({
-      type: actionConstants.SET_RESUME,
-      payload: await api.get(newResume.id),
-    });
+    setSearchParams({ resumeId: newResume.id });
   };
 
   const handlePrint = useReactToPrint({
     content: () => pdfRef.current,
   });
-
-  const fetchAndSetMasterList = async () => {
-    const response = await api.get("list_ids");
-    setSelectResumeList(response);
-  };
 
   const handleSave = async () => {
     formData.id
@@ -88,11 +88,7 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
   };
 
   const handleSelectResume = async (e: any) => {
-    const resume = await api.get(e.target.value);
-    dispatch({
-      type: actionConstants.SET_RESUME,
-      payload: resume,
-    });
+    setSearchParams({ resumeId: e.target.value });
   };
 
   return (
@@ -110,9 +106,10 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
           labelId="resume-select-label"
           id="demo-simple-select"
           onChange={handleSelectResume}
+          // value={selectResumeList.find((resume) => resume.id === searchParams.get("resumeId"))?.id}
         >
-          {selectResumeList.map(({ id, title }) => {
-            return <MenuItem value={id}> {title}</MenuItem>;
+          {selectResumeList.map(({ id, title }, i) => {
+            return <MenuItem key={`${id}-${i}`} value={id}> {title}</MenuItem>;
           })}
         </Select>
       </FormControl>
