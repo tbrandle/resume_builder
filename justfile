@@ -1,10 +1,12 @@
+setup: restart-colima build-node build-ui
+
 rebuild-images: prune build-node build-ui
 prune: 
   @echo "y" | docker system prune
 
 build-node:
   @echo "building server image"
-  @cd ./server docker build -t resume-builder-backend .
+  @cd ./server && docker build -t resume-builder-backend .
 
 build-ui: 
   @echo "building ui image"

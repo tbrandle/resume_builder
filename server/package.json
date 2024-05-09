@@ -5,9 +5,11 @@
   "main": "index.js",
   "scripts": {
     "build": "rimraf dist && npx tsc",
+    "prisma:migrate": "npx prisma migrate deploy",
+    "prisma:generate": "npx prisma generate",
     "prestart": "npm run build",
     "start": "nodemon script.ts",
-    "preserve": "npm run build",
+    "preserve": "npm run build && npm run prisma:migrate && npm run prisma:generate",
     "serve": "concurrently \"npx tsc -w\" \"NODE_ENV=local nodemon dist/server.js\"",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

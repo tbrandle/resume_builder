@@ -1,6 +1,7 @@
 import { uniqueId } from "lodash";
 import { Education, EmploymentHistory, IFormSectionList, Resume, Skill } from "../types/resumeTypes";
 
+// eslint-disable-next-line 
 const masterResume: Resume = {
   resume_title: "Master",
   personal_details: {
