@@ -688,7 +688,7 @@ export const defaultEducation = (): Education & IFormSectionList => ({
   ],
 });
 
-export const defaultResume = (): Resume => ({
+export const defaultResume = (override?: Partial<Resume>): Resume => ({
   resume_title: "",
   personal_details: {
     first_name: "",
@@ -764,4 +764,5 @@ export const defaultResume = (): Resume => ({
   skills: [],
   employment_history: [],
   education: [],
+  ...override
 });
