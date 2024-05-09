@@ -3,21 +3,21 @@ import DragIndicator from "@mui/icons-material/DragIndicator";
 import Stack from "@mui/material/Stack";
 import IconButton from "@mui/material/IconButton";
 import FormSection from "./FormSection";
-import { Field, IFormSectionList } from "../../types/resumeTypes";
+import { Field, FormItemSingleList } from "../../types/resumeTypes";
 import { ReactElement } from "react";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { DndContext, closestCorners } from "@dnd-kit/core";
 
 interface SortableFormItemProps {
-  item: IFormSectionList;
-  title: ReactElement<any, any>;
+  item: FormItemSingleList;
+  title: ReactElement<unknown, string>;
   handleUpdate: (payload: Field) => void;
   handleDelete: () => void;
 }
 
 interface SortableColumnProps {
-  items: IFormSectionList[];
+  items: FormItemSingleList[];
   listItemTitle: (item: any) => JSX.Element;
   columnTitle: string;
   handleUpdate: (parentId: string) => any;

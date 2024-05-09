@@ -20,13 +20,8 @@ interface PdfViewProps {
 
 // Create Document Component
 const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
-  (props, ref) => {
-    const {
-      personalDetails,
-      skills,
-      employmentHistory,
-      education,
-    } = props;
+  function PdfView(props, ref) {
+    const { personalDetails, skills, employmentHistory, education } = props;
 
     return (
       <div
@@ -40,14 +35,14 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
       >
         <div ref={ref}>
           <Stack className="page">
-              <div className="nameTitleContainer">
-                <div className="nameTitle">
-                  <div className="name title">
-                    {personalDetails.first_name} {personalDetails.last_name}
-                  </div>
-                  <div className="jobTitle">{personalDetails.job_title}</div>
+            <div className="nameTitleContainer">
+              <div className="nameTitle">
+                <div className="name title">
+                  {personalDetails.first_name} {personalDetails.last_name}
                 </div>
+                <div className="jobTitle">{personalDetails.job_title}</div>
               </div>
+            </div>
             <Stack direction={"row"}>
               <div className="col colLeft">
                 <div className="details section">
@@ -79,7 +74,7 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
                     className="professionalSummary"
                     dangerouslySetInnerHTML={{
                       __html: DOMPurify.sanitize(
-                        personalDetails.professional_summary
+                        personalDetails.professional_summary,
                       ),
                     }}
                   />
@@ -90,7 +85,10 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
                     return (
                       <div key={i}>
                         <div className="employmentHeader">
-                          <Stack direction={"row"} justifyContent={"space-between"}>
+                          <Stack
+                            direction={"row"}
+                            justifyContent={"space-between"}
+                          >
                             <div className="subTitle">
                               {employment.job_title}, {employment.employer}
                             </div>
@@ -138,7 +136,7 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
         </div>
       </div>
     );
-  }
+  },
 );
 
 export default PdfView;

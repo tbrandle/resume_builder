@@ -3,7 +3,7 @@ import FormControl from "@mui/material/FormControl";
 import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
 import AddCircleOutline from "@mui/icons-material/AddCircleOutline";
 import ContentCopy from "@mui/icons-material/ContentCopy";
 import Delete from "@mui/icons-material/Delete";
@@ -27,7 +27,7 @@ interface HeaderProps {
 
 const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
   const { api } = useApi();
-  let [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const [selectResumeList, setSelectResumeList] = useState<
     { id: string; title: string }[]
@@ -84,7 +84,7 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
     setSearchParams({ resumeId: id });
   };
 
-  const handleSelectResume = async (e: any) => {
+  const handleSelectResume = async (e: SelectChangeEvent<string>) => {
     setSearchParams({ resumeId: e.target.value });
   };
 
@@ -98,7 +98,7 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
           onChange={handleSelectResume}
           value={
             selectResumeList.find(
-              (resume) => resume.id === searchParams.get("resumeId")
+              (resume) => resume.id === searchParams.get("resumeId"),
             )?.id || ""
           }
         >
@@ -128,10 +128,7 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
           </IconButton>
         </Tooltip>
         <Tooltip title="Duplicate">
-          <IconButton
-            className={"iconButton"}
-            onClick={handleDuplicate}
-          >
+          <IconButton className={"iconButton"} onClick={handleDuplicate}>
             <ContentCopy />
           </IconButton>
         </Tooltip>
@@ -141,9 +138,7 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
           </IconButton>
         </Tooltip>
         <Tooltip title="Delete">
-          <IconButton
-            onClick={handleDelete}
-          >
+          <IconButton onClick={handleDelete}>
             <Delete />
           </IconButton>
         </Tooltip>

@@ -8,8 +8,8 @@
 }
 
 .emptyStateContainer {
-    height: 95vh;
-    width:100%;
-    justify-content: center;
-    align-items:center;
-  }
+  height: 95vh;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+}
