@@ -11,7 +11,7 @@ import Download from "@mui/icons-material/Download";
 import Save from "@mui/icons-material/Save";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
-import { Dispatch, RefObject, useCallback, useEffect, useState } from "react";
+import { ChangeEvent, Dispatch, RefObject, useCallback, useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import { defaultResume } from "../../data/defaultData";
 import useApi from "../../hooks/useApi";
@@ -106,6 +106,10 @@ const Header = ({
     setSearchParams({ resumeId: e.target.value });
   };
 
+  const handleBotToggle = async (_e: ChangeEvent<HTMLInputElement>, checked: boolean) => {
+    setIsBotTheme(checked);
+  };
+
   return (
     <Stack direction={"row"} className={"headerContainer"}>
       <FormControl variant="standard" sx={{ m: 1, minWidth: 300 }}>
@@ -134,7 +138,7 @@ const Header = ({
       <Stack direction={"row"} columnGap={3} alignItems="center">
         <BotToggle
           checked={isBotTheme}
-          onChange={(e) => setIsBotTheme(e.target.checked)}
+          onChange={handleBotToggle}
         />
         <Tooltip title="New resume">
           <IconButton className={"iconButton"} onClick={createNewResume}>
