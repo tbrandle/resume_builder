@@ -1,5 +1,5 @@
 import { uniqueId } from "lodash";
-import { Resume, Skill, SkillLevel } from "../types/resumeTypes";
+import { Education, EmploymentHistory, IFormSectionList, Resume, Skill } from "../types/resumeTypes";
 
 const masterResume: Resume = {
   resume_title: "Master",
@@ -578,8 +578,117 @@ const masterResume: Resume = {
   ],
 };
 
+export const defaultSkill = (): Skill & IFormSectionList => ({
+  skill: "",
+  skill_level: "",
+  id: uniqueId(),
+  fields: [
+    {
+      id: uniqueId(),
+      label: "skill",
+      type: "text",
+      value: "",
+    },
+    {
+      id: uniqueId(),
+      label: "skill_level",
+      type: "select",
+      value: "",
+      options: ["Novice", "Beginner", "Skillful", "Experienced", "Expert"],
+    },
+  ],
+});
 
-export const defaultResume: Resume = {
+export const defaultEmployment = (): EmploymentHistory & IFormSectionList => ({
+  job_title: "",
+  employer: "",
+  city: "",
+  state: "",
+  date_start: "",
+  date_end: "",
+  description: "",
+  id: uniqueId(),
+  fields: [
+    {
+      id: uniqueId(),
+      label: "job_title",
+      type: "text",
+      value: "",
+    },
+    {
+      id: uniqueId(),
+      label: "employer",
+      type: "text",
+      value: "",
+    },
+    {
+      id: uniqueId(),
+      label: "city",
+      type: "text",
+      value: "",
+    },
+    {
+      id: uniqueId(),
+      label: "state",
+      type: "text",
+      value: "",
+    },
+    {
+      id: uniqueId(),
+      label: "date_start",
+      type: "text",
+      value: "",
+    },
+    {
+      id: uniqueId(),
+      label: "date_end",
+      type: "text",
+      value: "",
+    },
+    {
+      id: uniqueId(),
+      label: "description",
+      type: "html",
+      value: "",
+    },
+  ],
+});
+
+export const defaultEducation = (): Education & IFormSectionList => ({
+  school: "",
+  degree: "",
+  city: "",
+  state: "",
+  id: uniqueId(),
+  fields: [
+    {
+      id: uniqueId(),
+      label: "school",
+      type: "text",
+      value: "",
+    },
+    {
+      id: uniqueId(),
+      label: "degree",
+      type: "text",
+      value: "",
+    },
+    {
+      id: uniqueId(),
+      label: "city",
+      type: "text",
+      value: "",
+    },
+    {
+      id: uniqueId(),
+      label: "state",
+      type: "text",
+      value: "",
+    },
+  ],
+});
+
+export const defaultResume = (): Resume => ({
   resume_title: "",
   personal_details: {
     first_name: "",
@@ -652,117 +761,7 @@ export const defaultResume: Resume = {
       },
     ],
   },
-  skills: [
-    {
-      skill: "",
-      skill_level: "",
-      id: uniqueId(),
-      fields: [
-        {
-          id: uniqueId(),
-          label: "skill",
-          type: "text",
-          value: "",
-        },
-        {
-          id: uniqueId(),
-          label: "skill_level",
-          type: "select",
-          value: "",
-          options: ["Novice", "Beginner", "Skillful", "Experienced", "Expert"],
-        },
-      ],
-    },
-  ],
-  employment_history: [
-    {
-      job_title: "",
-      employer: "",
-      city: "",
-      state: "",
-      date_start: "",
-      date_end: "",
-      description: "",
-      id: uniqueId(),
-      fields: [
-        {
-          id: uniqueId(),
-          label: "job_title",
-          type: "text",
-          value: "",
-        },
-        {
-          id: uniqueId(),
-          label: "employer",
-          type: "text",
-          value: "",
-        },
-        {
-          id: uniqueId(),
-          label: "city",
-          type: "text",
-          value: "",
-        },
-        {
-          id: uniqueId(),
-          label: "state",
-          type: "text",
-          value: "",
-        },
-        {
-          id: uniqueId(),
-          label: "date_start",
-          type: "text",
-          value: "",
-        },
-        {
-          id: uniqueId(),
-          label: "date_end",
-          type: "text",
-          value: "",
-        },
-        {
-          id: uniqueId(),
-          label: "description",
-          type: "html",
-          value: "",
-        },
-      ],
-    },
-  ],
-  education: [
-    {
-      school: "",
-      degree: "",
-      city: "",
-      state: "",
-      id: uniqueId(),
-      fields: [
-        {
-          id: uniqueId(),
-          label: "school",
-          type: "text",
-          value: "",
-        },
-        {
-          id: uniqueId(),
-          label: "degree",
-          type: "text",
-          value: "",
-        },
-        {
-          id: uniqueId(),
-          label: "city",
-          type: "text",
-          value: "",
-        },
-        {
-          id: uniqueId(),
-          label: "state",
-          type: "text",
-          value: "",
-        },
-      ],
-    },
-  ],
-};
+  skills: [],
+  employment_history: [],
+  education: [],
+});

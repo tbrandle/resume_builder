@@ -1,6 +1,7 @@
 import { uniqueId } from "lodash";
 import { Field, Resume, SkillLevel } from "../types/resumeTypes";
 import { arrayMove } from "@dnd-kit/sortable";
+import { defaultEducation, defaultEmployment, defaultSkill } from "../data/defaultData";
 
 export const actionConstants = {
   UPDATE_RESUME_TITLE: "UPDATE_RESUME_TITLE",
@@ -146,29 +147,9 @@ const resumeReducer = (state: Resume, action: Action) => {
       };
     }
     case actionConstants.ADD_SKILL: {
-      const newSkill: (typeof state.skills)[0] = {
-        skill: "",
-        skill_level: "",
-        id: uniqueId(),
-        fields: [
-          {
-            id: uniqueId(),
-            label: "skill",
-            type: "text",
-            value: "",
-          },
-          {
-            id: uniqueId(),
-            label: "skill_level",
-            type: "select",
-            value: "",
-            options: Object.keys(SkillLevel).map((key) => key),
-          },
-        ],
-      };
       return {
         ...state,
-        skills: [...state.skills, newSkill],
+        skills: [...state.skills, defaultSkill()],
       };
     }
     case actionConstants.REORDER_SKILLS: {
@@ -204,28 +185,9 @@ const resumeReducer = (state: Resume, action: Action) => {
       };
     }
     case actionConstants.ADD_EMPLOYMENT_HISTORY: {
-      const newEmployment: (typeof state.employment_history)[0] = {
-        job_title: "",
-        employer: "",
-        city: "",
-        state: "",
-        date_start: "",
-        date_end: "",
-        description: "",
-        id: uniqueId(),
-        fields: [
-          { id: uniqueId(), label: "job_title", type: "text", value: "" },
-          { id: uniqueId(), label: "employer", type: "text", value: "" },
-          { id: uniqueId(), label: "city", type: "text", value: "" },
-          { id: uniqueId(), label: "state", type: "text", value: "" },
-          { id: uniqueId(), label: "date_start", type: "text", value: "" },
-          { id: uniqueId(), label: "date_end", type: "text", value: "" },
-          { id: uniqueId(), label: "description", type: "html", value: "" },
-        ],
-      };
       return {
         ...state,
-        employment_history: [...state.employment_history, newEmployment],
+        employment_history: [...state.employment_history, defaultEmployment()],
       };
     }
     case actionConstants.REORDER_EMPLOYMENT_HISTORY: {
@@ -275,22 +237,9 @@ const resumeReducer = (state: Resume, action: Action) => {
       };
     }
     case actionConstants.ADD_EDUCATION: {
-      const newEmployment: (typeof state.education)[0] = {
-        school: "",
-        degree: "",
-        city: "",
-        state: "",
-        id: uniqueId(),
-        fields: [
-          { id: uniqueId(), label: "school", type: "text", value: "" },
-          { id: uniqueId(), label: "degree", type: "text", value: "" },
-          { id: uniqueId(), label: "city", type: "text", value: "" },
-          { id: uniqueId(), label: "state", type: "text", value: "" },
-        ],
-      };
       return {
         ...state,
-        education: [...state.education, newEmployment],
+        education: [...state.education, defaultEducation()],
       };
     }
     case actionConstants.UPDATE_EDUCATION: {
