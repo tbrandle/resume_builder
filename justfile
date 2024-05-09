@@ -16,3 +16,6 @@ restart-colima:
 
 up: 
   docker-compose up
+
+backend:
+  docker-compose up db server

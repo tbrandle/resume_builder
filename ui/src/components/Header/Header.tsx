@@ -15,7 +15,6 @@ import {
   RefObject,
   useCallback,
   useEffect,
-  useMemo,
   useState,
 } from "react";
 import { useReactToPrint } from "react-to-print";
@@ -32,24 +31,24 @@ interface HeaderProps {
 }
 
 const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
-  const { api, error, isLoading } = useApi();
+  const { api } = useApi();
   let [searchParams, setSearchParams] = useSearchParams();
 
   const [selectResumeList, setSelectResumeList] = useState<
     { id: string; title: string }[]
   >([]);
 
-  const fetchAndSetMasterList = async () => {
+  const fetchAndSetMasterList = useCallback(async () => {
     const response = await api.get("list_ids");
     setSelectResumeList(response);
-  };
+  }, [setSelectResumeList, api]);
 
   useEffect(() => {
     const fetchResumes = async () => {
       await fetchAndSetMasterList();
     };
     fetchResumes();
-  }, [setSelectResumeList, searchParams]);
+  }, [fetchAndSetMasterList, searchParams]);
 
   const handleDuplicate = async () => {
     const duplicateResume: Resume = {
@@ -73,7 +72,6 @@ const Header = ({ formData, dispatch, pdfRef }: HeaderProps) => {
   };
 
   const handleDelete = async (id: string) => {
-    console.log("DELETE", id);
     await api.delete(id);
     searchParams.delete("resumeId");
     setSearchParams(searchParams);
