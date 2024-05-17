@@ -28,6 +28,7 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
       skills,
       employmentHistory,
       education,
+      socialMedia,
       isBotTheme,
       pageRef,
     } = props;
@@ -67,6 +68,40 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
                   <div className="section">
                     <div className="subTitle">Email</div>
                     <div>{personalDetails.email}</div>
+                  </div>
+                </div>
+                <div className="details section">
+                  <div className="title">Links</div>
+
+                  <div className="section">
+                    <div className="subTitle">Portfolio</div>
+                    <a
+                      href={`https://${socialMedia.portfolio}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {socialMedia.portfolio}
+                    </a>
+                  </div>
+                  <div className="section">
+                    <div className="subTitle">Github</div>
+                    <a
+                      href={`https://${socialMedia.github}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {socialMedia.github}
+                    </a>
+                  </div>
+                  <div className="section">
+                    <div className="subTitle">LinkedIn</div>
+                    <a
+                      href={`https://${socialMedia.linked_in}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {socialMedia.linked_in}
+                    </a>
                   </div>
                 </div>
                 <div className="details section ">
