@@ -1,4 +1,4 @@
-setup: restart-colima install-ui install-node build-node build-ui
+setup: restart-colima build-node build-ui
 
 rebuild-images: prune build-node build-ui
 prune: 

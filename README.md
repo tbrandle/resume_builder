@@ -14,6 +14,7 @@ Steps to run app for the first time:
    - `DATABASE_URL` is the url Prisma ORM uses to connect to the postgres database. It should follow this format `postgres://${USERNAME}:${PASSWORD}@db:${DB_PORT}/resume_db`
 2. Add `.env` file to the `./ui` directory with the following variables:
    - `REACT_APP_BASE_URL` The value should look something like this: `http://localhost:${BACKEND_PORT}/api/resumes`
+3. Run `just install-ui` followed by `just install-node`.
 3. Once colima is installed, you can run `just setup`. This will start up colima with the correct memory allocations, build the ui, and backend images
 4. Next, run `just up` to start up the postgres, node, and react containers.
 5. Visit `localhost:3000` and you are ready to make your first resume!
