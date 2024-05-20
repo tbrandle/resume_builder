@@ -1,5 +1,3 @@
-# Getting Started with Create React App
-
 # Local start up
 
 Make sure you have the following packages installed on your machine: docker, docker-compose, colima, just. If you do not have these packages installed, follow these steps:
