@@ -9,8 +9,12 @@ export const getAllResumes = async (
   res: Response,
   next: NextFunction
 ) => {
-  const allResumes = await prisma.resume.findMany();
-  res.status(200).send(allResumes);
+  try {
+    const allResumes = await prisma.resume.findMany();
+    res.status(200).send(allResumes);
+  } catch (error) {
+    next(error);
+  }
 };
 
 export const getListIds = async (
@@ -19,7 +23,9 @@ export const getListIds = async (
   next: NextFunction
 ) => {
   try {
-    const allResumes = await prisma.resume.findMany();
+    const allResumes = await prisma.resume.findMany({
+      select: { id: true, resume: true },
+    });
     res.status(200).send(
       allResumes.map(({ resume, id }) => {
         const resumeObject = resume as Prisma.JsonObject;
@@ -27,8 +33,7 @@ export const getListIds = async (
       })
     );
   } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
+    next(error);
   }
 };
 
@@ -37,16 +42,20 @@ export const getSingleResume = async (
   res: Response,
   next: NextFunction
 ) => {
-  const response = await prisma.resume.findUnique({
-    where: { id: req.params.id },
-  });
+  try {
+    const response = await prisma.resume.findUnique({
+      where: { id: req.params.id },
+    });
 
-  if (!response) {
-    return next(new NotFoundException("Resume not found."));
+    if (!response) {
+      return next(new NotFoundException("Resume not found."));
+    }
+
+    const resumeObj = response.resume as Prisma.JsonObject;
+    res.status(200).send({ ...resumeObj, id: response.id });
+  } catch (error) {
+    next(error);
   }
-
-  const resumeObj = response?.resume as Prisma.JsonObject;
-  res.status(200).send({ ...resumeObj, id: response?.id });
 };
 
 export const createResume = async (
@@ -61,20 +70,14 @@ export const createResume = async (
       },
     });
 
-    if (!resume) {
-      return next(
-        new BadRequestException("Something went wrong! Resume was not created.")
-      );
-    }
-
     res
-      .status(200)
+      .status(201)
       .send({ message: `Successfully added resume`, id: resume.id });
   } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
+    next(error);
   }
 };
+
 export const updateResume = async (
   req: Request,
   res: Response,
@@ -90,19 +93,25 @@ export const updateResume = async (
       },
     });
 
-    if (!resume) {
-      return next(new NotFoundException("Resume not found."));
-    }
-
     res
       .status(200)
       .send({ message: `Successfully updated resume`, id: resume.id });
   } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2025"
+    ) {
+      return next(new NotFoundException("Resume not found."));
+    }
+    next(error);
   }
 };
-export const deleteResume = async (req: Request, res: Response) => {
+
+export const deleteResume = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const resume = await prisma.resume.delete({
       where: {
@@ -114,7 +123,12 @@ export const deleteResume = async (req: Request, res: Response) => {
       .status(200)
       .send({ message: `Successfully deleted resume`, id: resume.id });
   } catch (error) {
-    console.log(error);
-    res.sendStatus(500);
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2025"
+    ) {
+      return next(new NotFoundException("Resume not found."));
+    }
+    next(error);
   }
 };

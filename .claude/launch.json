@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "ui",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd /Users/timbrandle/dev/resume_builder/ui && npm start"],
+      "port": 3000
+    },
+    {
+      "name": "server",
+      "runtimeExecutable": "bash",
+      "runtimeArgs": ["-c", "cd /Users/timbrandle/dev/resume_builder/server && set -a && source .env.local && set +a && npm run start:dev"],
+      "port": 8080
+    }
+  ]
+}

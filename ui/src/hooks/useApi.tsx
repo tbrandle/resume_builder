@@ -12,7 +12,6 @@ const useApi = () => {
   const [error, setError] = useState<unknown>();
 
   const fetchResume = async <T,>({ method, url, body }: FetchArgs<T>) => {
-    console.log(`[${method}]: ${url}`);
     setIsLoading(true);
 
     const response = await fetch(
@@ -30,7 +29,6 @@ const useApi = () => {
       setIsLoading(false);
       return responseJson;
     } else {
-      console.log({ responseJson });
       setIsLoading(false);
       setError(responseJson);
       throw Error(responseJson);

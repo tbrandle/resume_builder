@@ -1,12 +1,15 @@
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
+import React, { useCallback } from "react";
 import { Action, actionConstants } from "../../reducers/resumeReducer";
 import { Field, Resume } from "../../types/resumeTypes";
 import "react-quill/dist/quill.snow.css";
 import { FormSection } from "./FormSection";
 import "./ResumeForm.css";
 import SortableColumn from "./SortableColumn";
+import SortableItemSummary from "./SortableItemSummary";
+import SectionTitle from "../shared/SectionTitle";
 import TextField from "@mui/material/TextField";
 
 const ResumeForm = ({
@@ -16,6 +19,96 @@ const ResumeForm = ({
   resume: Resume;
   dispatch: React.Dispatch<Action>;
 }) => {
+  const handleUpdatePersonalDetails = useCallback(
+    (payload: Field) =>
+      dispatch({ type: actionConstants.UPDATE_PERSONAL_DETAILS, payload }),
+    [dispatch],
+  );
+
+  const handleUpdateSocialMedia = useCallback(
+    (payload: Field) =>
+      dispatch({ type: actionConstants.UPDATE_SOCIAL_MEDIA, payload }),
+    [dispatch],
+  );
+
+  const handleSkillsUpdate = useCallback(
+    (parentId: string) => (fieldPayload: Field) =>
+      dispatch({
+        type: actionConstants.UPDATE_SKILLS,
+        payload: { parentId, fieldPayload },
+      }),
+    [dispatch],
+  );
+
+  const handleSkillsDelete = useCallback(
+    (parentId: string) => () =>
+      dispatch({ type: actionConstants.DELETE_SKILL, payload: parentId }),
+    [dispatch],
+  );
+
+  const handleSkillsDragEnd = useCallback(
+    (activeId: string, overId: string) =>
+      dispatch({
+        type: actionConstants.REORDER_SKILLS,
+        payload: { activeId, overId },
+      }),
+    [dispatch],
+  );
+
+  const handleEmploymentUpdate = useCallback(
+    (parentId: string) => (fieldPayload: Field) =>
+      dispatch({
+        type: actionConstants.UPDATE_EMPLOYMENT_HISTORY,
+        payload: { parentId, fieldPayload },
+      }),
+    [dispatch],
+  );
+
+  const handleEmploymentDelete = useCallback(
+    (parentId: string) => () =>
+      dispatch({
+        type: actionConstants.DELETE_EMPLOYMENT,
+        payload: parentId,
+      }),
+    [dispatch],
+  );
+
+  const handleEmploymentDragEnd = useCallback(
+    (activeId: string, overId: string) =>
+      dispatch({
+        type: actionConstants.REORDER_EMPLOYMENT_HISTORY,
+        payload: { activeId, overId },
+      }),
+    [dispatch],
+  );
+
+  const handleEducationUpdate = useCallback(
+    (parentId: string) => (fieldPayload: Field) =>
+      dispatch({
+        type: actionConstants.UPDATE_EDUCATION,
+        payload: { parentId, fieldPayload },
+      }),
+    [dispatch],
+  );
+
+  const handleEducationDelete = useCallback(
+    (parentId: string) => () =>
+      dispatch({
+        type: actionConstants.DELETE_EDUCATION,
+        payload: parentId,
+      }),
+    [dispatch],
+  );
+
+  const handleEducationDragEnd = useCallback(
+    (activeId: string, overId: string) =>
+      dispatch({
+        type: actionConstants.REORDER_EDUCATION,
+        payload: { activeId, overId },
+      }),
+    [dispatch],
+  );
+
   return (
     <Box
       component="form"
@@ -43,79 +136,27 @@ const ResumeForm = ({
           }}
         />
         <FormSection
-          title={
-            <h3
-              style={{
-                width: "100%",
-                textAlign: "left",
-                paddingLeft: "10px",
-              }}
-            >
-              Personal Details
-            </h3>
-          }
+          title={<SectionTitle>Personal Details</SectionTitle>}
           data={resume.personal_details}
-          handleUpdate={(payload) =>
-            dispatch({
-              type: actionConstants.UPDATE_PERSONAL_DETAILS,
-              payload,
-            })
-          }
+          handleUpdate={handleUpdatePersonalDetails}
         />
         <FormSection
-          title={
-            <h3
-              style={{
-                paddingLeft: "10px",
-              }}
-            >
-              Social Media
-            </h3>
-          }
+          title={<SectionTitle>Social Media</SectionTitle>}
           data={resume.social_media}
-          handleUpdate={(payload) =>
-            dispatch({
-              type: actionConstants.UPDATE_SOCIAL_MEDIA,
-              payload,
-            })
-          }
+          handleUpdate={handleUpdateSocialMedia}
         />
 
         <SortableColumn
           columnTitle={"Skills"}
-          onDragEnd={(activeId, overId) => {
-            dispatch({
-              type: actionConstants.REORDER_SKILLS,
-              payload: {
-                activeId,
-                overId,
-              },
-            });
-          }}
+          onDragEnd={handleSkillsDragEnd}
           listItemTitle={(skill) => (
-            <Stack
-              style={{
-                padding: "20px",
-                fontSize: "13px",
-              }}
-              spacing={0.5}
-            >
-              <strong>{skill.skill}</strong>
-              <div>{skill.skill_level}</div>
-            </Stack>
+            <SortableItemSummary
+              primary={skill.skill}
+              secondary={skill.skill_level}
+            />
           )}
-          handleUpdate={(parentId: string) => (fieldPayload: Field) => {
-            dispatch({
-              type: actionConstants.UPDATE_SKILLS,
-              payload: { parentId, fieldPayload },
-            });
-          }}
-          handleDelete={(parentId: string) => () => {
-            dispatch({
-              type: actionConstants.DELETE_SKILL,
-              payload: parentId,
-            });
-          }}
+          handleUpdate={handleSkillsUpdate}
+          handleDelete={handleSkillsDelete}
           items={resume.skills}
         />
         <Button onClick={() => dispatch({ type: actionConstants.ADD_SKILL })}>
@@ -124,45 +165,19 @@ const ResumeForm = ({
 
         <SortableColumn
           columnTitle={"Employment History"}
-          onDragEnd={(activeId, overId) => {
-            dispatch({
-              type: actionConstants.REORDER_EMPLOYMENT_HISTORY,
-              payload: {
-                activeId,
-                overId,
-              },
-            });
-          }}
+          onDragEnd={handleEmploymentDragEnd}
           listItemTitle={(employment) => (
-            <Stack
-              style={{
-                padding: "20px",
-                fontSize: "13px",
-              }}
-              spacing={0.5}
-            >
-              <strong>
-                {employment.job_title}, {employment.employer}
-              </strong>
-              {employment.date_start ? (
-                <div>
-                  {employment.date_start} - {employment.date_end}
-                </div>
-              ) : null}
-            </Stack>
+            <SortableItemSummary
+              primary={`${employment.job_title}, ${employment.employer}`}
+              secondary={
+                employment.date_start
+                  ? `${employment.date_start} - ${employment.date_end}`
+                  : undefined
+              }
+            />
           )}
-          handleUpdate={(parentId: string) => (fieldPayload: Field) =>
-            dispatch({
-              type: actionConstants.UPDATE_EMPLOYMENT_HISTORY,
-              payload: { parentId, fieldPayload },
-            })
-          }
-          handleDelete={(parentId: string) => () => {
-            dispatch({
-              type: actionConstants.DELETE_EMPLOYMENT,
-              payload: parentId,
-            });
-          }}
+          handleUpdate={handleEmploymentUpdate}
+          handleDelete={handleEmploymentDelete}
           items={resume.employment_history}
         />
         <Button
@@ -175,39 +190,15 @@ const ResumeForm = ({
 
         <SortableColumn
           columnTitle={"Education"}
-          onDragEnd={(activeId, overId) => {
-            dispatch({
-              type: actionConstants.REORDER_EDUCATION,
-              payload: {
-                activeId,
-                overId,
-              },
-            });
-          }}
+          onDragEnd={handleEducationDragEnd}
           listItemTitle={(education) => (
-            <Stack
-              style={{
-                padding: "20px",
-                fontSize: "13px",
-              }}
-              spacing={0.5}
-            >
-              <strong>{education.school}</strong>
-              <div>{education.degree}</div>
-            </Stack>
+            <SortableItemSummary
+              primary={education.school}
+              secondary={education.degree}
+            />
           )}
-          handleUpdate={(parentId: string) => (fieldPayload: Field) =>
-            dispatch({
-              type: actionConstants.UPDATE_EDUCATION,
-              payload: { parentId, fieldPayload },
-            })
-          }
-          handleDelete={(parentId: string) => () => {
-            dispatch({
-              type: actionConstants.DELETE_EDUCATION,
-              payload: parentId,
-            });
-          }}
+          handleUpdate={handleEducationUpdate}
+          handleDelete={handleEducationDelete}
           items={resume.education}
         />
 
@@ -221,4 +212,4 @@ const ResumeForm = ({
   );
 };
 
-export default ResumeForm;
+export default React.memo(ResumeForm);

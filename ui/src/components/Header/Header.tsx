@@ -4,6 +4,8 @@ import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Select, { SelectChangeEvent } from "@mui/material/Select";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 import AddCircleOutline from "@mui/icons-material/AddCircleOutline";
 import ContentCopy from "@mui/icons-material/ContentCopy";
 import Delete from "@mui/icons-material/Delete";
@@ -48,6 +50,7 @@ const Header = ({
 }: HeaderProps) => {
   const { api } = useApi();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [errorMsg, setErrorMsg] = useState<string | null>(null);
 
   const [selectResumeList, setSelectResumeList] = useState<
     { id: string; title: string }[]
@@ -58,7 +61,7 @@ const Header = ({
       const response = await api.get("list_ids");
       setSelectResumeList(response);
     } catch (error) {
-      console.log({ error });
+      setErrorMsg("Failed to load resume list.");
     }
   }, [setSelectResumeList, api]);
 
@@ -79,7 +82,7 @@ const Header = ({
       const newResume = await api.post(duplicateResume);
       setSearchParams({ resumeId: newResume.id });
     } catch (error) {
-      console.log({ error });
+      setErrorMsg("Failed to duplicate resume. Please try again.");
     }
   };
 
@@ -96,16 +99,21 @@ const Header = ({
       });
       fetchAndSetMasterList();
     } catch (e) {
-      console.error(e);
+      setErrorMsg("Failed to save resume. Please try again.");
     }
   };
 
   const handleDelete = async () => {
     if (resume.id) {
-      await api.delete(resume.id);
-      searchParams.delete("resumeId");
-      setSearchParams(searchParams);
-      fetchAndSetMasterList();
+      try {
+        await api.delete(resume.id);
+        searchParams.delete("resumeId");
+        setSearchParams(searchParams);
+        fetchAndSetMasterList();
+      } catch (error) {
+        setErrorMsg("Failed to delete resume. Please try again.");
+        return;
+      }
     }
     dispatch({
       type: actionConstants.SET_RESUME,
@@ -114,15 +122,19 @@ const Header = ({
   };
 
   const createNewResume = async () => {
-    const { id } = await api.post(defaultResume({ resume_title: "New" }));
-    setSearchParams({ resumeId: id });
+    try {
+      const { id } = await api.post(defaultResume({ resume_title: "New" }));
+      setSearchParams({ resumeId: id });
+    } catch (error) {
+      setErrorMsg("Failed to create resume. Please try again.");
+    }
   };
 
-  const handleSelectResume = async (e: SelectChangeEvent<string>) => {
+  const handleSelectResume = (e: SelectChangeEvent<string>) => {
     setSearchParams({ resumeId: e.target.value });
   };
 
-  const handleBotToggle = async (
+  const handleBotToggle = (
     _e: ChangeEvent<HTMLInputElement>,
     checked: boolean,
   ) => {
@@ -130,69 +142,81 @@ const Header = ({
   };
 
   return (
-    <Stack direction={"row"} className={"headerContainer"}>
-      <Stack direction={"row"} columnGap={4}>
-        <FormControl variant="standard" sx={{ m: 1, minWidth: 300 }}>
-          <InputLabel id="resume-select-label">Select resume</InputLabel>
-          <Select
-            labelId="resume-select-label"
-            id="demo-simple-select"
-            onChange={handleSelectResume}
-            value={
-              selectResumeList.find(
-                (resume) => resume.id === searchParams.get("resumeId"),
-              )?.id || ""
-            }
-          >
-            {selectResumeList.map(({ id, title }, i) => {
-              return (
-                <MenuItem key={`${id}-${i}`} value={id}>
-                  {" "}
-                  {title}
-                </MenuItem>
-              );
-            })}
-          </Select>
-        </FormControl>
-        <BotToggle checked={isBotTheme} onChange={handleBotToggle} />
-      </Stack>
-      <div className={"numberOfPages"}>
-        {numberOfPages} {numberOfPages < 2 ? "page" : "pages"}
-      </div>
-      <Stack direction={"row"} columnGap={3} alignItems="center">
-        <Tooltip title="New resume">
-          <IconButton className={"iconButton"} onClick={createNewResume}>
-            <AddCircleOutline />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Download PDF">
-          <IconButton className={"iconButton"} onClick={handlePrint}>
-            <Download />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Duplicate">
-          <IconButton className={"iconButton"} onClick={handleDuplicate}>
-            <ContentCopy />
-          </IconButton>
-        </Tooltip>
-        <Tooltip title="Save">
-          <span>
-            <IconButton
-              className={"iconButton"}
-              onClick={handleSave}
-              disabled={isSaved}
+    <>
+      <Stack direction={"row"} className={"headerContainer"}>
+        <Stack direction={"row"} columnGap={4}>
+          <FormControl variant="standard" sx={{ m: 1, minWidth: 300 }}>
+            <InputLabel id="resume-select-label">Select resume</InputLabel>
+            <Select
+              labelId="resume-select-label"
+              id="demo-simple-select"
+              onChange={handleSelectResume}
+              value={
+                selectResumeList.find(
+                  (resume) => resume.id === searchParams.get("resumeId"),
+                )?.id || ""
+              }
             >
-              <Save />
+              {selectResumeList.map(({ id, title }, i) => {
+                return (
+                  <MenuItem key={`${id}-${i}`} value={id}>
+                    {" "}
+                    {title}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+          <BotToggle checked={isBotTheme} onChange={handleBotToggle} />
+        </Stack>
+        <div className={"numberOfPages"}>
+          {numberOfPages} {numberOfPages < 2 ? "page" : "pages"}
+        </div>
+        <Stack direction={"row"} columnGap={3} alignItems="center">
+          <Tooltip title="New resume">
+            <IconButton className={"iconButton"} onClick={createNewResume}>
+              <AddCircleOutline />
             </IconButton>
-          </span>
-        </Tooltip>
-        <Tooltip title="Delete">
-          <IconButton className={"iconButton"} onClick={handleDelete}>
-            <Delete />
-          </IconButton>
-        </Tooltip>
+          </Tooltip>
+          <Tooltip title="Download PDF">
+            <IconButton className={"iconButton"} onClick={handlePrint}>
+              <Download />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Duplicate">
+            <IconButton className={"iconButton"} onClick={handleDuplicate}>
+              <ContentCopy />
+            </IconButton>
+          </Tooltip>
+          <Tooltip title="Save">
+            <span>
+              <IconButton
+                className={"iconButton"}
+                onClick={handleSave}
+                disabled={isSaved}
+              >
+                <Save />
+              </IconButton>
+            </span>
+          </Tooltip>
+          <Tooltip title="Delete">
+            <IconButton className={"iconButton"} onClick={handleDelete}>
+              <Delete />
+            </IconButton>
+          </Tooltip>
+        </Stack>
       </Stack>
-    </Stack>
+      <Snackbar
+        open={!!errorMsg}
+        autoHideDuration={4000}
+        onClose={() => setErrorMsg(null)}
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+      >
+        <Alert severity="error" onClose={() => setErrorMsg(null)}>
+          {errorMsg}
+        </Alert>
+      </Snackbar>
+    </>
   );
 };
 
