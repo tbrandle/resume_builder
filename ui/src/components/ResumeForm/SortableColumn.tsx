@@ -8,6 +8,7 @@ import { ReactElement } from "react";
 import { SortableContext, useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { DndContext, closestCorners } from "@dnd-kit/core";
+import SectionTitle from "../shared/SectionTitle";
 
 interface SortableFormItemProps {
   item: FormItemSingleList;
@@ -16,12 +17,12 @@ interface SortableFormItemProps {
   handleDelete: () => void;
 }
 
-interface SortableColumnProps {
-  items: FormItemSingleList[];
-  listItemTitle: (item: any) => JSX.Element;
+interface SortableColumnProps<T extends FormItemSingleList> {
+  items: T[];
+  listItemTitle: (item: T) => JSX.Element;
   columnTitle: string;
-  handleUpdate: (parentId: string) => any;
-  handleDelete: (parentId: string) => any;
+  handleUpdate: (parentId: string) => (payload: Field) => void;
+  handleDelete: (parentId: string) => () => void;
   onDragEnd: (activeId: string, overId: string) => void;
 }
 
@@ -62,14 +63,14 @@ const SortableFormItem = ({
   );
 };
 
-const SortableColumn = ({
+const SortableColumn = <T extends FormItemSingleList>({
   items,
   listItemTitle,
   columnTitle,
   handleUpdate,
   handleDelete,
   onDragEnd,
-}: SortableColumnProps) => {
+}: SortableColumnProps<T>) => {
   return (
     <DndContext
       collisionDetection={closestCorners}
@@ -79,15 +80,7 @@ const SortableColumn = ({
         onDragEnd(active.id.toString(), over.id.toString());
       }}
     >
-      <h3
-        style={{
-          paddingLeft: "10px",
-          textAlign: "left",
-          width: "100%",
-        }}
-      >
-        {columnTitle}
-      </h3>
+      <SectionTitle>{columnTitle}</SectionTitle>
       <SortableContext items={items}>
         {items.map((item, i) => {
           return (

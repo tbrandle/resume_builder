@@ -1,4 +1,4 @@
-import { Field, ReduxState, Resume } from "../types/resumeTypes";
+import { Field, FormItemSingleList, ReduxState, Resume } from "../types/resumeTypes";
 import { arrayMove } from "@dnd-kit/sortable";
 import {
   defaultEducation,
@@ -102,6 +102,30 @@ const updateFieldState = (fields: Field[], payload: Partial<Field>) =>
       : field,
   );
 
+const reorderById = <T extends { id: string }>(
+  array: T[],
+  activeId: string,
+  overId: string,
+): T[] => {
+  const getPos = (id: string) => array.findIndex((item) => item.id === id);
+  return arrayMove(array, getPos(activeId), getPos(overId));
+};
+
+const updateItemById = <T extends FormItemSingleList>(
+  array: T[],
+  parentId: string,
+  fieldPayload: Field,
+): T[] =>
+  array.map((item) =>
+    item.id === parentId
+      ? {
+          ...item,
+          [fieldPayload.label]: fieldPayload.value,
+          fields: updateFieldState(item.fields, fieldPayload),
+        }
+      : item,
+  );
+
 const resumeReducer = (state: ReduxState, action: Action) => {
   const updateResume = (resumeValue: Partial<Resume>) => ({
     isSaved: false,
@@ -151,28 +175,17 @@ const resumeReducer = (state: ReduxState, action: Action) => {
     }
     case actionConstants.UPDATE_SKILLS: {
       const { parentId, fieldPayload } = action.payload;
-      const skills = state.resume.skills.map((skill) =>
-        skill.id === parentId
-          ? {
-              ...skill,
-              ...{ [fieldPayload.label]: fieldPayload.value },
-              fields: updateFieldState(skill.fields, fieldPayload),
-            }
-          : skill,
-      );
-      return updateResume({ skills });
+      return updateResume({
+        skills: updateItemById(state.resume.skills, parentId, fieldPayload),
+      });
     }
     case actionConstants.ADD_SKILL: {
       return updateResume({ skills: [...state.resume.skills, defaultSkill()] });
     }
     case actionConstants.REORDER_SKILLS: {
       const { activeId, overId } = action.payload;
-      const getTaskPos = (id: string) =>
-        state.resume.skills.findIndex((skill) => skill.id === id);
-      const originalPos = getTaskPos(activeId);
-      const newPos = getTaskPos(overId);
       return updateResume({
-        skills: arrayMove(state.resume.skills, originalPos, newPos),
+        skills: reorderById(state.resume.skills, activeId, overId),
       });
     }
     case actionConstants.DELETE_SKILL: {
@@ -207,45 +220,28 @@ const resumeReducer = (state: ReduxState, action: Action) => {
     }
     case actionConstants.REORDER_EMPLOYMENT_HISTORY: {
       const { activeId, overId } = action.payload;
-      const getTaskPos = (id: string) =>
-        state.resume.employment_history.findIndex(
-          (employment) => employment.id === id,
-        );
-      const originalPos = getTaskPos(activeId);
-      const newPos = getTaskPos(overId);
-
       return updateResume({
-        employment_history: arrayMove(
+        employment_history: reorderById(
           state.resume.employment_history,
-          originalPos,
-          newPos,
+          activeId,
+          overId,
         ),
       });
     }
     case actionConstants.REORDER_EDUCATION: {
       const { activeId, overId } = action.payload;
-      const getTaskPos = (id: string) =>
-        state.resume.education.findIndex((edu) => edu.id === id);
-      const originalPos = getTaskPos(activeId);
-      const newPos = getTaskPos(overId);
-
       return updateResume({
-        education: arrayMove(state.resume.education, originalPos, newPos),
+        education: reorderById(state.resume.education, activeId, overId),
       });
     }
     case actionConstants.UPDATE_EMPLOYMENT_HISTORY: {
       const { parentId, fieldPayload } = action.payload;
-      const newState = state.resume.employment_history.map((employment) =>
-        employment.id === parentId
-          ? {
-              ...employment,
-              ...{ [fieldPayload.label]: fieldPayload.value },
-              fields: updateFieldState(employment.fields, fieldPayload),
-            }
-          : employment,
-      );
       return updateResume({
-        employment_history: newState,
+        employment_history: updateItemById(
+          state.resume.employment_history,
+          parentId,
+          fieldPayload,
+        ),
       });
     }
     case actionConstants.ADD_EDUCATION: {
@@ -255,18 +251,8 @@ const resumeReducer = (state: ReduxState, action: Action) => {
     }
     case actionConstants.UPDATE_EDUCATION: {
       const { parentId, fieldPayload } = action.payload;
-      const newState = state.resume.education.map((education) =>
-        education.id === parentId
-          ? {
-              ...education,
-              ...{ [fieldPayload.label]: fieldPayload.value },
-              fields: updateFieldState(education.fields, fieldPayload),
-            }
-          : education,
-      );
-
       return updateResume({
-        education: newState,
+        education: updateItemById(state.resume.education, parentId, fieldPayload),
       });
     }
     default:

@@ -32,7 +32,6 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
       isBotTheme,
       pageRef,
     } = props;
-    console.log("rerender");
     return (
       <div className="pageContainer">
         <div ref={ref}>
@@ -198,4 +197,4 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
   },
 );
 
-export default PdfView;
+export default React.memo(PdfView);

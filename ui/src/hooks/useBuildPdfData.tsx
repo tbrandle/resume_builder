@@ -3,7 +3,7 @@ import { useMemo } from "react";
 import { Resume } from "../types/resumeTypes";
 
 const useBuildPdfData = (resume: Resume) => {
-  const personlDetails = useMemo(() => {
+  const personalDetails = useMemo(() => {
     return resume.personal_details.fields
       ? omit(resume.personal_details, ["fields"])
       : resume.personal_details;
@@ -38,7 +38,7 @@ const useBuildPdfData = (resume: Resume) => {
   );
 
   return {
-    personlDetails,
+    personalDetails,
     socialMedia,
     skills,
     employmentHistory,

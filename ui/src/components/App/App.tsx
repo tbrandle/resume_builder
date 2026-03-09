@@ -1,7 +1,7 @@
 import Stack from "@mui/material/Stack";
 import "./App.css";
 import PdfView from "../PdfView/PdfView";
-import { useEffect, useMemo, useReducer, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { defaultResume } from "../../data/defaultData";
 import resumeReducer, { actionConstants } from "../../reducers/resumeReducer";
 import ResumeForm from "../ResumeForm/ResumeForm";
@@ -10,6 +10,7 @@ import useBuildPdfData from "../../hooks/useBuildPdfData";
 import { useSearchParams } from "react-router-dom";
 import useApi from "../../hooks/useApi";
 import useResizeObserver from "use-resize-observer";
+import { PDF_PAGE_HEIGHT_PX } from "../../constants/pdf";
 
 function App() {
   const [{ resume, isSaved }, dispatch] = useReducer(resumeReducer, {
@@ -20,16 +21,14 @@ function App() {
   const [isBotTheme, setIsBotTheme] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const params = useMemo(() => searchParams, [searchParams]);
-  const { api, isLoading, error } = useApi();
+  const { api } = useApi();
 
   useEffect(() => {
     const fetchResume = async () => {
-      const resumeId = params.get("resumeId");
+      const resumeId = searchParams.get("resumeId");
       if (resumeId) {
         try {
           const savedResume = await api.get(resumeId);
-          console.log({ savedResume });
           dispatch({
             type: actionConstants.SET_RESUME,
             payload: savedResume,
@@ -41,26 +40,22 @@ function App() {
     };
 
     fetchResume();
-  }, [params, api]);
+  }, [searchParams, api]);
 
   const { ref, height = 0 } = useResizeObserver({
     box: "content-box",
   });
 
-  if (height) {
-    console.log({ height }, new Date(Date.now()).toLocaleString());
-  }
-
   const pdfRef = useRef<HTMLDivElement | null>(null);
 
-  const { personlDetails, socialMedia, skills, employmentHistory, education } =
+  const { personalDetails, socialMedia, skills, employmentHistory, education } =
     useBuildPdfData(resume);
 
   return (
     <>
       <Header
         resume={resume}
-        numberOfPages={Math.ceil(height / 1094)}
+        numberOfPages={Math.ceil(height / PDF_PAGE_HEIGHT_PX)}
         isSaved={isSaved}
         dispatch={dispatch}
         pdfRef={pdfRef}
@@ -76,7 +71,7 @@ function App() {
                 ref={pdfRef}
                 pageRef={ref}
                 isBotTheme={isBotTheme}
-                personalDetails={personlDetails}
+                personalDetails={personalDetails}
                 socialMedia={socialMedia}
                 skills={skills}
                 employmentHistory={employmentHistory}
