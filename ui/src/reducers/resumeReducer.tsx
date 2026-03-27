@@ -24,6 +24,7 @@ export const actionConstants = {
   DELETE_SKILL: "DELETE_SKILL",
   DELETE_EMPLOYMENT: "DELETE_EMPLOYMENT",
   DELETE_EDUCATION: "DELETE_EDUCATION",
+  SET_THEME: "SET_THEME",
 } as const;
 
 export type Action =
@@ -90,6 +91,10 @@ export type Action =
   | {
       type: typeof actionConstants.UPDATE_EDUCATION;
       payload: { parentId: string; fieldPayload: Field };
+    }
+  | {
+      type: typeof actionConstants.SET_THEME;
+      payload: { theme: string; customThemeJSON?: import('@mui/material/styles').ThemeOptions };
     };
 
 const updateFieldState = (fields: Field[], payload: Partial<Field>) =>
@@ -253,6 +258,12 @@ const resumeReducer = (state: ReduxState, action: Action) => {
       const { parentId, fieldPayload } = action.payload;
       return updateResume({
         education: updateItemById(state.resume.education, parentId, fieldPayload),
+      });
+    }
+    case actionConstants.SET_THEME: {
+      return updateResume({
+        theme: action.payload.theme,
+        customThemeJSON: action.payload.customThemeJSON,
       });
     }
     default:
