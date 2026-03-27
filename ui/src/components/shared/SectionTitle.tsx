@@ -1,9 +1,14 @@
+import Typography from "@mui/material/Typography";
 import React from "react";
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
-  <h3 style={{ paddingLeft: "10px", textAlign: "left", width: "100%" }}>
+  <Typography
+    component="h3"
+    variant="subtitle1"
+    sx={{ pl: "10px", textAlign: "left", width: "100%" }}
+  >
     {children}
-  </h3>
+  </Typography>
 );
 
 export default SectionTitle;

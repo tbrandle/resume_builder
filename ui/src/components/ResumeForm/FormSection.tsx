@@ -1,4 +1,5 @@
 import { capitalize } from "lodash";
+import Box from "@mui/material/Box";
 import InputLabel from "@mui/material/InputLabel";
 import MenuItem from "@mui/material/MenuItem";
 import Stack from "@mui/material/Stack";
@@ -38,7 +39,7 @@ export const FormSection = ({
 }: FormSectionProps) => {
   const [expanded, setExpanded] = useState(false);
   return (
-    <Card style={{ width: "100%", margin: "12px auto" }}>
+    <Card sx={{ width: "100%", margin: "12px auto" }}>
       <Stack
         direction={"row"}
         alignItems={"center"}
@@ -64,7 +65,7 @@ export const FormSection = ({
           const { id, label, type, value } = field;
           if (type === "html") {
             return (
-              <div key={id} style={{ width: "100%", padding: "27px" }}>
+              <Box key={id} sx={{ width: "100%", p: "27px" }}>
                 <InputLabel>{capitalize(label.replace("_", " "))}</InputLabel>
                 <ReactQuill
                   theme="snow"
@@ -76,7 +77,7 @@ export const FormSection = ({
                   value={value as string}
                   onChange={(e) => handleUpdate({ ...field, value: e })}
                 />
-              </div>
+              </Box>
             );
           }
           return (

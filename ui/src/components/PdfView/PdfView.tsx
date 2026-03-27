@@ -38,16 +38,7 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
           <Stack ref={pageRef} className="page">
             <div className="nameTitleContainer">
               <div
-                className="nameTitle"
-                style={
-                  isBotTheme
-                    ? {
-                        backgroundImage: "unset",
-                        border: "unset",
-                        padding: "unset",
-                      }
-                    : undefined
-                }
+                className={isBotTheme ? "nameTitle botTheme" : "nameTitle"}
               >
                 <div className="name title">
                   {personalDetails.first_name} {personalDetails.last_name}
@@ -108,15 +99,7 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
                   {skills.map(({ skill, skill_level }, i) => (
                     <Fragment key={`${skill}-${i}`}>
                       <div
-                        className="skill"
-                        style={
-                          isBotTheme
-                            ? {
-                                border: "unset",
-                                padding: "unset",
-                              }
-                            : undefined
-                        }
+                        className={isBotTheme ? "skill botTheme" : "skill"}
                       >
                         {skill}
                       </div>
@@ -171,13 +154,7 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
                   <div className="title">Education</div>
                   {education.map((ed, i) => {
                     return (
-                      <div
-                        key={i}
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}
-                      >
+                      <div key={i} className="educationRow">
                         <div className="subTitle">
                           {ed.degree}, {ed.school}
                         </div>

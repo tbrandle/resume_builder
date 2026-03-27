@@ -1,4 +1,4 @@
-import "./Header.css";
+import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
@@ -141,9 +141,18 @@ const Header = ({
     setIsBotTheme(checked);
   };
 
+  const iconButtonSx = { "&:hover": { color: "black" } };
+
   return (
     <>
-      <Stack direction={"row"} className={"headerContainer"}>
+      <Stack
+        direction={"row"}
+        sx={{
+          backgroundColor: "rgb(172, 168, 168)",
+          justifyContent: "space-between",
+          padding: "10px 20px",
+        }}
+      >
         <Stack direction={"row"} columnGap={4}>
           <FormControl variant="standard" sx={{ m: 1, minWidth: 300 }}>
             <InputLabel id="resume-select-label">Select resume</InputLabel>
@@ -169,29 +178,29 @@ const Header = ({
           </FormControl>
           <BotToggle checked={isBotTheme} onChange={handleBotToggle} />
         </Stack>
-        <div className={"numberOfPages"}>
+        <Box sx={{ alignContent: "center" }}>
           {numberOfPages} {numberOfPages < 2 ? "page" : "pages"}
-        </div>
+        </Box>
         <Stack direction={"row"} columnGap={3} alignItems="center">
           <Tooltip title="New resume">
-            <IconButton className={"iconButton"} onClick={createNewResume}>
+            <IconButton sx={iconButtonSx} onClick={createNewResume}>
               <AddCircleOutline />
             </IconButton>
           </Tooltip>
           <Tooltip title="Download PDF">
-            <IconButton className={"iconButton"} onClick={handlePrint}>
+            <IconButton sx={iconButtonSx} onClick={handlePrint}>
               <Download />
             </IconButton>
           </Tooltip>
           <Tooltip title="Duplicate">
-            <IconButton className={"iconButton"} onClick={handleDuplicate}>
+            <IconButton sx={iconButtonSx} onClick={handleDuplicate}>
               <ContentCopy />
             </IconButton>
           </Tooltip>
           <Tooltip title="Save">
             <span>
               <IconButton
-                className={"iconButton"}
+                sx={iconButtonSx}
                 onClick={handleSave}
                 disabled={isSaved}
               >
@@ -200,7 +209,7 @@ const Header = ({
             </span>
           </Tooltip>
           <Tooltip title="Delete">
-            <IconButton className={"iconButton"} onClick={handleDelete}>
+            <IconButton sx={iconButtonSx} onClick={handleDelete}>
               <Delete />
             </IconButton>
           </Tooltip>

@@ -127,3 +127,19 @@
     box-shadow: none;
   }
 }
+
+.nameTitle.botTheme {
+  background-image: unset;
+  border: unset;
+  padding: unset;
+}
+
+.skill.botTheme {
+  border: unset;
+  padding: unset;
+}
+
+.educationRow {
+  display: flex;
+  justify-content: space-between;
+}

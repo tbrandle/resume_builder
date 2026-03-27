@@ -6,7 +6,6 @@ import { Action, actionConstants } from "../../reducers/resumeReducer";
 import { Field, Resume } from "../../types/resumeTypes";
 import "react-quill/dist/quill.snow.css";
 import { FormSection } from "./FormSection";
-import "./ResumeForm.css";
 import SortableColumn from "./SortableColumn";
 import SortableItemSummary from "./SortableItemSummary";
 import SectionTitle from "../shared/SectionTitle";
@@ -114,7 +113,14 @@ const ResumeForm = ({
       component="form"
       noValidate
       autoComplete="off"
-      className={"formContainer"}
+      sx={{
+        display: "flex",
+        flexDirection: "column",
+        width: "40%",
+        p: 4,
+        overflow: "scroll",
+        height: "92vh",
+      }}
     >
       <Stack
         direction="row"
