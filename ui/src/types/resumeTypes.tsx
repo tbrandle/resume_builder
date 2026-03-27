@@ -75,6 +75,8 @@ export interface Resume {
   skills: (Skill & FormItemSingleList)[];
   employment_history: (EmploymentHistory & FormItemSingleList)[];
   education: (Education & FormItemSingleList)[];
+  theme?: string;
+  customThemeJSON?: import('@mui/material/styles').ThemeOptions;
 }
 
 export interface ReduxState {
