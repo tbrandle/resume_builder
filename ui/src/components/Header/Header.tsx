@@ -10,6 +10,7 @@ import AddCircleOutline from "@mui/icons-material/AddCircleOutline";
 import ContentCopy from "@mui/icons-material/ContentCopy";
 import Delete from "@mui/icons-material/Delete";
 import Download from "@mui/icons-material/Download";
+import Palette from "@mui/icons-material/Palette";
 import Save from "@mui/icons-material/Save";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
@@ -18,6 +19,7 @@ import {
   RefObject,
   useCallback,
   useEffect,
+  useRef,
   useState,
 } from "react";
 import { useReactToPrint } from "react-to-print";
@@ -26,6 +28,7 @@ import useApi from "../../hooks/useApi";
 import { Action, actionConstants } from "../../reducers/resumeReducer";
 import { Resume } from "../../types/resumeTypes";
 import { useSearchParams } from "react-router-dom";
+import { BUILT_IN_THEMES, DEFAULT_THEME_ID, ThemeOptions } from "../../themes/resumeThemes";
 
 interface HeaderProps {
   resume: Resume;
@@ -33,6 +36,9 @@ interface HeaderProps {
   isSaved: boolean;
   dispatch: Dispatch<Action>;
   pdfRef: RefObject<HTMLDivElement>;
+  theme?: string;
+  onThemeChange: (id: string) => void;
+  onCustomThemeUpload: (json: ThemeOptions) => void;
 }
 
 const Header = ({
@@ -41,7 +47,11 @@ const Header = ({
   isSaved,
   dispatch,
   pdfRef,
+  theme,
+  onThemeChange,
+  onCustomThemeUpload,
 }: HeaderProps) => {
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const { api } = useApi();
   const [searchParams, setSearchParams] = useSearchParams();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -128,6 +138,23 @@ const Header = ({
     setSearchParams({ resumeId: e.target.value });
   };
 
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const json = JSON.parse(event.target?.result as string);
+        onCustomThemeUpload(json);
+      } catch {
+        setErrorMsg("Invalid theme JSON file.");
+      }
+    };
+    reader.onerror = () => setErrorMsg("Failed to read theme file.");
+    reader.readAsText(file);
+    e.target.value = "";
+  };
+
   const iconButtonSx = { "&:hover": { color: "black" } };
 
   return (
@@ -161,6 +188,21 @@ const Header = ({
                   </MenuItem>
                 );
               })}
+            </Select>
+          </FormControl>
+          <FormControl variant="standard" sx={{ m: 1, minWidth: 180 }}>
+            <InputLabel id="theme-select-label">Theme</InputLabel>
+            <Select
+              labelId="theme-select-label"
+              value={theme ?? DEFAULT_THEME_ID}
+              onChange={(e) => onThemeChange(e.target.value)}
+            >
+              {BUILT_IN_THEMES.map(({ id, label }) => (
+                <MenuItem key={id} value={id}>{label}</MenuItem>
+              ))}
+              {theme === "custom" && (
+                <MenuItem value="custom">Custom (uploaded)</MenuItem>
+              )}
             </Select>
           </FormControl>
         </Stack>
@@ -199,6 +241,18 @@ const Header = ({
               <Delete />
             </IconButton>
           </Tooltip>
+          <Tooltip title="Upload custom theme">
+            <IconButton sx={iconButtonSx} onClick={() => fileInputRef.current?.click()}>
+              <Palette />
+            </IconButton>
+          </Tooltip>
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept=".json,application/json"
+            style={{ display: "none" }}
+            onChange={handleFileChange}
+          />
         </Stack>
       </Stack>
       <Snackbar
