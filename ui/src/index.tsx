@@ -3,9 +3,10 @@ import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./components/App/App";
 import reportWebVitals from "./reportWebVitals";
+import { ThemeProvider } from "@mui/material/styles";
+import { theme } from "./theme";
 
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import "./index.css";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +21,9 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <ThemeProvider theme={theme}>
+      <RouterProvider router={router} />
+    </ThemeProvider>
   </React.StrictMode>,
 );
 

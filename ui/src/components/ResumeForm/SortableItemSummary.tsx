@@ -6,7 +6,7 @@ interface SortableItemSummaryProps {
 }
 
 const SortableItemSummary = ({ primary, secondary }: SortableItemSummaryProps) => (
-  <Stack style={{ padding: "20px", fontSize: "13px" }} spacing={0.5}>
+  <Stack sx={{ p: "20px", fontSize: "13px" }} spacing={0.5}>
     <strong>{primary}</strong>
     {secondary && <div>{secondary}</div>}
   </Stack>
