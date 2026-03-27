@@ -6,3 +6,24 @@
   overflow: scroll;
   height: 92vh;
 }
+
+.sectionTitle {
+  width: 100%;
+  padding-left: 10px;
+  text-align: left;
+}
+
+.sortableItemSummary {
+  padding: 20px;
+  font-size: 13px;
+}
+
+.formSectionCard {
+  width: 100%;
+  margin: 12px auto;
+}
+
+.formSectionHtmlField {
+  width: 100%;
+  padding: 27px;
+}

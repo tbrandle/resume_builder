@@ -1,9 +1,8 @@
 import React from "react";
+import "../ResumeForm/ResumeForm.css";
 
 const SectionTitle = ({ children }: { children: React.ReactNode }) => (
-  <h3 style={{ paddingLeft: "10px", textAlign: "left", width: "100%" }}>
-    {children}
-  </h3>
+  <h3 className="sectionTitle">{children}</h3>
 );
 
 export default SectionTitle;

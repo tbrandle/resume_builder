@@ -1,4 +1,5 @@
 import Stack from "@mui/material/Stack";
+import "./ResumeForm.css";
 
 interface SortableItemSummaryProps {
   primary: string;
@@ -6,7 +7,7 @@ interface SortableItemSummaryProps {
 }
 
 const SortableItemSummary = ({ primary, secondary }: SortableItemSummaryProps) => (
-  <Stack style={{ padding: "20px", fontSize: "13px" }} spacing={0.5}>
+  <Stack className="sortableItemSummary" spacing={0.5}>
     <strong>{primary}</strong>
     {secondary && <div>{secondary}</div>}
   </Stack>

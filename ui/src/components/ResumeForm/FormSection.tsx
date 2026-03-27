@@ -11,6 +11,7 @@ import { Field, FormItemSingle } from "../../types/resumeTypes";
 import ReactQuill from "react-quill";
 import { styled } from "@mui/material/styles";
 import { ReactElement, useState } from "react";
+import "./ResumeForm.css";
 
 interface FormSectionProps {
   data: FormItemSingle;
@@ -38,7 +39,7 @@ export const FormSection = ({
 }: FormSectionProps) => {
   const [expanded, setExpanded] = useState(false);
   return (
-    <Card style={{ width: "100%", margin: "12px auto" }}>
+    <Card className="formSectionCard">
       <Stack
         direction={"row"}
         alignItems={"center"}
@@ -64,7 +65,7 @@ export const FormSection = ({
           const { id, label, type, value } = field;
           if (type === "html") {
             return (
-              <div key={id} style={{ width: "100%", padding: "27px" }}>
+              <div key={id} className="formSectionHtmlField">
                 <InputLabel>{capitalize(label.replace("_", " "))}</InputLabel>
                 <ReactQuill
                   theme="snow"

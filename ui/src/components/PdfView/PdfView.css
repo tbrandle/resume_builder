@@ -90,6 +90,11 @@
     margin: 4px 0;
   }
 
+  .skillBotTheme {
+    border: unset;
+    padding: unset;
+  }
+
   .nameTitleContainer {
     width: 100%;
     margin: 42px 0;
@@ -104,6 +109,17 @@
     margin: auto;
     padding: 46px;
   }
+  .nameTitleBotTheme {
+    background-image: unset;
+    border: unset;
+    padding: unset;
+  }
+
+  .educationRow {
+    display: flex;
+    justify-content: space-between;
+  }
+
   .name {
     font-size: 22px;
     margin-bottom: 9px;

@@ -37,18 +37,7 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
         <div ref={ref}>
           <Stack ref={pageRef} className="page">
             <div className="nameTitleContainer">
-              <div
-                className="nameTitle"
-                style={
-                  isBotTheme
-                    ? {
-                        backgroundImage: "unset",
-                        border: "unset",
-                        padding: "unset",
-                      }
-                    : undefined
-                }
-              >
+              <div className={`nameTitle${isBotTheme ? " nameTitleBotTheme" : ""}`}>
                 <div className="name title">
                   {personalDetails.first_name} {personalDetails.last_name}
                 </div>
@@ -107,17 +96,7 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
                   <div className="title">Skills</div>
                   {skills.map(({ skill, skill_level }, i) => (
                     <Fragment key={`${skill}-${i}`}>
-                      <div
-                        className="skill"
-                        style={
-                          isBotTheme
-                            ? {
-                                border: "unset",
-                                padding: "unset",
-                              }
-                            : undefined
-                        }
-                      >
+                      <div className={`skill${isBotTheme ? " skillBotTheme" : ""}`}>
                         {skill}
                       </div>
                       {/* <div>{skill_level}</div> */}
@@ -171,13 +150,7 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
                   <div className="title">Education</div>
                   {education.map((ed, i) => {
                     return (
-                      <div
-                        key={i}
-                        style={{
-                          display: "flex",
-                          justifyContent: "space-between",
-                        }}
-                      >
+                      <div key={i} className="educationRow">
                         <div className="subTitle">
                           {ed.degree}, {ed.school}
                         </div>
