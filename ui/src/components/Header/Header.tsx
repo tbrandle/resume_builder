@@ -14,7 +14,6 @@ import Save from "@mui/icons-material/Save";
 import Stack from "@mui/material/Stack";
 import Tooltip from "@mui/material/Tooltip";
 import {
-  ChangeEvent,
   Dispatch,
   RefObject,
   useCallback,
@@ -27,14 +26,11 @@ import useApi from "../../hooks/useApi";
 import { Action, actionConstants } from "../../reducers/resumeReducer";
 import { Resume } from "../../types/resumeTypes";
 import { useSearchParams } from "react-router-dom";
-import BotToggle from "./BotToggle";
 
 interface HeaderProps {
   resume: Resume;
   numberOfPages: number;
   isSaved: boolean;
-  isBotTheme: boolean;
-  setIsBotTheme: Dispatch<React.SetStateAction<boolean>>;
   dispatch: Dispatch<Action>;
   pdfRef: RefObject<HTMLDivElement>;
 }
@@ -43,8 +39,6 @@ const Header = ({
   resume,
   numberOfPages,
   isSaved,
-  isBotTheme,
-  setIsBotTheme,
   dispatch,
   pdfRef,
 }: HeaderProps) => {
@@ -134,13 +128,6 @@ const Header = ({
     setSearchParams({ resumeId: e.target.value });
   };
 
-  const handleBotToggle = (
-    _e: ChangeEvent<HTMLInputElement>,
-    checked: boolean,
-  ) => {
-    setIsBotTheme(checked);
-  };
-
   const iconButtonSx = { "&:hover": { color: "black" } };
 
   return (
@@ -176,7 +163,6 @@ const Header = ({
               })}
             </Select>
           </FormControl>
-          <BotToggle checked={isBotTheme} onChange={handleBotToggle} />
         </Stack>
         <Box sx={{ alignContent: "center" }}>
           {numberOfPages} {numberOfPages < 2 ? "page" : "pages"}

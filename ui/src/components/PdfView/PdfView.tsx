@@ -9,9 +9,9 @@ import DOMPurify from "isomorphic-dompurify";
 import "./PdfView.css";
 import React, { Fragment } from "react";
 import Stack from "@mui/material/Stack";
+import { useTheme } from "@mui/material/styles";
 
 interface PdfViewProps {
-  isBotTheme: boolean;
   pageRef: (instance: Element | null) => void;
   personalDetails: PersonalDetails;
   socialMedia: SocialMedia;
@@ -29,16 +29,28 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
       employmentHistory,
       education,
       socialMedia,
-      isBotTheme,
       pageRef,
     } = props;
+    const theme = useTheme();
     return (
       <div className="pageContainer">
         <div ref={ref}>
-          <Stack ref={pageRef} className="page">
+          <Stack
+            ref={pageRef}
+            className="page"
+            sx={{
+              '--pdf-page-bg': theme.palette.background.default,
+              '--pdf-text-color': theme.palette.text.primary,
+              '--pdf-title-border-color': theme.palette.divider,
+              '--pdf-nameTitle-border': theme.custom.nameTitleBorder,
+              '--pdf-nameTitle-bg': theme.custom.nameTitleBg,
+              '--pdf-nameTitle-padding': theme.custom.nameTitlePadding,
+              '--pdf-skill-border-color': theme.custom.skillBorderColor,
+            } as React.CSSProperties}
+          >
             <div className="nameTitleContainer">
               <div
-                className={isBotTheme ? "nameTitle botTheme" : "nameTitle"}
+                className="nameTitle"
               >
                 <div className="name title">
                   {personalDetails.first_name} {personalDetails.last_name}
@@ -99,7 +111,7 @@ const PdfView = React.forwardRef<HTMLDivElement | null, PdfViewProps>(
                   {skills.map(({ skill, skill_level }, i) => (
                     <Fragment key={`${skill}-${i}`}>
                       <div
-                        className={isBotTheme ? "skill botTheme" : "skill"}
+                        className="skill"
                       >
                         {skill}
                       </div>
