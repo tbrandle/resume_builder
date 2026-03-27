@@ -1,7 +1,7 @@
 import Stack from "@mui/material/Stack";
 import "./App.css";
 import PdfView from "../PdfView/PdfView";
-import { useEffect, useReducer, useRef, useState } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import { defaultResume } from "../../data/defaultData";
 import resumeReducer, { actionConstants } from "../../reducers/resumeReducer";
 import ResumeForm from "../ResumeForm/ResumeForm";
@@ -11,14 +11,14 @@ import { useSearchParams } from "react-router-dom";
 import useApi from "../../hooks/useApi";
 import useResizeObserver from "use-resize-observer";
 import { PDF_PAGE_HEIGHT_PX } from "../../constants/pdf";
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { getThemeById, DEFAULT_THEME_ID } from "../../themes/resumeThemes";
 
 function App() {
   const [{ resume, isSaved }, dispatch] = useReducer(resumeReducer, {
     isSaved: true,
     resume: defaultResume(),
   });
-
-  const [isBotTheme, setIsBotTheme] = useState(false);
 
   const [searchParams, setSearchParams] = useSearchParams();
   const { api } = useApi();
@@ -51,6 +51,10 @@ function App() {
   const { personalDetails, socialMedia, skills, employmentHistory, education } =
     useBuildPdfData(resume);
 
+  const resolvedTheme = resume.customThemeJSON
+    ? createTheme(resume.customThemeJSON)
+    : (getThemeById(resume.theme) ?? getThemeById(DEFAULT_THEME_ID)!);
+
   return (
     <>
       <Header
@@ -59,24 +63,23 @@ function App() {
         isSaved={isSaved}
         dispatch={dispatch}
         pdfRef={pdfRef}
-        isBotTheme={isBotTheme}
-        setIsBotTheme={setIsBotTheme}
       />
       <Stack direction={"row"} useFlexGap>
         {resume.id ? (
           <>
             <ResumeForm resume={resume} dispatch={dispatch} />
             <Stack className={"pdfViewContainer"}>
-              <PdfView
-                ref={pdfRef}
-                pageRef={ref}
-                isBotTheme={isBotTheme}
-                personalDetails={personalDetails}
-                socialMedia={socialMedia}
-                skills={skills}
-                employmentHistory={employmentHistory}
-                education={education}
-              />
+              <ThemeProvider theme={resolvedTheme}>
+                <PdfView
+                  ref={pdfRef}
+                  pageRef={ref}
+                  personalDetails={personalDetails}
+                  socialMedia={socialMedia}
+                  skills={skills}
+                  employmentHistory={employmentHistory}
+                  education={education}
+                />
+              </ThemeProvider>
             </Stack>
           </>
         ) : (
