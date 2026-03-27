@@ -1,3 +1,4 @@
+import Box from "@mui/material/Box";
 import FormControl from "@mui/material/FormControl";
 import IconButton from "@mui/material/IconButton";
 import InputLabel from "@mui/material/InputLabel";
@@ -177,9 +178,9 @@ const Header = ({
           </FormControl>
           <BotToggle checked={isBotTheme} onChange={handleBotToggle} />
         </Stack>
-        <div style={{ alignContent: "center" }}>
+        <Box sx={{ alignContent: "center" }}>
           {numberOfPages} {numberOfPages < 2 ? "page" : "pages"}
-        </div>
+        </Box>
         <Stack direction={"row"} columnGap={3} alignItems="center">
           <Tooltip title="New resume">
             <IconButton sx={iconButtonSx} onClick={createNewResume}>
