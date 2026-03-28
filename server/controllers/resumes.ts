@@ -107,6 +107,31 @@ export const updateResume = async (
   }
 };
 
+export const deleteManyResumes = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  try {
+    const { ids } = req.body as { ids: string[] };
+
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return next(new BadRequestException("ids must be a non-empty array."));
+    }
+
+    const result = await prisma.resume.deleteMany({
+      where: { id: { in: ids } },
+    });
+
+    res.status(200).send({
+      message: `Successfully deleted ${result.count} resume(s)`,
+      count: result.count,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const deleteResume = async (
   req: Request,
   res: Response,

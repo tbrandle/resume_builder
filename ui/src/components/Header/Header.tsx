@@ -9,6 +9,7 @@ import Alert from "@mui/material/Alert";
 import AddCircleOutline from "@mui/icons-material/AddCircleOutline";
 import ContentCopy from "@mui/icons-material/ContentCopy";
 import Delete from "@mui/icons-material/Delete";
+import DeleteSweep from "@mui/icons-material/DeleteSweep";
 import Download from "@mui/icons-material/Download";
 import Palette from "@mui/icons-material/Palette";
 import Save from "@mui/icons-material/Save";
@@ -30,6 +31,7 @@ import { Resume } from "../../types/resumeTypes";
 import { useSearchParams } from "react-router-dom";
 import { ThemeOptions } from "@mui/material/styles";
 import { BUILT_IN_THEMES, DEFAULT_THEME_ID } from "../../themes/resumeThemes";
+import BatchDeleteDialog from "./BatchDeleteDialog";
 
 interface HeaderProps {
   resume: Resume;
@@ -53,6 +55,7 @@ const Header = ({
   onCustomThemeUpload,
 }: HeaderProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [isBatchDeleteOpen, setIsBatchDeleteOpen] = useState(false);
   const { api } = useApi();
   const [searchParams, setSearchParams] = useSearchParams();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -156,6 +159,16 @@ const Header = ({
     e.target.value = "";
   };
 
+  const handleBatchDeleteSuccess = (deletedIds: string[]) => {
+    if (resume.id && deletedIds.includes(resume.id)) {
+      searchParams.delete("resumeId");
+      setSearchParams(searchParams);
+      dispatch({ type: actionConstants.SET_RESUME, payload: defaultResume() });
+    }
+    fetchAndSetMasterList();
+    setIsBatchDeleteOpen(false);
+  };
+
   const iconButtonSx = { "&:hover": { color: "black" } };
 
   return (
@@ -242,6 +255,11 @@ const Header = ({
               <Delete />
             </IconButton>
           </Tooltip>
+          <Tooltip title="Manage resumes">
+            <IconButton sx={iconButtonSx} onClick={() => setIsBatchDeleteOpen(true)}>
+              <DeleteSweep />
+            </IconButton>
+          </Tooltip>
           <Tooltip title="Upload custom theme">
             <IconButton sx={iconButtonSx} onClick={() => fileInputRef.current?.click()}>
               <Palette />
@@ -266,6 +284,14 @@ const Header = ({
           {errorMsg}
         </Alert>
       </Snackbar>
+      <BatchDeleteDialog
+        open={isBatchDeleteOpen}
+        onClose={() => setIsBatchDeleteOpen(false)}
+        resumeList={selectResumeList}
+        activeResumeId={resume.id}
+        onDeleteSuccess={handleBatchDeleteSuccess}
+        onError={(msg) => setErrorMsg(msg)}
+      />
     </>
   );
 };

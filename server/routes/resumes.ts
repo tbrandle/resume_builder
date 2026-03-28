@@ -13,6 +13,8 @@ resumeRoutes.post("", ResumeController.createResume);
 
 resumeRoutes.patch("/:id", ResumeController.updateResume);
 
+resumeRoutes.delete("/batch", ResumeController.deleteManyResumes);
+
 resumeRoutes.delete("/:id", ResumeController.deleteResume);
 
 export default resumeRoutes;
