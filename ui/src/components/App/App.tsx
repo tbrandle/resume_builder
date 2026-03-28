@@ -11,8 +11,8 @@ import { useSearchParams } from "react-router-dom";
 import useApi from "../../hooks/useApi";
 import useResizeObserver from "use-resize-observer";
 import { PDF_PAGE_HEIGHT_PX } from "../../constants/pdf";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
-import { getThemeById, DEFAULT_THEME_ID, ThemeOptions } from "../../themes/resumeThemes";
+import { ThemeProvider, createTheme, ThemeOptions } from "@mui/material/styles";
+import { getThemeById, DEFAULT_THEME_ID } from "../../themes/resumeThemes";
 
 function App() {
   const [{ resume, isSaved }, dispatch] = useReducer(resumeReducer, {
