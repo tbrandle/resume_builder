@@ -28,7 +28,8 @@ import useApi from "../../hooks/useApi";
 import { Action, actionConstants } from "../../reducers/resumeReducer";
 import { Resume } from "../../types/resumeTypes";
 import { useSearchParams } from "react-router-dom";
-import { BUILT_IN_THEMES, DEFAULT_THEME_ID, ThemeOptions } from "../../themes/resumeThemes";
+import { ThemeOptions } from "@mui/material/styles";
+import { BUILT_IN_THEMES, DEFAULT_THEME_ID } from "../../themes/resumeThemes";
 
 interface HeaderProps {
   resume: Resume;
