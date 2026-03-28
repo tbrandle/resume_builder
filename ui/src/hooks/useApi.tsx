@@ -1,17 +1,17 @@
 import { useMemo, useState } from "react";
 import { Resume } from "../types/resumeTypes";
 
-interface FetchArgs<T> {
+interface FetchArgs {
   method: string;
   url?: string;
-  body?: T;
+  body?: unknown;
 }
 
 const useApi = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<unknown>();
 
-  const fetchResume = async <T,>({ method, url, body }: FetchArgs<T>) => {
+  const fetchResume = async ({ method, url, body }: FetchArgs) => {
     setIsLoading(true);
 
     const response = await fetch(
@@ -42,6 +42,8 @@ const useApi = () => {
       patch: async (id: string, body: Resume) =>
         fetchResume({ method: "PATCH", url: id, body }),
       delete: async (id: string) => fetchResume({ method: "DELETE", url: id }),
+      deleteMany: async (ids: string[]) =>
+        fetchResume({ method: "DELETE", url: "batch", body: { ids } }),
     }),
     [],
   );
