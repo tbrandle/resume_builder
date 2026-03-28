@@ -11,7 +11,7 @@ import { useSearchParams } from "react-router-dom";
 import useApi from "../../hooks/useApi";
 import useResizeObserver from "use-resize-observer";
 import { PDF_PAGE_HEIGHT_PX } from "../../constants/pdf";
-import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { ThemeProvider, createTheme, ThemeOptions } from "@mui/material/styles";
 import { getThemeById, DEFAULT_THEME_ID } from "../../themes/resumeThemes";
 
 function App() {
@@ -55,6 +55,20 @@ function App() {
     ? createTheme(resume.customThemeJSON)
     : (getThemeById(resume.theme) ?? getThemeById(DEFAULT_THEME_ID)!);
 
+  const handleThemeChange = (themeId: string) => {
+    dispatch({
+      type: actionConstants.SET_THEME,
+      payload: { theme: themeId, customThemeJSON: undefined },
+    });
+  };
+
+  const handleCustomThemeUpload = (json: ThemeOptions) => {
+    dispatch({
+      type: actionConstants.SET_THEME,
+      payload: { theme: "custom", customThemeJSON: json },
+    });
+  };
+
   return (
     <>
       <Header
@@ -63,6 +77,9 @@ function App() {
         isSaved={isSaved}
         dispatch={dispatch}
         pdfRef={pdfRef}
+        theme={resume.theme}
+        onThemeChange={handleThemeChange}
+        onCustomThemeUpload={handleCustomThemeUpload}
       />
       <Stack direction={"row"} useFlexGap>
         {resume.id ? (
