@@ -32,6 +32,7 @@ import { useSearchParams } from "react-router-dom";
 import { ThemeOptions } from "@mui/material/styles";
 import { BUILT_IN_THEMES, DEFAULT_THEME_ID } from "../../themes/resumeThemes";
 import BatchDeleteDialog from "./BatchDeleteDialog";
+import UnsavedChangesDialog from "./UnsavedChangesDialog";
 
 interface HeaderProps {
   resume: Resume;
@@ -56,6 +57,10 @@ const Header = ({
 }: HeaderProps) => {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [isBatchDeleteOpen, setIsBatchDeleteOpen] = useState(false);
+  const [pendingAction, setPendingAction] = useState<(() => Promise<void>) | null>(null);
+  const [isUnsavedDialogOpen, setIsUnsavedDialogOpen] = useState(false);
+  const [isSaving, setIsSaving] = useState(false);
+  const [dialogSaveError, setDialogSaveError] = useState<string | null>(null);
   const { api } = useApi();
   const [searchParams, setSearchParams] = useSearchParams();
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -138,8 +143,49 @@ const Header = ({
     }
   };
 
+  const guardNavigation = (action: () => Promise<void>) => {
+    if (!isSaved) {
+      setPendingAction(() => action);
+      setIsUnsavedDialogOpen(true);
+    } else {
+      action();
+    }
+  };
+
+  const handleSaveAndContinue = async () => {
+    setIsSaving(true);
+    setDialogSaveError(null);
+    try {
+      resume.id ? await api.patch(resume.id, resume) : await api.post(resume);
+      dispatch({ type: actionConstants.SAVE_RESUME });
+      fetchAndSetMasterList();
+      setIsUnsavedDialogOpen(false);
+      const action = pendingAction;
+      setPendingAction(null);
+      await action?.();
+    } catch {
+      setDialogSaveError("Failed to save resume. Please try again.");
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const handleDiscard = async () => {
+    setIsUnsavedDialogOpen(false);
+    const action = pendingAction;
+    setPendingAction(null);
+    await action?.();
+  };
+
+  const handleCancelDialog = () => {
+    setIsUnsavedDialogOpen(false);
+    setPendingAction(null);
+    setDialogSaveError(null);
+  };
+
   const handleSelectResume = (e: SelectChangeEvent<string>) => {
-    setSearchParams({ resumeId: e.target.value });
+    const resumeId = e.target.value;
+    guardNavigation(async () => setSearchParams({ resumeId }));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -170,6 +216,10 @@ const Header = ({
   };
 
   const iconButtonSx = { "&:hover": { color: "black" } };
+  const saveButtonSx = {
+    ...iconButtonSx,
+    ...(!isSaved && { color: "warning.main" }),
+  };
 
   return (
     <>
@@ -225,7 +275,7 @@ const Header = ({
         </Box>
         <Stack direction={"row"} columnGap={3} alignItems="center">
           <Tooltip title="New resume">
-            <IconButton sx={iconButtonSx} onClick={createNewResume}>
+            <IconButton sx={iconButtonSx} onClick={() => guardNavigation(createNewResume)}>
               <AddCircleOutline />
             </IconButton>
           </Tooltip>
@@ -235,20 +285,14 @@ const Header = ({
             </IconButton>
           </Tooltip>
           <Tooltip title="Duplicate">
-            <IconButton sx={iconButtonSx} onClick={handleDuplicate}>
+            <IconButton sx={iconButtonSx} onClick={() => guardNavigation(handleDuplicate)}>
               <ContentCopy />
             </IconButton>
           </Tooltip>
           <Tooltip title="Save">
-            <span>
-              <IconButton
-                sx={iconButtonSx}
-                onClick={handleSave}
-                disabled={isSaved}
-              >
-                <Save />
-              </IconButton>
-            </span>
+            <IconButton sx={saveButtonSx} onClick={handleSave}>
+              <Save />
+            </IconButton>
           </Tooltip>
           <Tooltip title="Delete">
             <IconButton sx={iconButtonSx} onClick={handleDelete}>
@@ -291,6 +335,14 @@ const Header = ({
         activeResumeId={resume.id}
         onDeleteSuccess={handleBatchDeleteSuccess}
         onError={(msg) => setErrorMsg(msg)}
+      />
+      <UnsavedChangesDialog
+        open={isUnsavedDialogOpen}
+        onSaveAndContinue={handleSaveAndContinue}
+        onDiscard={handleDiscard}
+        onCancel={handleCancelDialog}
+        isSaving={isSaving}
+        saveError={dialogSaveError}
       />
     </>
   );
